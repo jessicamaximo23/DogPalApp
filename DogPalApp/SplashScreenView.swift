@@ -26,12 +26,17 @@ struct SplashScreenView: View {
                         .scaledToFit()
                         .frame(width: 275, height: 500)
                         .clipShape(Ellipse())
-                    
+//                        .scaleEffect(size)
+                        .opacity(opacity)
                 }
-                .scaleEffect(size)
-                .opacity(opacity)
+                .onAppear{
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
+                        self.isActive = true
+                    }
+                }
                 
             }
+            .padding()
         }
     }
 }

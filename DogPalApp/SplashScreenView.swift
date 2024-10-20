@@ -8,8 +8,31 @@
 import SwiftUI
 
 struct SplashScreenView: View {
+    @State private var isActive = false
+    @State private var size = 1.2
+    @State private var opacity = 0.9
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if isActive{
+            HomeScreenView()
+        }else {
+            ZStack{
+                Color("LaunchBackgroundColor")
+                    .ignoresSafeArea()
+                
+                VStack{
+                    Image("DogPalLogo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 275, height: 500)
+                        .clipShape(Ellipse())
+                    
+                }
+                .scaleEffect(size)
+                .opacity(opacity)
+                
+            }
+        }
     }
 }
 

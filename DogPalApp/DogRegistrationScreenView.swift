@@ -16,84 +16,121 @@ struct DogRegistrationScreenView: View {
     @State private var dogPhoto: UIImage? = nil
     @State private var dogSize: String = ""
     @State private var showImagePicker = false
+    @State private var userType: UserType = .owner
+    
+    //Radio btn for both
+    enum UserType: String, CaseIterable {
+            case owner = "Dog Owner"
+            case walker = "Dog Walker"
+        }
     
     var body: some View {
         
-        
-            VStack {
-                //Logo
-                Image("dogpal-high-resolution-logo-transparent")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 70)
-                    .colorMultiply(Color.brown)
-                    .padding()
+            NavigationView{
+                VStack {
                     
-                
-                // Set up Informations
-                Form {
-                        TextField("your Name", text: $userName)
+                    //Logo
+                    Image("dogpal-high-resolution-logo-transparent")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 70)
+                        .colorMultiply(Color.brown)
+                       
+                    Text("Set up your account")
+                        .font(.title)
+                    
+                    // Set up Informations
+                    Form {
+                        TextField("Your Name", text: $userName)
+                        .padding(5)
                         TextField("Dog's Name", text: $dogName)
+                        .padding(5)
                         TextField("Dog's Breed", text: $dogBreed)
+                        .padding(5)
                         TextField("Dog's Age", text: $dogAge)
+                        .padding(5)
                         TextField("Dog's Size", text: $dogSize)
+                        .padding(5)
                             .keyboardType(.numberPad)
-                    
-                    Section(header: Text("Introduce your best buddy to the community with a picture")) {
                         
-                        if let image = dogPhoto {
+                        Picker("User Type", selection: $userType) {
+                            ForEach(UserType.allCases, id: \.self) { userType in
+                                Text(userType.rawValue).tag(userType)
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .padding(.vertical)
+                        
+                        
+                        Section(header: Text("Introduce your best buddy to the community with a picture")) {
                             
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 200)
-                                .clipShape(Circle())
-                                .shadow(radius: 10)
-                        } else {
-                            Button(action: {
-                                showImagePicker = true
-                            }) {
-                                HStack {
-                                    Image(systemName: "camera")
-                                        .font(.largeTitle)
-                                        .foregroundColor(.brown)
-                                    
-                                    Text("Select a Photo")
-                                        .font(.headline)
-                                        .foregroundColor(.brown)
+                            if let image = dogPhoto {
+                                
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 200)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 10)
+                            } else {
+                                Button(action: {
+                                    showImagePicker = true
+                                }) {
+                                    HStack {
+                                        Image(systemName: "camera")
+                                            .font(.largeTitle)
+                                            .foregroundColor(.brown)
+                                        
+                                        Text("Select a Photo")
+                                            .font(.headline)
+                                            .foregroundColor(.brown)
+                                    }
                                 }
+                            }
+                            //Submit dog
+                            Section {
+                                Button(action: {
+                                    registerDog()
+                                }) {
+                                    Text("Submit your Dog")
+                                        .frame(maxWidth: .infinity)
+                                        .padding()
+                                        .background(Color.brown)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(30)
+                                }
+                                .disabled(dogName.isEmpty || dogBreed.isEmpty || dogAge.isEmpty || dogPhoto == nil)
                             }
                         }
                     }
-                    
-                   //Submit dog
-                    Section {
-                        Button(action: {
-                            registerDog()
-                        }) {
-                            Text("Submit your Dog")
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color.brown)
-                                .foregroundColor(.white)
-                                .cornerRadius(30)
-                        }
-                        .disabled(dogName.isEmpty || dogBreed.isEmpty || dogAge.isEmpty || dogPhoto == nil)
-                    }
-                }
-               
-            }
-            .sheet(isPresented: $showImagePicker) {
-                ImagePicker(image: $dogPhoto)
-            }
         
-    }
+                }
+                .sheet(isPresented: $showImagePicker) {
+                    ImagePicker(image: $dogPhoto)
+                    
+                }
+                .navigationTitle("")
+                .navigationBarItems(
+                    leading: Button(action: {
+                        print("Back")
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            
+                        }
+                    },
+                    trailing: Button("Cancel") {
+                        print("Cancelled")
+                    }
+                )
+            }
+        }
     
+               
   
     func registerDog() {
         
-        // Aqui você pode adicionar a lógica para salvar os dados do cachorro
-        print("Registered Dog: \(dogName), \(dogBreed), \(dogAge)")
+        print("Registered Dog: \(userName),\(dogName), \(dogBreed), \(dogAge), \(dogSize)")
     }
 }
 

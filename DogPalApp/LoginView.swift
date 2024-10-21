@@ -34,9 +34,15 @@ struct LoginView: View {
                     .font(.title)
                     .padding()
                 
-                Text("No account yet? Sign-up here")
-                //                Need to put the logic for the here in this spot
-                
+                HStack{
+                    Text("No account yet? Sign-up")
+                    //                Need to put the logic for the here in this spot
+                    NavigationLink(destination: SignUpView()){
+                        Text("here")
+                            .foregroundStyle(.blue)
+                            .fontWeight(.bold)
+                    }
+                }
                 TextField("Email", text: $email)
                     .padding()
                     .autocapitalization(.none)

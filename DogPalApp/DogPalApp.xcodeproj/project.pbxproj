@@ -30,11 +30,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0819B3032CC18460007A780D /* DogPalApp */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = DogPalApp;
-			sourceTree = "<group>";
-		};
 		0819B3142CC18462007A780D /* DogPalAppTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = DogPalAppTests;
@@ -75,7 +70,6 @@
 		0819B2F82CC18460007A780D = {
 			isa = PBXGroup;
 			children = (
-				0819B3032CC18460007A780D /* DogPalApp */,
 				0819B3142CC18462007A780D /* DogPalAppTests */,
 				0819B31E2CC18462007A780D /* DogPalAppUITests */,
 				0819B3022CC18460007A780D /* Products */,
@@ -106,9 +100,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				0819B3032CC18460007A780D /* DogPalApp */,
 			);
 			name = DogPalApp;
 			packageProductDependencies = (

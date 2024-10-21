@@ -27,22 +27,45 @@
 		0819B3012CC18460007A780D /* DogPalApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogPalApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0819B3112CC18462007A780D /* DogPalAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0819B31B2CC18462007A780D /* DogPalAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		08957A932CC6C3780021BB86 /* DogPalApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = DogPalApp.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		08957ADF2CC6C4C90021BB86 /* Exceptions for "DogPalApp" folder in "DogPalApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				DogPalAppTests/DogPalAppTests.swift,
+				DogPalAppUITests/DogPalAppUITests.swift,
+				DogPalAppUITests/DogPalAppUITestsLaunchTests.swift,
+			);
+			target = 0819B3002CC18460007A780D /* DogPalApp */;
+		};
+		08957AE02CC6C4C90021BB86 /* Exceptions for "DogPalApp" folder in "DogPalAppTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				DogPalAppTests/DogPalAppTests.swift,
+			);
+			target = 0819B3102CC18462007A780D /* DogPalAppTests */;
+		};
+		08957AEA2CC6C4CE0021BB86 /* Exceptions for "DogPalApp" folder in "DogPalAppUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				DogPalAppUITests/DogPalAppUITests.swift,
+				DogPalAppUITests/DogPalAppUITestsLaunchTests.swift,
+			);
+			target = 0819B31A2CC18462007A780D /* DogPalAppUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0819B3032CC18460007A780D /* DogPalApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				08957ADF2CC6C4C90021BB86 /* Exceptions for "DogPalApp" folder in "DogPalApp" target */,
+				08957AE02CC6C4C90021BB86 /* Exceptions for "DogPalApp" folder in "DogPalAppTests" target */,
+				08957AEA2CC6C4CE0021BB86 /* Exceptions for "DogPalApp" folder in "DogPalAppUITests" target */,
+			);
 			path = DogPalApp;
-			sourceTree = "<group>";
-		};
-		0819B3142CC18462007A780D /* DogPalAppTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = DogPalAppTests;
-			sourceTree = "<group>";
-		};
-		0819B31E2CC18462007A780D /* DogPalAppUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = DogPalAppUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -76,8 +99,6 @@
 			isa = PBXGroup;
 			children = (
 				0819B3032CC18460007A780D /* DogPalApp */,
-				0819B3142CC18462007A780D /* DogPalAppTests */,
-				0819B31E2CC18462007A780D /* DogPalAppUITests */,
 				0819B3022CC18460007A780D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,6 +109,13 @@
 				0819B3012CC18460007A780D /* DogPalApp.app */,
 				0819B3112CC18462007A780D /* DogPalAppTests.xctest */,
 				0819B31B2CC18462007A780D /* DogPalAppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		08957A992CC6C3780021BB86 /* Products */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -130,9 +158,6 @@
 			dependencies = (
 				0819B3132CC18462007A780D /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				0819B3142CC18462007A780D /* DogPalAppTests */,
-			);
 			name = DogPalAppTests;
 			packageProductDependencies = (
 			);
@@ -152,9 +177,6 @@
 			);
 			dependencies = (
 				0819B31D2CC18462007A780D /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				0819B31E2CC18462007A780D /* DogPalAppUITests */,
 			);
 			name = DogPalAppUITests;
 			packageProductDependencies = (
@@ -198,6 +220,12 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0819B3022CC18460007A780D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 08957A992CC6C3780021BB86 /* Products */;
+					ProjectRef = 08957A932CC6C3780021BB86 /* DogPalApp.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				0819B3002CC18460007A780D /* DogPalApp */,

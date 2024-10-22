@@ -11,6 +11,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		080316142CC7855F003A49D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0819B2F92CC18460007A780D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0819B3002CC18460007A780D;
+			remoteInfo = DogPalApp;
+		};
 		0819B3122CC18462007A780D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0819B2F92CC18460007A780D /* Project object */;
@@ -28,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		080316102CC7855F003A49D7 /* DogPalAppUITestss.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppUITestss.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0819B3012CC18460007A780D /* DogPalApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogPalApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0819B3112CC18462007A780D /* DogPalAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0819B31B2CC18462007A780D /* DogPalAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -39,19 +47,16 @@
 			path = DogPalApp;
 			sourceTree = "<group>";
 		};
-		0819B3142CC18462007A780D /* DogPalAppTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = DogPalAppTests;
-			sourceTree = "<group>";
-		};
-		0819B31E2CC18462007A780D /* DogPalAppUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = DogPalAppUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0803160D2CC7855F003A49D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0819B2FE2CC18460007A780D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -81,8 +86,6 @@
 			isa = PBXGroup;
 			children = (
 				0819B3032CC18460007A780D /* DogPalApp */,
-				0819B3142CC18462007A780D /* DogPalAppTests */,
-				0819B31E2CC18462007A780D /* DogPalAppUITests */,
 				0819B3022CC18460007A780D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -93,6 +96,7 @@
 				0819B3012CC18460007A780D /* DogPalApp.app */,
 				0819B3112CC18462007A780D /* DogPalAppTests.xctest */,
 				0819B31B2CC18462007A780D /* DogPalAppUITests.xctest */,
+				080316102CC7855F003A49D7 /* DogPalAppUITestss.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -100,6 +104,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0803160F2CC7855F003A49D7 /* DogPalAppUITestss */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 080316162CC7855F003A49D7 /* Build configuration list for PBXNativeTarget "DogPalAppUITestss" */;
+			buildPhases = (
+				0803160C2CC7855F003A49D7 /* Sources */,
+				0803160D2CC7855F003A49D7 /* Frameworks */,
+				0803160E2CC7855F003A49D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				080316152CC7855F003A49D7 /* PBXTargetDependency */,
+			);
+			name = DogPalAppUITestss;
+			packageProductDependencies = (
+			);
+			productName = DogPalAppUITestss;
+			productReference = 080316102CC7855F003A49D7 /* DogPalAppUITestss.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		0819B3002CC18460007A780D /* DogPalApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0819B3252CC18462007A780D /* Build configuration list for PBXNativeTarget "DogPalApp" */;
@@ -136,9 +160,6 @@
 			dependencies = (
 				0819B3132CC18462007A780D /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				0819B3142CC18462007A780D /* DogPalAppTests */,
-			);
 			name = DogPalAppTests;
 			packageProductDependencies = (
 			);
@@ -159,9 +180,6 @@
 			dependencies = (
 				0819B31D2CC18462007A780D /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				0819B31E2CC18462007A780D /* DogPalAppUITests */,
-			);
 			name = DogPalAppUITests;
 			packageProductDependencies = (
 			);
@@ -179,6 +197,10 @@
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					0803160F2CC7855F003A49D7 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 0819B3002CC18460007A780D;
+					};
 					0819B3002CC18460007A780D = {
 						CreatedOnToolsVersion = 16.0;
 					};
@@ -212,11 +234,19 @@
 				0819B3002CC18460007A780D /* DogPalApp */,
 				0819B3102CC18462007A780D /* DogPalAppTests */,
 				0819B31A2CC18462007A780D /* DogPalAppUITests */,
+				0803160F2CC7855F003A49D7 /* DogPalAppUITestss */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0803160E2CC7855F003A49D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0819B2FF2CC18460007A780D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -241,6 +271,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0803160C2CC7855F003A49D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0819B2FD2CC18460007A780D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -265,6 +302,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		080316152CC7855F003A49D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0819B3002CC18460007A780D /* DogPalApp */;
+			targetProxy = 080316142CC7855F003A49D7 /* PBXContainerItemProxy */;
+		};
 		0819B3132CC18462007A780D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0819B3002CC18460007A780D /* DogPalApp */;
@@ -278,6 +320,40 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		080316172CC7855F003A49D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jessicamaximo.DogPalAppUITestss;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DogPalApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DogPalApp";
+			};
+			name = Debug;
+		};
+		080316182CC7855F003A49D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jessicamaximo.DogPalAppUITestss;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DogPalApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DogPalApp";
+			};
+			name = Release;
+		};
 		0819B3232CC18462007A780D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -524,6 +600,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		080316162CC7855F003A49D7 /* Build configuration list for PBXNativeTarget "DogPalAppUITestss" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				080316172CC7855F003A49D7 /* Debug */,
+				080316182CC7855F003A49D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		0819B2FC2CC18460007A780D /* Build configuration list for PBXProject "DogPalApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

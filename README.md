@@ -10,7 +10,6 @@ DogPals is an app designed for dog lovers, making it easy for dog owners to sche
 
         🤝 Connect with users who have similar interests and dogs.
 
-        💬 Share dog care tips and experiences.
 
 The app aims to build a community of dog owners who can support each other, share moments, and help their pets socialize.
 
@@ -30,8 +29,6 @@ The app aims to build a community of dog owners who can support each other, shar
 
         Frontend: Swift for iOS app development.
         
-        Backend: Firebase for authentication, real-time database, and storage.
+        Backend: Firebase for authentication, real-time database,  storage, Api Map
         
-        Version Control: Git and GitHub for code management.
-        
-        Collaboration: Team development using branches for new features and agile workflows.
+

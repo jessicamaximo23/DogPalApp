@@ -13,6 +13,7 @@ struct SignUpView: View {
     @Binding var isPresented: Bool
     @Binding var email: String
     @Binding var password: String
+    @State private var confirmPassword: String = ""
     @State private var alertMessage = ""
     @State private var isShowingAlert = false
                     
@@ -49,6 +50,16 @@ struct SignUpView: View {
                 .padding()
                             
             SecureField("Password", text: $password)
+                .padding()
+                .autocapitalization(.none)
+                .tint(.red)
+                .frame(width: 340, height: 40)
+                .padding([.leading, .trailing])
+                .overlay(RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.textFields, lineWidth: 2))
+                .padding()
+            
+            SecureField("Confirm Password", text: $confirmPassword)
                 .padding()
                 .autocapitalization(.none)
                 .tint(.red)

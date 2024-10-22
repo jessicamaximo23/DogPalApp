@@ -9,12 +9,12 @@ import SwiftUI
 
 struct SplashScreenView: View {
     @State private var isActive = false
-    @State private var size = 1.2
     @State private var opacity = 0.9
+    @State private var isLoginPresented = true
     
     var body: some View {
         if isActive{
-            HomeScreenView()
+            LoginView()
         }else {
             ZStack{
                 Color("LaunchBackgroundColor")

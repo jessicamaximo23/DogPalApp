@@ -16,87 +16,128 @@ struct DogRegistrationScreenView: View {
     @State private var dogPhoto: UIImage? = nil
     @State private var dogSize: String = ""
     @State private var showImagePicker = false
+    
+    @Environment(\.dismiss) var dismiss
        
        var body: some View {
-           
-            VStack {
-                   //Logo
-                Image("DogPalLogo2")
-                    .resizable()
-                    .scaledToFit()
-                    .padding()
-                    .frame(width: 350, height: 150)
-                
-                VStack(alignment: .leading) {
-                    Text("Set up your account")
-                        .font(.largeTitle)
-                        .padding(.bottom, 20)
-                }
-                 
+           NavigationView {
+               VStack {
+
+                   Image("DogPalLogo2")
+                       .resizable()
+                       .scaledToFit()
+                       .padding()
+                       .frame(width: 350, height: 150)
+                   
+                   VStack(alignment: .leading) {
+                       Text("Set up your account")
+                           .font(.largeTitle)
+                           .padding(.bottom, 20)
+                   }
                    // Set up Informations
-                Form {
-                    TextField("Your Name", text: $userName)
-                    TextField("Dog's Name", text: $dogName)
-                    TextField("Dog's Breed", text: $dogBreed)
-                    TextField("Dog's Age", text: $dogAge)
-                    TextField("Dog's Size", text: $dogSize)
-                               .keyboardType(.numberPad)
+                   Form {
+                       TextField("Your Name", text: $userName)
+                       TextField("Dog's Name", text: $dogName)
+                       TextField("Dog's Breed", text: $dogBreed)
+                       TextField("Dog's Age", text: $dogAge)
+                       TextField("Dog's Size", text: $dogSize)
+                           .keyboardType(.numberPad)
                        
-                Section(header: Text("Introduce your best buddy to the community with a picture")) {
+                       Section(header: Text("Introduce your best buddy to the community with a picture")) {
                            
-                    if let image = dogPhoto {
+                           if let image = dogPhoto {
                                
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 200)
-                            .clipShape(Circle())
-                            .shadow(radius: 10)
-                        
-                    } else {
-                        Button(action: {
-                            showImagePicker = true
-                        }) {
-                HStack {
-                        Image(systemName: "camera")
-                            .font(.largeTitle)
-                            .foregroundColor(.brown)
+                               Image(uiImage: image)
+                                   .resizable()
+                                   .scaledToFit()
+                                   .frame(height: 200)
+                                   .clipShape(Circle())
+                                   .shadow(radius: 10)
+                               
+                           } else {
+                               Button(action: {
+                                   showImagePicker = true
+                               }) {
+                                   HStack {
+                                       Image(systemName: "camera")
+                                           .font(.largeTitle)
+                                           .foregroundColor(.brown)
                                        
-                        Text("Select a Photo")
-                            .font(.headline)
-                            .foregroundColor(.brown)
-                            }
-                        }
-                    }
-                }
+                                       Text("Select a Photo")
+                                           .font(.headline)
+                                           .foregroundColor(.brown)
+                                   }
+                               }
+                           }
+                       }
                        
-                      //Submit dog
+                    //Submit dog
                     Section {
                         Button(action: {
-                               registerDog()
+                            let age = Int(dogAge) ?? 0
+                            let size = Int(dogSize) ?? 0
+
+                            let newDog = Dog(name: dogName, breed: dogBreed, age: age, size: size)
+                            
+                                newDog.registerDog()
+                               
+                               
                            }) {
-                            Text("Submit your Dog")
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color.brown)
-                                .foregroundColor(.white)
-                                .cornerRadius(30)
+                        Text("Submit your Dog")
+                                   .frame(maxWidth: .infinity)
+                                   .padding()
+                                   .background(Color.brown)
+                                   .foregroundColor(.white)
+                                   .cornerRadius(30)
                            }
                            .disabled(dogName.isEmpty || dogBreed.isEmpty || dogAge.isEmpty || dogPhoto == nil)
                        }
                    }
-                  
+                   
                }
-               .sheet(isPresented: $showImagePicker) {
-                   ImagePicker(image: $dogPhoto)
-               }
-       }
-     
+           }
+           .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                              Button(action: {
+                                  dismiss()
+                              }) {
+                                Label("Back", systemImage: "arrow.left")
+                              }
+                          }
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                              Button(action: {
+                                  dismiss()
+                              }) {
+                                  Label("Cancel", systemImage: "xmark")
+                                      .foregroundColor(.blue)
+                              }
+                          }
+                      }
+                      .sheet(isPresented: $showImagePicker) {
+                          ImagePicker(image: $dogPhoto)
+                      }
+                  }
+              }
+          
+
+class Dog {
+    var dogName: String
+    var dogBreed: String
+    var dogAge: Int
+    var dogSize: Int
+
+    init(name: String, breed: String, age: Int, size: Int) {
+        self.dogName = name
+        self.dogBreed = breed
+        self.dogAge = age
+        self.dogSize = size
+    }
 func registerDog() {
+    
            print("Registered Dog: \(dogName), \(dogBreed), \(dogAge)")
        }
-   }
-
+}
+   
 struct ImagePicker: UIViewControllerRepresentable {
        @Binding var image: UIImage?
 

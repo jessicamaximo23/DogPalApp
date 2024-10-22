@@ -103,6 +103,7 @@ struct DogRegistrationScreenView: View {
                                        .background(Color.brown)
                                        .foregroundColor(.white)
                                        .cornerRadius(30)
+                                       .padding(20)
                                }
                                .disabled(dogName.isEmpty || dogBreed.isEmpty || dogAge.isEmpty || dogPhoto == nil)
                            }

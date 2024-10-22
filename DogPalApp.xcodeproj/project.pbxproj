@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08F32E912CC830B10044739A /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F32E902CC830B10044739A /* Test.swift */; };
+		08F32E922CC830B10044739A /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F32E902CC830B10044739A /* Test.swift */; };
+		08F32E932CC830B10044739A /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F32E902CC830B10044739A /* Test.swift */; };
+		08F32E942CC830B10044739A /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F32E902CC830B10044739A /* Test.swift */; };
 		F97CF08B2CC7087200A6F891 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F97CF08A2CC7087200A6F891 /* FirebaseAuth */; };
 /* End PBXBuildFile section */
 
@@ -45,8 +49,9 @@
 		086656712CC7FC9C00BEF20D /* DogPalApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogPalApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		086656722CC7FC9C00BEF20D /* DogPalAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		086656732CC7FC9C00BEF20D /* DogPalAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		086656742CC7FC9C00BEF20D /* DogPalAppUITestss.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DogPalAppUITestss.xctest; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalApp.app/PlugIns/DogPalAppUITestss.xctest"; sourceTree = "<absolute>"; };
 		086656752CC7FC9C00BEF20D /* DogPalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		08F32E5F2CC829B70044739A /* DogPalAppUITestss.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppUITestss.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		08F32E902CC830B10044739A /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -104,7 +109,9 @@
 				086656712CC7FC9C00BEF20D /* DogPalApp.app */,
 				086656722CC7FC9C00BEF20D /* DogPalAppTests.xctest */,
 				086656732CC7FC9C00BEF20D /* DogPalAppUITests.xctest */,
+				08F32E902CC830B10044739A /* Test.swift */,
 				086656752CC7FC9C00BEF20D /* DogPalUITests.xctest */,
+				08F32E5F2CC829B70044739A /* DogPalAppUITestss.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,7 +135,7 @@
 			packageProductDependencies = (
 			);
 			productName = DogPalAppUITestss;
-			productReference = 086656742CC7FC9C00BEF20D /* DogPalAppUITestss.xctest */;
+			productReference = 08F32E5F2CC829B70044739A /* DogPalAppUITestss.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		0819B3002CC18460007A780D /* DogPalApp */ = {
@@ -226,6 +233,7 @@
 				TargetAttributes = {
 					0803160F2CC7855F003A49D7 = {
 						CreatedOnToolsVersion = 16.0;
+						LastSwiftMigration = 1600;
 						TestTargetID = 0819B3002CC18460007A780D;
 					};
 					0819B3002CC18460007A780D = {
@@ -233,14 +241,17 @@
 					};
 					0819B3102CC18462007A780D = {
 						CreatedOnToolsVersion = 16.0;
+						LastSwiftMigration = 1600;
 						TestTargetID = 0819B3002CC18460007A780D;
 					};
 					0819B31A2CC18462007A780D = {
 						CreatedOnToolsVersion = 16.0;
+						LastSwiftMigration = 1600;
 						TestTargetID = 0819B3002CC18460007A780D;
 					};
 					0866565F2CC7F9AA00BEF20D = {
 						CreatedOnToolsVersion = 16.0;
+						LastSwiftMigration = 1600;
 						TestTargetID = 0819B3002CC18460007A780D;
 					};
 				};
@@ -314,6 +325,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08F32E932CC830B10044739A /* Test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08F32E912CC830B10044739A /* Test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08F32E922CC830B10044739A /* Test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08F32E942CC830B10044739A /* Test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +390,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -382,6 +398,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jessicamaximo.DogPalAppUITestss;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DogPalApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DogPalApp";
@@ -392,6 +409,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -584,6 +602,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -592,6 +611,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jessicamaximo.DogPalAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DogPalApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DogPalApp";
@@ -602,6 +622,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -619,6 +640,7 @@
 		0819B32C2CC18462007A780D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -626,6 +648,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jessicamaximo.DogPalAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = DogPalApp;
@@ -635,6 +658,7 @@
 		0819B32D2CC18462007A780D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -652,6 +676,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -659,6 +684,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jessicamaximo.DogPalUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DogPalApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DogPalApp";
@@ -669,6 +695,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;

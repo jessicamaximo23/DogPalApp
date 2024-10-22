@@ -1,6 +1,6 @@
-🐾 DogPals App
+## 🐾 DogPals App
 
-📖 Description
+## 📖 Description
 
 DogPals is an app designed for dog lovers, making it easy for dog owners to schedule meetups and foster socialization and healthy activities for their pets. It allows users to:
 
@@ -14,7 +14,7 @@ DogPals is an app designed for dog lovers, making it easy for dog owners to sche
 
 The app aims to build a community of dog owners who can support each other, share moments, and help their pets socialize.
 
-🚀 Key Features
+## 🚀 Key Features
 
 🐾 Dog Registration: Allows users to register their dogs, including information such as breed, age, personality, and more.
 
@@ -26,7 +26,7 @@ The app aims to build a community of dog owners who can support each other, shar
         
         🎛️ Custom Filters: Use filters to refine searches by dog types, interests, and locations.
         
-🛠️ Technologies Used
+## 🛠️ Technologies Used
 
         Frontend: Swift for iOS app development.
         

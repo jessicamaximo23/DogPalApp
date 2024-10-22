@@ -5,14 +5,15 @@
 //  Created by Julien Villanti on 2024-10-20.
 //
 
+
 import SwiftUI
+import Firebase
+import FirebaseAuth
 
 struct LoginView: View {
-//    @Binding var isPresented: Bool
     @State private var email: String = ""
     @State private var password: String = ""
-    @State private var alertMessage = ""
-    @State private var isShowingAlert = false
+    @State private var isSignUpPresented: Bool = false
     
     var body: some View {
         NavigationView {
@@ -37,7 +38,10 @@ struct LoginView: View {
                 HStack{
                     Text("No account yet? Sign-up")
                     //                Need to put the logic for the here in this spot
-                    NavigationLink(destination: SignUpView()){
+                    NavigationLink(destination: SignUpView(
+                        isPresented: $isSignUpPresented,
+                        email: $email,
+                        password: $password)){
                         Text("here")
                             .foregroundStyle(.blue)
                             .fontWeight(.bold)
@@ -63,22 +67,14 @@ struct LoginView: View {
                         .stroke(Color.textFields, lineWidth: 2))
                     .padding()
                 
-                SecureField("Confirm Password", text: $password)
-                    .padding()
-                    .autocapitalization(.none)
-                    .tint(.red)
-                    .frame(width: 340, height: 40)
-                    .padding([.leading, .trailing])
-                    .overlay(RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.textFields, lineWidth: 2))
                 
                 //                Button container
                 VStack(spacing: 10) {
                     Button(action: {
-                        print("Sign Up Pressed")
+                        print("Sign In Pressed")
                         
                     }) {
-                        Text("Sign-Up")
+                        Text("Sign-In")
                     }
                     .fontWeight(.semibold)
                     .foregroundStyle(.white)
@@ -106,9 +102,12 @@ struct LoginView: View {
         }
     }
     
-    private func signUp() {}
+    private func signIn() {}
 }
 
 #Preview {
     LoginView()
 }
+
+
+

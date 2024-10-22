@@ -42,11 +42,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		086656582CC7F93700BEF20D /* DogPalApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = DogPalApp.app; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalApp.app"; sourceTree = "<absolute>"; };
-		086656592CC7F93700BEF20D /* DogPalAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DogPalAppTests.xctest; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalApp.app/PlugIns/DogPalAppTests.xctest"; sourceTree = "<absolute>"; };
-		0866565A2CC7F93700BEF20D /* DogPalAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DogPalAppUITests.xctest; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalAppUITests-Runner.app/PlugIns/DogPalAppUITests.xctest"; sourceTree = "<absolute>"; };
-		0866565B2CC7F93700BEF20D /* DogPalAppUITestss.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DogPalAppUITestss.xctest; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalApp.app/PlugIns/DogPalAppUITestss.xctest"; sourceTree = "<absolute>"; };
-		086656602CC7F9AA00BEF20D /* DogPalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DogPalUITests.xctest; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalApp.app/PlugIns/DogPalUITests.xctest"; sourceTree = "<absolute>"; };
+		086656712CC7FC9C00BEF20D /* DogPalApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogPalApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		086656722CC7FC9C00BEF20D /* DogPalAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		086656732CC7FC9C00BEF20D /* DogPalAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		086656742CC7FC9C00BEF20D /* DogPalAppUITestss.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DogPalAppUITestss.xctest; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalApp.app/PlugIns/DogPalAppUITestss.xctest"; sourceTree = "<absolute>"; };
+		086656752CC7FC9C00BEF20D /* DogPalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -101,6 +101,10 @@
 			isa = PBXGroup;
 			children = (
 				0819B3032CC18460007A780D /* DogPalApp */,
+				086656712CC7FC9C00BEF20D /* DogPalApp.app */,
+				086656722CC7FC9C00BEF20D /* DogPalAppTests.xctest */,
+				086656732CC7FC9C00BEF20D /* DogPalAppUITests.xctest */,
+				086656752CC7FC9C00BEF20D /* DogPalUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -124,7 +128,7 @@
 			packageProductDependencies = (
 			);
 			productName = DogPalAppUITestss;
-			productReference = 0866565B2CC7F93700BEF20D /* DogPalAppUITestss.xctest */;
+			productReference = 086656742CC7FC9C00BEF20D /* DogPalAppUITestss.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		0819B3002CC18460007A780D /* DogPalApp */ = {
@@ -147,7 +151,7 @@
 				F97CF08A2CC7087200A6F891 /* FirebaseAuth */,
 			);
 			productName = DogPalApp;
-			productReference = 086656582CC7F93700BEF20D /* DogPalApp.app */;
+			productReference = 086656712CC7FC9C00BEF20D /* DogPalApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		0819B3102CC18462007A780D /* DogPalAppTests */ = {
@@ -167,7 +171,7 @@
 			packageProductDependencies = (
 			);
 			productName = DogPalAppTests;
-			productReference = 086656592CC7F93700BEF20D /* DogPalAppTests.xctest */;
+			productReference = 086656722CC7FC9C00BEF20D /* DogPalAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		0819B31A2CC18462007A780D /* DogPalAppUITests */ = {
@@ -187,7 +191,7 @@
 			packageProductDependencies = (
 			);
 			productName = DogPalAppUITests;
-			productReference = 0866565A2CC7F93700BEF20D /* DogPalAppUITests.xctest */;
+			productReference = 086656732CC7FC9C00BEF20D /* DogPalAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		0866565F2CC7F9AA00BEF20D /* DogPalUITests */ = {
@@ -207,7 +211,7 @@
 			packageProductDependencies = (
 			);
 			productName = DogPalUITests;
-			productReference = 086656602CC7F9AA00BEF20D /* DogPalUITests.xctest */;
+			productReference = 086656752CC7FC9C00BEF20D /* DogPalUITests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */

@@ -15,6 +15,8 @@ struct LoginView: View {
     @State private var password: String = ""
     @State private var isSignUpPresented: Bool = false
     
+    @State private var isSignedIn: Bool = false 
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -97,6 +99,11 @@ struct LoginView: View {
                 .padding(.top, 30)
             
                 Spacer()
+                
+                //Sent for Dog registration
+                NavigationLink(destination: DogRegistrationScreenView(), isActive: $isSignedIn) {
+                    EmptyView()
+                }
             }
             .padding(.bottom, 100)
         }

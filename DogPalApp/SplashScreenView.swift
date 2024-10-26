@@ -17,20 +17,29 @@ struct SplashScreenView: View {
             LoginView()
         }else {
             ZStack{
-                Color("LaunchBackgroundColor")
-                    .ignoresSafeArea()
+                Color(.white)
+                  
                 
                 VStack{
-                    Image("DogPalLogo")
+                    Image("DogPalLogo2")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 275, height: 500)
                         .clipShape(Ellipse())
 //                        .scaleEffect(size)
                         .opacity(opacity)
+                    
+                    HStack{
+                        Text("Let's take a walk, woof")
+                        Image(systemName: "pawprint.fill")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            
+                        
+                    }
                 }
                 .onAppear{
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
                         self.isActive = true
                     }
                 }

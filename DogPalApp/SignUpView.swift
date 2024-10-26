@@ -16,6 +16,7 @@ struct SignUpView: View {
     @State private var confirmPassword: String = ""
     @State private var alertMessage = ""
     @State private var isShowingAlert = false
+    @State private var navigateToProfile = false
                     
     var body: some View {
         // Removed extra NavigationView since this view is already pushed through NavigationLink
@@ -102,6 +103,9 @@ struct SignUpView: View {
         } message: {
             Text(alertMessage)
         }
+        .navigationDestination(isPresented: $navigateToProfile){
+            ProfileView(userEmail: email)
+        }
     }
                     
     private func signUp() {
@@ -120,6 +124,22 @@ struct SignUpView: View {
             }
         }
     }
+}
+
+class UserManager: ObservableObject{
+    @Published var isLoggedIn: Bool = false
+    @Published var currentUser: User?
+    
+    func signOut(){
+        do {
+            try Auth.auth().signOut()
+            isLoggedIn = false
+            currentUser = nil
+        } catch {
+            print("Error signing out: \(error.localizedDescription)")
+        }
+    }
+    
 }
 
 // Fixed preview provider

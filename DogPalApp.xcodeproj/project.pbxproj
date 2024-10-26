@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F97CF08B2CC7087200A6F891 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F97CF08A2CC7087200A6F891 /* FirebaseAuth */; };
+		F9CE4E9B2CC73D4A00D91E96 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F9CE4E9A2CC73D4A00D91E96 /* FirebaseAuth */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F97CF08B2CC7087200A6F891 /* FirebaseAuth in Frameworks */,
+				F9CE4E9B2CC73D4A00D91E96 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +117,7 @@
 			);
 			name = DogPalApp;
 			packageProductDependencies = (
-				F97CF08A2CC7087200A6F891 /* FirebaseAuth */,
+				F9CE4E9A2CC73D4A00D91E96 /* FirebaseAuth */,
 			);
 			productName = DogPalApp;
 			productReference = 0819B3012CC18460007A780D /* DogPalApp.app */;
@@ -202,7 +202,7 @@
 			mainGroup = 0819B2F82CC18460007A780D;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				F97CF0892CC7087200A6F891 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				F9CE4E992CC73D4A00D91E96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0819B3022CC18460007A780D /* Products */;
@@ -563,7 +563,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		F97CF0892CC7087200A6F891 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		F9CE4E992CC73D4A00D91E96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
@@ -574,9 +574,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F97CF08A2CC7087200A6F891 /* FirebaseAuth */ = {
+		F9CE4E9A2CC73D4A00D91E96 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F97CF0892CC7087200A6F891 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = F9CE4E992CC73D4A00D91E96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */

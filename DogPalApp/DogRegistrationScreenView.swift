@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Firebase
+
 
 struct DogRegistrationScreenView: View {
     
@@ -92,8 +94,7 @@ struct DogRegistrationScreenView: View {
                                    let size = Int(dogSize) ?? 0
                                    
                                    let newDog = Dog(name: dogName, breed: dogBreed, age: age, size: size)
-                                   
-                                   newDog.registerDog()
+                                    newDog.registerDog()
                                    
                                    
                                }) {

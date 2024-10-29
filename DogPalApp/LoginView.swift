@@ -17,10 +17,11 @@ struct LoginView: View {
     @State private var alertMessage: String = ""
     @State private var isLoading: Bool = false
     @State private var navigateToHome: Bool = false
+    @State private var navigateToForgotPassword: Bool = false
     @StateObject private var authManager = AuthManager()
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Image("DogPalLogo2")
                     .resizable()
@@ -94,15 +95,16 @@ struct LoginView: View {
                     )
                     .shadow(radius: 5)
                     .disabled(isLoading)
-                
-                    NavigationLink(destination: ForgotPasswordView()) {
-                        Text("Forgot Password?")
-                            .fontWeight(.semibold)
-                            .foregroundStyle(Color.textFields)
+                    
+                    //                    NavigationLink(destination: ForgotPasswordView(), isActive: $navigateToForgotPassword) {
+                    Button("Forgot Password?") {
+                        navigateToForgotPassword = true
                     }
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.textFields)
                 }
                 .padding(.top, 30)
-                                   
+                              
                 Spacer()
             }
             .padding(.bottom, 100)
@@ -112,8 +114,10 @@ struct LoginView: View {
                 Text(alertMessage)
             }
             .fullScreenCover(isPresented: $navigateToHome) {
-//                Directing to ProfileView for testing purpose and until we have a homeView
                 ProfileView(userEmail: email)
+            }
+            .navigationDestination(isPresented: $navigateToForgotPassword) {
+                ForgotPasswordView()
             }
         }
     }
@@ -124,30 +128,29 @@ struct LoginView: View {
             showAlert = true
             return
         }
-          
+        
         isLoading = true
-          
-        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+        
+        Auth.auth().signIn(withEmail: email, password: password) { _, error in
             isLoading = false
-              
+            
             if let error = error {
                 handleSignInError(error)
             } else {
                 // Sign in successful
                 navigateToHome = true
                 UserDefaults.standard.set(email, forKey: "userEmail")
-                               if let uid = Auth.auth().currentUser?.uid {
-                                   UserDefaults.standard.set(uid, forKey: "userId")
-                               }
-                               navigateToHome = true
-            
+                if let uid = Auth.auth().currentUser?.uid {
+                    UserDefaults.standard.set(uid, forKey: "userId")
+                }
+                navigateToHome = true
             }
         }
     }
     
     private func handleSignInError(_ error: Error) {
         let errorCode = AuthErrorCode(_bridgedNSError: error as NSError)?.code
-            
+        
         switch errorCode {
         case .wrongPassword:
             alertMessage = "Invalid email or password"
@@ -162,14 +165,14 @@ struct LoginView: View {
         default:
             alertMessage = "An error occurred. Please try again"
         }
-            
+        
         showAlert = true
     }
 }
-
+    
 class AuthManager: ObservableObject {
     @Published var isAuthenticated = false
-    
+        
     init() {
         // Check if user is already signed in
         isAuthenticated = Auth.auth().currentUser != nil

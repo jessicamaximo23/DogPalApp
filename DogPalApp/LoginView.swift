@@ -112,7 +112,8 @@ struct LoginView: View {
                 Text(alertMessage)
             }
             .fullScreenCover(isPresented: $navigateToHome) {
-                           HomeScreenView()
+//                Directing to ProfileView for testing purpose and until we have a homeView
+                ProfileView(userEmail: email)
             }
         }
     }

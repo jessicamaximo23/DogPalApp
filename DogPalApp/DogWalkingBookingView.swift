@@ -23,173 +23,101 @@ struct DogWalkBookingView: View {
     @State private var selectedDate = Date()
     
     var body: some View {
-        NavigationView {
-<<<<<<< HEAD
-            ScrollView {
-            
-                VStack() {
-                
-=======
-            VStack {
->>>>>>> main
-                Image("DogPalLogo2")
-                    .resizable()
-                    .scaledToFit()
-                    .padding()
-                    .frame(width: 350, height: 150)
-<<<<<<< HEAD
+            NavigationView {
+                VStack {
+                    Image("DogPalLogo2")
+                        .resizable()
+                        .scaledToFit()
+                        .padding()
+                        .frame(width: 350, height: 150)
+                        .padding(.bottom)
+                    
+                    Text(walkerName)
+                        .font(.largeTitle)
+                    
+                    Image("profiledoggo")
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(Circle())
+                        .frame(width: 100, height: 100)
+                        .padding()
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("About Me")
+                            .font(.headline)
+                        
+                        ScrollView {
+                            Text(walkerExperience)
+                            
+                                .font(.subheadline)
+                                .padding(10)
+                                .background(Color(.systemGray6))
+                                .cornerRadius(8)
+                        }
+                        .frame(maxHeight: 150) 
+                    }
+                    .padding(.horizontal)
+                    
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("Age: \(walkerAge)")
+                                .font(.headline)
+                            
+                            Text("Price: $\(walkValue) per hour")
+                                .font(.headline)
+                            
+                            Map(coordinateRegion: $region, showsUserLocation: true)
+                                .frame(height: 100)
+                                .cornerRadius(10)
+                                .padding(.top, 10)
+                        }
+                        .padding()
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        Text("Reviews")
+                            .font(.headline)
+                            .padding(.top)
+                        
+                        Text("⭐️⭐️⭐️⭐️⭐️ - \"Great experience! My dog loved the walk!\"")
+                        Text("⭐️⭐️⭐️⭐️ - \"Very reliable and caring!\"")
+                    }
+                    .padding(.horizontal)
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        print("Reserva realizada para \(selectedDate.formatted())!")
+                    }) {
+                        Text("Confirm Booking")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.brown)
+                            .cornerRadius(10)
+                    }
                     .padding(.bottom)
-                
-                Text("Doggo Walker")
-                    .font(.largeTitle)
-                
-                Image("profilledoggo")
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-                    .frame(width: 200, height: 100)
-                    .padding()
-                
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("About Me")
-                        .font(.headline)
-                    
-                    Text("I'm a passionate dog lover with over 3 years of experience in dog walking. I ensure your furry friend gets the best care during our walks!")
-                        .font(.subheadline)
-                        .padding(10)
-                        .background(Color(.systemGray6))
-                        .cornerRadius(8)
                 }
-                .padding(.horizontal)
-                
-                
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("Price: $20 per walk")
-                            .font(.headline)
-                        
-                      
-                        Map(coordinateRegion: $region, showsUserLocation: true)
-                            .frame(width: 300, height: 100)
-                            .cornerRadius(10)
-                            .padding(.top, 10)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            Label("Back", systemImage: "arrow.left")
+                        }
                     }
-                   
-                }
-                
-                // Reviews
-                VStack(alignment: .leading) {
-                    Text("Reviews")
-                        .font(.headline)
-                        .padding()
-                    
-                    
-                    Text("⭐️⭐️⭐️⭐️⭐️ - \"Great experience! My dog loved the walk!\"")
-                        .padding()
-                    
-                    Text("⭐️⭐️⭐️⭐️ - \"Very reliable and caring!\"")
-                        .padding()
-                    
-                    Text("⭐️⭐️⭐️⭐️ - \"We love your caring!\"")
-                        .padding()
-                }
-                .padding(.vertical)
-                
-
-                
-                
-                Button(action: {
-                    
-                    print("Reserve Confirmed \(selectedDate.formatted())!")
-=======
-                
-                Text(walkerName)
-                    .font(.largeTitle)
-                
-                Image("dogwalkerprofile")
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-                    .frame(width: 100, height: 100)
-                    .padding()
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("About Me")
-                        .font(.headline)
-                    
-                    ScrollView {
-                        Text(walkerExperience) // Exibe toda a experiência
-                            .font(.subheadline)
-                            .padding(10)
-                            .background(Color(.systemGray6))
-                            .cornerRadius(8)
-                    }
-                    .frame(maxHeight: 150) // Limite de altura para o campo de descrição
-                }
-                .padding(.horizontal)
-                
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("Age: \(walkerAge)")
-                            .font(.headline)
-                        
-                        Text("Price: $\(walkValue) per hour")
-                            .font(.headline)
-                        
-                        Map(coordinateRegion: $region, showsUserLocation: true)
-                            .frame(height: 100)
-                            .cornerRadius(10)
-                            .padding(.top, 10)
-                    }
-                    .padding()
-                }
-                
-                VStack(alignment: .leading) {
-                    Text("Reviews")
-                        .font(.headline)
-                        .padding(.top)
-                    
-                    Text("⭐️⭐️⭐️⭐️⭐️ - \"Great experience! My dog loved the walk!\"")
-                    Text("⭐️⭐️⭐️⭐️ - \"Very reliable and caring!\"")
-                }
-                .padding(.horizontal)
-                
-                Spacer()
-                
-                Button(action: {
-                    print("Reserva realizada para \(selectedDate.formatted())!")
->>>>>>> main
-                }) {
-                    Text("Confirm Booking")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.brown)
-                        .cornerRadius(10)
-                }
-                .padding(.bottom)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        Label("Back", systemImage: "arrow.left")
-                    }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        Label("Cancel", systemImage: "xmark")
-                            .foregroundColor(.blue)
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            Label("Cancel", systemImage: "xmark")
+                                .foregroundColor(.blue)
+                        }
                     }
                 }
             }
-        }
         }
     }
-}
 
 #Preview {
     DogWalkBookingView(

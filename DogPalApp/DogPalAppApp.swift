@@ -10,6 +10,11 @@ import Firebase
 import FirebaseCore
 import FirebaseAuth
 
+import SwiftUI
+import Firebase
+import FirebaseCore
+import FirebaseAuth
+
 
 @main
 struct DogPalAppApp: App {

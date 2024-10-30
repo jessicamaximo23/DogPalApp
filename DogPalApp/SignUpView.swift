@@ -17,6 +17,7 @@ struct SignUpView: View {
     @State private var alertMessage = ""
     @State private var isShowingAlert = false
     @State private var navigateToProfile = false
+    @Environment(\.dismiss) private var dismiss
                     
     var body: some View {
         // Removed extra NavigationView since this view is already pushed through NavigationLink
@@ -86,9 +87,9 @@ struct SignUpView: View {
                 .shadow(radius: 5)
                                 
                 Button(action: {
-                    isPresented = false // This will dismiss the view
+                    dismiss()// This will dismiss the view
                 }) {
-                    Text("Already have an account? Sign in") // Changed from "Forgot Password?"
+                    Text("Already have an account? Sign in") //
                         .fontWeight(.semibold)
                         .foregroundStyle(Color.textFields)
                 }

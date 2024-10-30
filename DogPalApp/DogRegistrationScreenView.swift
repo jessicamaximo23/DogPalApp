@@ -7,6 +7,8 @@
 
 import SwiftUI
 import Firebase
+import FirebaseDatabase
+
 
 
 struct DogRegistrationScreenView: View {
@@ -25,94 +27,103 @@ struct DogRegistrationScreenView: View {
            NavigationView {
                VStack {
                    
-                       Image("DogPalLogo2")
-                           .resizable()
-                           .scaledToFit()
-                           .padding()
-                           .frame(width: 350, height: 150)
+                   Image("DogPalLogo2")
+                       .resizable()
+                       .scaledToFit()
+                       .padding()
+                       .frame(width: 350, height: 150)
+                   
+                   VStack(alignment: .leading) {
+                       Text("Set up your account")
+                           .font(.largeTitle)
+                           .padding(.bottom, 20)
+                   }
+                   
+                   Section {
+                       TextField("Your Name", text: $userName)
+                           .textFieldStyle(RoundedBorderTextFieldStyle())
+                           .padding(.horizontal)
                        
-                       VStack(alignment: .leading) {
-                           Text("Set up your account")
-                               .font(.largeTitle)
-                               .padding(.bottom, 20)
-                       }
-                       // Set up Informations
-                       Section {
-                            TextField("Your Name", text: $userName)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding(.horizontal)
+                       TextField("Dog's Name", text: $dogName)
+                           .textFieldStyle(RoundedBorderTextFieldStyle())
+                           .padding(.horizontal)
+                       
+                       TextField("Dog's Breed", text: $dogBreed)
+                           .textFieldStyle(RoundedBorderTextFieldStyle())
+                           .padding(.horizontal)
+                       
+                       TextField("Dog's Age", text: $dogAge)
+                           .textFieldStyle(RoundedBorderTextFieldStyle())
+                           .padding(.horizontal)
+                       
+                       TextField("Dog's Size", text: $dogSize)
+                           .textFieldStyle(RoundedBorderTextFieldStyle())
+                           .keyboardType(.numberPad)
+                           .padding(.horizontal)
+                       
+                       Section(header: Text("Introduce your best buddy to the community with a picture")) {
                            
-                            TextField("Dog's Name", text: $dogName)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding(.horizontal)
-                           
-                            TextField("Dog's Breed", text: $dogBreed)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding(.horizontal)
-                           
-                           TextField("Dog's Age", text: $dogAge)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding(.horizontal)
-                           
-                            TextField("Dog's Size", text: $dogSize)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .keyboardType(.numberPad)
-                            .padding(.horizontal)
-                           
-                           Section(header: Text("Introduce your best buddy to the community with a picture")) {
+                           if let image = dogPhoto {
                                
-                               if let image = dogPhoto {
-                                   
-                                   Image(uiImage: image)
-                                       .resizable()
-                                       .scaledToFit()
-                                       .frame(height: 200)
-                                       .clipShape(Circle())
-                                       .shadow(radius: 10)
-                                   
-                               } else {
-                                   Button(action: {
-                                       showImagePicker = true
-                                   }) {
-                                       HStack {
-                                           Image(systemName: "camera")
-                                               .font(.largeTitle)
-                                               .foregroundColor(.brown)
-                                           
-                                           Text("Select a Photo")
-                                               .font(.headline)
-                                               .foregroundColor(.brown)
-                                       }
+                               Image(uiImage: image)
+                                   .resizable()
+                                   .scaledToFit()
+                                   .frame(height: 200)
+                                   .clipShape(Circle())
+                                   .shadow(radius: 10)
+                               
+                           } else {
+                               Button(action: {
+                                   showImagePicker = true
+                               }) {
+                                   HStack {
+                                       Image(systemName: "camera")
+                                           .font(.largeTitle)
+                                           .foregroundColor(.brown)
+                                       
+                                       Text("Select a Photo")
+                                           .font(.headline)
+                                           .foregroundColor(.brown)
                                    }
                                }
                            }
-                           
-                           //Submit dog
-                           Section {
-                               Button(action: {
-                                   let age = Int(dogAge) ?? 0
-                                   let size = Int(dogSize) ?? 0
-                                   
-                                   let newDog = Dog(name: dogName, breed: dogBreed, age: age, size: size)
-                                    newDog.registerDog()
-                                   
-                                   
-                               }) {
-                                   Text("Submit your Dog")
-                                       .frame(maxWidth: .infinity)
-                                       .padding()
-                                       .background(Color.brown)
-                                       .foregroundColor(.white)
-                                       .cornerRadius(30)
-                                       .padding(20)
-                               }
-                               .disabled(dogName.isEmpty || dogBreed.isEmpty || dogAge.isEmpty || dogPhoto == nil)
-                           }
                        }
                        
-                   
-               }
-               .toolbar {
+                       //Submit dog
+                       Section {
+                           Button(action: {
+                               
+                               guard let age = Int(dogAge), let size = Int(dogSize), !dogName.isEmpty, !dogBreed.isEmpty else {
+                                   print("Please fill in all fields correctly.")
+                                   return
+                               }
+                               
+                               
+                               let newDog = Dog(name: self.dogName, breed: self.dogBreed, age: age, size: size)
+                               newDog.registerDog()
+                               
+                               // Limpa os campos após o registro
+                               self.dogName = ""
+                               self.dogBreed = ""
+                               self.dogAge = ""
+                               self.dogSize = ""
+                               self.dogPhoto = nil
+                               dismiss()
+                               
+                               
+                           }) {
+                               Text("Submit your Dog")
+                                   .frame(maxWidth: .infinity)
+                                   .padding()
+                                   .background(Color.brown)
+                                   .foregroundColor(.white)
+                                   .cornerRadius(30)
+                                   .padding(20)
+                           }
+                           .disabled(dogName.isEmpty || dogBreed.isEmpty || dogAge.isEmpty || dogPhoto == nil)
+                       }
+                   }
+               }.toolbar {
                    ToolbarItem(placement: .navigationBarLeading) {
                        Button(action: {
                            dismiss()
@@ -142,19 +153,41 @@ class Dog {
     var dogBreed: String
     var dogAge: Int
     var dogSize: Int
-
+    
+    var ref: DatabaseReference!
+    
     init(name: String, breed: String, age: Int, size: Int) {
         self.dogName = name
         self.dogBreed = breed
         self.dogAge = age
         self.dogSize = size
+        
+        self.ref = Database.database().reference()
     }
     
-func registerDog() {
-    
-           print("Registered Dog: \(dogName), \(dogBreed), \(dogAge), Size: \(dogSize)")
-       }
+    func registerDog() {
+        
+        let ref = Database.database().reference()
+        
+        let dogData: [String: Any] = [
+            "name": dogName,
+            "breed": dogBreed,
+            "age": dogAge,
+            "size": dogSize
+        ]
+        
+        
+        ref.child("dogs").childByAutoId().setValue(dogData) { error, _ in
+            if let error = error {
+                print("Error adding dog: \(error.localizedDescription)")
+            } else {
+                print("Dog successfully registered: \(self.dogName)")
+            }
+        }
+    }
 }
+    
+   
    
 struct ImagePicker: UIViewControllerRepresentable {
        @Binding var image: UIImage?

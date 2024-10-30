@@ -5,6 +5,10 @@
 //  Created by Jessica Maximo on 2024-10-24.
 //
 
+//FOR TO DO = ADD SCROLL VIEW
+//PUT FOR ADD THE PHOTO OPTIONAL
+//WHY I CLICK ON THE BTN AND NOT SHOW ANY ALERT FOR FILL THE FORM
+
 import SwiftUI
 import Firebase
 import FirebaseDatabase
@@ -17,7 +21,7 @@ struct DogRegistrationScreenView: View {
     @State private var dogBreed: String = ""
     @State private var dogAge: String = ""
     @State private var dogPhoto: UIImage? = nil
-    @State private var dogSize: String = ""
+    @State private var dogWeight: String = ""
     @State private var showImagePicker = false
     @State private var showAlert = false
     @State private var errorMessage: String? = nil
@@ -58,7 +62,7 @@ struct DogRegistrationScreenView: View {
                            .textFieldStyle(RoundedBorderTextFieldStyle())
                            .padding(.horizontal)
                        
-                       TextField("Dog's Size", text: $dogSize)
+                       TextField("Dog's Weight", text: $dogWeight)
                            .textFieldStyle(RoundedBorderTextFieldStyle())
                            .keyboardType(.numberPad)
                            .padding(.horizontal)
@@ -95,7 +99,7 @@ struct DogRegistrationScreenView: View {
                        //Submit dog
                        Section {
                            Button(action: {
-                               guard let age = Int(dogAge), let size = Int(dogSize), !dogName.isEmpty, !dogBreed.isEmpty else {
+                               guard let age = Int(dogAge), let size = Int(dogWeight), !dogName.isEmpty, !dogBreed.isEmpty else {
                                    errorMessage = "Please fill in all fields correctly."
                                    showAlert = true
                                    return
@@ -105,11 +109,11 @@ struct DogRegistrationScreenView: View {
                                
                                newDog.registerDog { success in
                                    if success {
-                                       // Limpar o formulário
+                                    
                                        self.dogName = ""
                                        self.dogBreed = ""
                                        self.dogAge = ""
-                                       self.dogSize = ""
+                                       self.dogWeight = ""
                                        self.dogPhoto = nil
                                        errorMessage = nil
                                        
@@ -171,7 +175,7 @@ class Dog {
     var dogName: String
     var dogBreed: String
     var dogAge: Int
-    var dogSize: Int
+    var dogWeight: Int
     
     var ref: DatabaseReference!
     
@@ -179,7 +183,7 @@ class Dog {
         self.dogName = name
         self.dogBreed = breed
         self.dogAge = age
-        self.dogSize = size
+        self.dogWeight = size
         
         self.ref = Database.database().reference()
     }
@@ -190,17 +194,18 @@ class Dog {
             "name": dogName,
             "breed": dogBreed,
             "age": dogAge,
-            "size": dogSize
+            "weight": dogWeight
         ]
         print("Registering dog data: \(dogData)")
         
         ref.child("dogs").childByAutoId().setValue(dogData) { error, _ in
-            
-            if let error = error {
-                print("Error adding dog: \(error.localizedDescription)")
-            } else {
-                print("Dog successfully registered: \(self.dogName)")
-            }
+                if let error = error {
+                    print("Error adding dog: \(error.localizedDescription)")
+                    completion(false)
+                } else {
+                    print("Dog successfully registered: \(self.dogName)")
+                    completion(true)
+                }
         }
     }
 }

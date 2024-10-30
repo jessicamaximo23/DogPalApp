@@ -20,6 +20,9 @@ struct DogRegistrationScreenView: View {
     @State private var dogPhoto: UIImage? = nil
     @State private var dogSize: String = ""
     @State private var showImagePicker = false
+    @State private var showAlert = false
+    @State private var errorMessage: String? = nil
+    @State private var showDogWalkerSelection = false
     
     @Environment(\.dismiss) var dismiss
        
@@ -61,7 +64,8 @@ struct DogRegistrationScreenView: View {
                            .keyboardType(.numberPad)
                            .padding(.horizontal)
                        
-                       Section(header: Text("Introduce your best buddy to the community with a picture")) {
+                       Section(header: Text("Introduce your best buddy to the community with a picture")
+                        .padding(20)) {
                            
                            if let image = dogPhoto {
                                
@@ -79,11 +83,11 @@ struct DogRegistrationScreenView: View {
                                    HStack {
                                        Image(systemName: "camera")
                                            .font(.largeTitle)
-                                           .foregroundColor(.brown)
+                                           .foregroundColor(.textFields)
                                        
                                        Text("Select a Photo")
                                            .font(.headline)
-                                           .foregroundColor(.brown)
+                                           .foregroundColor(.textFields)
                                    }
                                }
                            }
@@ -92,35 +96,50 @@ struct DogRegistrationScreenView: View {
                        //Submit dog
                        Section {
                            Button(action: {
-                               
                                guard let age = Int(dogAge), let size = Int(dogSize), !dogName.isEmpty, !dogBreed.isEmpty else {
-                                   print("Please fill in all fields correctly.")
+                                   errorMessage = "Please fill in all fields correctly."
+                                   showAlert = true
                                    return
                                }
                                
                                
                                let newDog = Dog(name: self.dogName, breed: self.dogBreed, age: age, size: size)
+                               //Register dog
                                newDog.registerDog()
                                
-                               // Limpa os campos após o registro
+                               // Clean the form
                                self.dogName = ""
                                self.dogBreed = ""
                                self.dogAge = ""
                                self.dogSize = ""
                                self.dogPhoto = nil
-                               dismiss()
+                               errorMessage = nil;
+                               
+                               showDogWalkerSelection = true
                                
                                
                            }) {
                                Text("Submit your Dog")
                                    .frame(maxWidth: .infinity)
                                    .padding()
-                                   .background(Color.brown)
+                                   .background(
+                                    Capsule()
+                                        .fill(Color.textFields)
+                                   )
                                    .foregroundColor(.white)
                                    .cornerRadius(30)
                                    .padding(20)
                            }
                            .disabled(dogName.isEmpty || dogBreed.isEmpty || dogAge.isEmpty || dogPhoto == nil)
+                       }
+                       .alert(isPresented: $showAlert) { 
+                                           Alert(title: Text("Error"),
+                                                 message: Text(errorMessage ?? "Please fill in all fields."),
+                                                 dismissButton: .default(Text("OK")))
+                           
+                                       }.sheet(isPresented: $showDogWalkerSelection) {
+                               DogWalkerSelectionView() // Mostrar a nova view
+                           
                        }
                    }
                }.toolbar {
@@ -167,17 +186,16 @@ class Dog {
     
     func registerDog() {
         
-        let ref = Database.database().reference()
-        
         let dogData: [String: Any] = [
             "name": dogName,
             "breed": dogBreed,
             "age": dogAge,
             "size": dogSize
         ]
-        
+        print("Registering dog data: \(dogData)")
         
         ref.child("dogs").childByAutoId().setValue(dogData) { error, _ in
+            
             if let error = error {
                 print("Error adding dog: \(error.localizedDescription)")
             } else {

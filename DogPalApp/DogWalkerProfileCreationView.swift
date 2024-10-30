@@ -101,17 +101,17 @@ struct DogWalkerProfileCreationView: View {
                     }
                 }
                 
-                NavigationLink(
-                    destination: DogWalkBookingView(
-                        walkerName: userName,
-                        walkerAge: Int(userAge) ?? 0,
-                        walkerExperience: experience,
-                        walkValue: Int(walkValue) ?? 0
-                    ),
-                    isActive: $navigateToBooking
-                ) {
-                    EmptyView()
-                }
+//                NavigationLink(
+//                    destination: DogWalkerBookingView(
+//                        walkerName: userName,
+//                        walkerAge: Int(userAge) ?? 0,
+//                        walkerExperience: experience,
+//                        walkValue: Int(walkValue) ?? 0
+//                    ),
+//                    isActive: $navigateToBooking
+//                ) {
+//                    EmptyView()
+//                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

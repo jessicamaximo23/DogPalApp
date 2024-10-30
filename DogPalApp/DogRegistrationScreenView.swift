@@ -10,7 +10,6 @@ import Firebase
 import FirebaseDatabase
 
 
-
 struct DogRegistrationScreenView: View {
     
     @State private var userName: String = ""
@@ -102,35 +101,36 @@ struct DogRegistrationScreenView: View {
                                    return
                                }
                                
-                               
                                let newDog = Dog(name: self.dogName, breed: self.dogBreed, age: age, size: size)
-                               //Register dog
-                               newDog.registerDog()
                                
-                               // Clean the form
-                               self.dogName = ""
-                               self.dogBreed = ""
-                               self.dogAge = ""
-                               self.dogSize = ""
-                               self.dogPhoto = nil
-                               errorMessage = nil;
-                               
-                               showDogWalkerSelection = true
-                               
-                               
+                               newDog.registerDog { success in
+                                   if success {
+                                       // Limpar o formulário
+                                       self.dogName = ""
+                                       self.dogBreed = ""
+                                       self.dogAge = ""
+                                       self.dogSize = ""
+                                       self.dogPhoto = nil
+                                       errorMessage = nil
+                                       
+                                       showDogWalkerSelection = true
+                                   } else {
+                                       errorMessage = "Failed to register the dog."
+                                       showAlert = true
+                                   }
+                               }
                            }) {
                                Text("Submit your Dog")
                                    .frame(maxWidth: .infinity)
                                    .padding()
-                                   .background(
-                                    Capsule()
-                                        .fill(Color.textFields)
-                                   )
+                                   .background(Capsule().fill(Color.textFields))
                                    .foregroundColor(.white)
                                    .cornerRadius(30)
-                                   .padding(20)
+                                   .padding(.horizontal)
                            }
                            .disabled(dogName.isEmpty || dogBreed.isEmpty || dogAge.isEmpty || dogPhoto == nil)
+
+                           
                        }
                        .alert(isPresented: $showAlert) { 
                                            Alert(title: Text("Error"),
@@ -184,7 +184,7 @@ class Dog {
         self.ref = Database.database().reference()
     }
     
-    func registerDog() {
+    func registerDog(completion: @escaping (Bool) -> Void) {
         
         let dogData: [String: Any] = [
             "name": dogName,

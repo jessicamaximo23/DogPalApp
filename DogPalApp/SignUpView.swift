@@ -13,6 +13,7 @@ struct SignUpView: View {
     @Binding var isPresented: Bool
     @Binding var email: String
     @Binding var password: String
+    @Binding var name: String
     @State private var confirmPassword: String = ""
     @State private var alertMessage = ""
     @State private var isShowingAlert = false
@@ -39,6 +40,16 @@ struct SignUpView: View {
                 .padding()
                             
             // Removed redundant HStack since this is the sign-up view
+            
+            TextField("Name", text: $name)
+                .padding()
+                .autocapitalization(.none)
+                .tint(.red)
+                .frame(width: 340, height: 40)
+                .padding([.leading, .trailing])
+                .overlay(RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.textFields, lineWidth: 2))
+                .padding()
                             
             TextField("Email", text: $email)
                 .padding()
@@ -148,7 +159,8 @@ struct SignUpView_Previews: PreviewProvider {
         SignUpView(
             isPresented: .constant(true),
             email: .constant(""),
-            password: .constant("")
+            password: .constant(""),
+            name: .constant("")
         )
     }
 }

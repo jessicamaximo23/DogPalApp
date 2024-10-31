@@ -10,6 +10,7 @@ import FirebaseAuth
 import SwiftUI
 
 struct LoginView: View {
+    @State private var name: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var isSignUpPresented: Bool = false
@@ -41,11 +42,12 @@ struct LoginView: View {
                 
                 HStack {
                     Text("No account yet? Sign-up")
-                    //                Need to put the logic for the here in this spot
+                          //                Need to put the logic for the here in this spot
                     NavigationLink(destination: SignUpView(
                         isPresented: $isSignUpPresented,
                         email: $email,
-                        password: $password
+                        password: $password,
+                        name: $name
                     )) {
                         Text("here")
                             .foregroundStyle(.blue)

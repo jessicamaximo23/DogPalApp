@@ -3,7 +3,6 @@
 //  DogPalApp
 //
 //  Created by Jessica Maximo on 2024-10-30.
-//
 
 import SwiftUI
 
@@ -22,56 +21,58 @@ struct HomeScreenView: View {
     var body: some View {
         
         NavigationView {
-            VStack {
-                
-                HStack{
-                    Spacer()
-                    
-                    NavigationLink(destination: SettingsView()) {
+            
+            ScrollView(.vertical, showsIndicators: false){
+                VStack {
+                    HStack{
+                        Spacer()
+                        
+                        NavigationLink(destination: SettingsView()) {
                             Image(systemName: "gearshape.fill")
-                            .font(.title)
-                            .padding()
-                    }
-                }
-                
-                Image("profiledoggo")
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-                    .frame(width: 40, height: 40)
-                    .padding()
-                
-                Text("Welcome, \(userName)!")
-                    .font(.largeTitle)
-                    .padding()
-                
-                HStack {
-                    Text("Let's take a walk, woof")
-                    Image(systemName: "pawprint.fill")
-                        .font(.title3)
-                        .fontWeight(.bold)
-                        .padding()
-                }
-                
-                Image("map")
-                    .resizable()
-                    .scaledToFit()
-                    .padding()
-                    .frame(width: 350, height: 250)
-                
-                Text("Best Parks in Montreal")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding()
-                
-                
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack{
-                        ForEach(parks) { park in
-                            ParkCardView(park: park)
+                                .font(.title)
                         }
                     }
-                }
+                    
+                    Image("profilledoggo")
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(Circle())
+                        .frame(width: 130, height: 130)
+                        .padding()
+                    
+                    Text("Welcome, \(userName)!")
+                        .font(.largeTitle)
+                        .padding()
+                    
+                    HStack {
+                        Text("Let's take a walk, woof")
+                        Image(systemName: "pawprint.fill")
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .padding()
+                    }
+                    
+                    Image("map")
+                        .resizable()
+                        .scaledToFit()
+                        .padding()
+                        .frame(width: 350, height: 250)
+                    
+                    Text("Best Parks in Montreal")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .padding()
+                    
+                
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        
+                        HStack(spacing: 15) {
+                        ForEach(parks) { park in
+                        ParkCardView(park: park)
+                            }
+                        }
+                        .padding()
+                            }                }
                 .padding()
                 
             }
@@ -79,7 +80,9 @@ struct HomeScreenView: View {
     }
     
     struct SettingsView: View {
+        
         var body: some View {
+            
             Text("Settings Screen")
                 .font(.largeTitle)
                 .padding()

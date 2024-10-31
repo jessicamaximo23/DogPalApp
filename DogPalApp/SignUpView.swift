@@ -40,6 +40,8 @@ struct SignUpView: View {
                 .padding()
                             
             // Removed redundant HStack since this is the sign-up view
+            
+            TextField
                             
             TextField("Email", text: $email)
                 .padding()
@@ -154,3 +156,4 @@ struct SignUpView_Previews: PreviewProvider {
     }
 }
                 
+//

@@ -77,6 +77,8 @@ struct ForgotPasswordView: View {
             } message: {
                 Text(alertMessage)
             }
+//            .toolbar(.hidden, for: .navigationBar)
+            .navigationBarBackButtonHidden(true)
         }
     }
     

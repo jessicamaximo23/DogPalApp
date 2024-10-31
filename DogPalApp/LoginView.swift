@@ -120,7 +120,9 @@ struct LoginView: View {
                 ForgotPasswordView()
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
+        
     
     private func signIn() {
         guard !email.isEmpty, !password.isEmpty else {

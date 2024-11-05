@@ -5,14 +5,10 @@
 //  Created by Jessica Maximo on 2024-10-24.
 //
 
-//FOR TO DO = ADD SCROLL VIEW
-//PUT FOR ADD THE PHOTO OPTIONAL
-//WHY I CLICK ON THE BTN AND NOT SHOW ANY ALERT FOR FILL THE FORM
-
 import SwiftUI
 import Firebase
 import FirebaseDatabase
-
+import UIKit
 
 struct DogRegistrationScreenView: View {
     
@@ -27,6 +23,40 @@ struct DogRegistrationScreenView: View {
     @State private var errorMessage: String? = nil
     @State private var showDogWalkerSelection = false
     
+    
+    struct ImagePicker: UIViewControllerRepresentable {
+           @Binding var image: UIImage?
+
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+               
+               let picker = UIImagePickerController()
+               picker.delegate = context.coordinator
+               return picker
+           }
+
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+
+           class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+               var parent: ImagePicker
+               
+               init(parent: ImagePicker) {
+                   self.parent = parent
+               }
+               
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+                   
+                   if let selectedImage = info[.originalImage] as? UIImage {
+                       parent.image = selectedImage
+                   }
+                   picker.dismiss(animated: true)
+               }
+           }
+
+    func makeCoordinator() -> Coordinator {
+               Coordinator(parent: self)
+        }
+    }
+
     @Environment(\.dismiss) var dismiss
        
        var body: some View {
@@ -212,38 +242,6 @@ class Dog {
     
    
    
-struct ImagePicker: UIViewControllerRepresentable {
-       @Binding var image: UIImage?
-
-func makeUIViewController(context: Context) -> UIImagePickerController {
-           
-           let picker = UIImagePickerController()
-           picker.delegate = context.coordinator
-           return picker
-       }
-
-func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
-
-       class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-           var parent: ImagePicker
-           
-           init(parent: ImagePicker) {
-               self.parent = parent
-           }
-           
-func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-               
-               if let selectedImage = info[.originalImage] as? UIImage {
-                   parent.image = selectedImage
-               }
-               picker.dismiss(animated: true)
-           }
-       }
-
-func makeCoordinator() -> Coordinator {
-           Coordinator(parent: self)
-    }
-}
 
 #Preview {
     DogRegistrationScreenView()

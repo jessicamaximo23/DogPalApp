@@ -7,18 +7,22 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
+import UIKit
 
 struct HomeScreenView: View {
        
     @State private var parks = [
         Park(name: "Park Lafontaine", rating: 4.8, imageName: "parclafontaine", description: "One of the most popular parks in Montreal, ideal for picnics and walks.", reviews: ["Incredible!", "Great place to relax.", "Very beautiful!"]),
+        
         Park(name: "Park Jean-Drapeau", rating: 4.7, imageName: "parcjeandrapeau", description: "A park with a view of the river and various outdoor activities.", reviews: ["I love running here.", "A perfect place for a family day."]),
+        
         Park(name: "Park Angrignon", rating: 4.6, imageName: "parcangrignon", description: "A peaceful park with large green areas and lakes.", reviews: ["Excellent for walks.", "Very well maintained."])
     ]
     
     @Environment(\.dismiss) var dismiss
     @State private var userName: String = ""
-    @State private var userImage: String = "userImage"
+    @State private var userImage:  UIImage?
+    @State private var showingImagePicker: Bool = false
     
     var body: some View {
         
@@ -36,12 +40,29 @@ struct HomeScreenView: View {
                         }
                     }
                     
-                    Image("profilledoggo")
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(Circle())
-                        .frame(width: 130, height: 130)
-                        .padding()
+                    Button(action: {
+                        showingImagePicker = true
+                                }) {
+                                if let image = userImage {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(Circle())
+                                .frame(width: 250, height: 250)
+                                
+                                    } else {
+                            Image(systemName: "person.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .foregroundColor(.gray)
+                                .frame(width: 130, height: 130)
+                                .padding()
+                                }
+                                    
+                            }
+                    .sheet(isPresented: $showingImagePicker) {
+                        ImagePicker(image: $userImage)
+                                }
                     
                     Text("Hello, \(userName)")
                         .font(.system(size: 20))
@@ -162,7 +183,7 @@ struct ParkDetailView: View {
             Image(park.imageName)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 250, height: 250)
+                .frame(width: 350, height: 350)
                 .cornerRadius(15)
                 .shadow(radius: 5)
             
@@ -201,6 +222,7 @@ struct ParkDetailView: View {
             }
             .padding()
         }
+        
     }
 }
 
@@ -209,6 +231,42 @@ struct SettingsView: View {
         Text("Settings Screen")
             .font(.largeTitle)
             .padding()
+    }
+}
+
+struct ImagePicker: UIViewControllerRepresentable {
+    @Binding var image: UIImage?
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.delegate = context.coordinator
+        picker.sourceType = .photoLibrary
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+    
+    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+        var parent: ImagePicker
+        
+        init(_ parent: ImagePicker) {
+            self.parent = parent
+        }
+        
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let uiImage = info[.originalImage] as? UIImage {
+                parent.image = uiImage
+            }
+            picker.dismiss(animated: true)
+        }
+        
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            picker.dismiss(animated: true)
+        }
     }
 }
 

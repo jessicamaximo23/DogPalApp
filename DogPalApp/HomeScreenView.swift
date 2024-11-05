@@ -4,10 +4,13 @@
 //
 //  Created by Jessica Maximo on 2024-10-30.
 
+//DA HOME VIEW ENVIAR PARA OUTRA PAGINA DE FAZER O PERFIL
+
 import SwiftUI
 import Firebase
 import FirebaseAuth
 import UIKit
+
 
 struct HomeScreenView: View {
        
@@ -33,13 +36,13 @@ struct HomeScreenView: View {
                     HStack{
                         Spacer()
                         
-                        NavigationLink(destination: SettingsView()) {
-                            Image(systemName: "gearshape.fill")
-                                .font(.title)
-                                .foregroundColor(.black)
-                        }
-                    }
-                    
+                
+//                        NavigationLink(destination: ProfileView()) {
+//                            Image(systemName: "gearshape.fill")
+//                                .font(.title)
+//                                .foregroundColor(.black)
+//                        }
+                                           }
                     Button(action: {
                         showingImagePicker = true
                                 }) {
@@ -115,15 +118,6 @@ struct HomeScreenView: View {
     }
 
 
-    struct SettingsView: View {
-        
-        var body: some View {
-            
-            Text("Settings Screen")
-                .font(.largeTitle)
-                .padding()
-        }
-    }
     
     struct ParkCardView: View {
         var park: Park
@@ -225,13 +219,7 @@ struct ParkDetailView: View {
     }
 }
 
-struct SettingsView: View {
-    var body: some View {
-        Text("Settings Screen")
-            .font(.largeTitle)
-            .padding()
-    }
-}
+
 
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var image: UIImage?

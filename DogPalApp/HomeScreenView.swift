@@ -5,9 +5,11 @@
 //  Created by Jessica Maximo on 2024-10-30.
 
 import SwiftUI
+import Firebase
+import FirebaseAuth
 
 struct HomeScreenView: View {
-    
+       
     @State private var parks = [
         Park(name: "Parque Lafontaine", rating: 4.8, imageName: "park1"),
         Park(name: "Parque Jean-Drapeau", rating: 4.7, imageName: "park2"),
@@ -30,6 +32,7 @@ struct HomeScreenView: View {
                         NavigationLink(destination: SettingsView()) {
                             Image(systemName: "gearshape.fill")
                                 .font(.title)
+                                .foregroundColor(.black)
                         }
                     }
                     
@@ -40,17 +43,9 @@ struct HomeScreenView: View {
                         .frame(width: 130, height: 130)
                         .padding()
                     
-                    Text("Welcome, \(userName)!")
-                        .font(.largeTitle)
+                    Text("Hello, \(userName)")
+                        .font(.system(size: 20))
                         .padding()
-                    
-                    HStack {
-                        Text("Let's take a walk, woof")
-                        Image(systemName: "pawprint.fill")
-                            .font(.title3)
-                            .fontWeight(.bold)
-                            .padding()
-                    }
                     
                     Image("map")
                         .resizable()
@@ -59,26 +54,47 @@ struct HomeScreenView: View {
                         .frame(width: 350, height: 250)
                     
                     Text("Best Parks in Montreal")
-                        .font(.largeTitle)
+                        .font(.title)
                         .fontWeight(.bold)
                         .padding()
                     
-                
                     ScrollView(.horizontal, showsIndicators: false) {
                         
                         HStack(spacing: 15) {
-                        ForEach(parks) { park in
-                        ParkCardView(park: park)
+                            ForEach(parks) { park in
+                                ParkCardView(park: park)
                             }
                         }
                         .padding()
-                            }                }
+                    }
+                }
                 .padding()
-                
+                .onAppear {
+                    if Auth.auth().currentUser != nil {
+                            fetchUserName()
+                        } else {
+                            print("User not logged in")
+                        }
+                }
             }
         }
     }
     
+    func fetchUserName() {
+        guard let user = Auth.auth().currentUser else {
+            print("User not authenticated")
+            return
+        }
+        
+     
+        if let email = user.email {
+            self.userName = email
+        } else {
+            print("No display name found for the user")
+        }
+    }
+
+
     struct SettingsView: View {
         
         var body: some View {

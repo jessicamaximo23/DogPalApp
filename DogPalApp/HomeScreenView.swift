@@ -11,9 +11,9 @@ import FirebaseAuth
 struct HomeScreenView: View {
        
     @State private var parks = [
-        Park(name: "Parque Lafontaine", rating: 4.8, imageName: "park1"),
-        Park(name: "Parque Jean-Drapeau", rating: 4.7, imageName: "park2"),
-        Park(name: "Parque Angrignon", rating: 4.6, imageName: "park3")
+        Park(name: "Park Lafontaine", rating: 4.8, imageName: "parclafontaine", description: "One of the most popular parks in Montreal, ideal for picnics and walks.", reviews: ["Incredible!", "Great place to relax.", "Very beautiful!"]),
+        Park(name: "Park Jean-Drapeau", rating: 4.7, imageName: "parcjeandrapeau", description: "A park with a view of the river and various outdoor activities.", reviews: ["I love running here.", "A perfect place for a family day."]),
+        Park(name: "Park Angrignon", rating: 4.6, imageName: "parcangrignon", description: "A peaceful park with large green areas and lakes.", reviews: ["Excellent for walks.", "Very well maintained."])
     ]
     
     @Environment(\.dismiss) var dismiss
@@ -129,7 +129,7 @@ struct HomeScreenView: View {
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding()
-                        .background(Color.blue)
+                        .background(Color.textFields)
                         .cornerRadius(10)
                         .padding(.top, 5)
                 }
@@ -148,6 +148,9 @@ struct Park: Identifiable {
     var name: String
     var rating: Double
     var imageName: String
+    var description: String
+    var reviews: [String]
+    
 }
 
 struct ParkDetailView: View {
@@ -155,14 +158,48 @@ struct ParkDetailView: View {
     
     var body: some View {
         VStack {
+            
+            Image(park.imageName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 250, height: 250)
+                .cornerRadius(15)
+                .shadow(radius: 5)
+            
             Text(park.name)
                 .font(.largeTitle)
-                .padding()
-            // Adicione mais detalhes sobre o parque aqui
+                .fontWeight(.bold)
+                .padding(.top, 10)
+            
             Text("Rating: \(park.rating, specifier: "%.1f")")
                 .font(.headline)
+                .foregroundColor(.secondary)
+                .padding(.bottom, 5)
+            
+            Text(park.description)
+                .font(.body)
                 .padding()
-            Spacer()
+                .multilineTextAlignment(.center)
+            
+            VStack(alignment: .leading) {
+                Text("Reviews")
+                    .font(.headline)
+                    .padding(.top, 10)
+                
+                ForEach(park.reviews, id: \.self) { review in
+                    HStack {
+                        
+                        ForEach(0..<5) { star in
+                            Image(systemName: "star.fill")
+                                .foregroundColor(star < Int(park.rating.rounded()) ? .yellow : .gray)
+                        }
+                        Text(review)
+                            .font(.subheadline)
+                            .padding(.leading)
+                    }
+                }
+            }
+            .padding()
         }
     }
 }

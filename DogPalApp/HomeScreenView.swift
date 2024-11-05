@@ -58,7 +58,6 @@ struct HomeScreenView: View {
                                 .frame(width: 130, height: 130)
                                 .padding()
                                 }
-                                    
                             }
                     .sheet(isPresented: $showingImagePicker) {
                         ImagePicker(image: $userImage)

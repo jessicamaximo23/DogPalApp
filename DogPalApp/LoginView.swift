@@ -19,6 +19,8 @@ struct LoginView: View {
     @State private var navigateToHome: Bool = false
     @StateObject private var authManager = AuthManager()
     
+    @State private var isSignedIn: Bool = false 
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -104,6 +106,11 @@ struct LoginView: View {
                 .padding(.top, 30)
                                    
                 Spacer()
+                
+                //Sent for Dog registration
+                NavigationLink(destination: DogRegistrationScreenView(), isActive: $isSignedIn) {
+                    EmptyView()
+                }
             }
             .padding(.bottom, 100)
             .alert("Sign In", isPresented: $showAlert) {

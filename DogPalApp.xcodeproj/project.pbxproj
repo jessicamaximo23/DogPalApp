@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08925FF02CD29B8F00FE96EB /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 08925FEF2CD29B8F00FE96EB /* FirebaseDatabase */; };
 		F9CE4E9B2CC73D4A00D91E96 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F9CE4E9A2CC73D4A00D91E96 /* FirebaseAuth */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08925FF02CD29B8F00FE96EB /* FirebaseDatabase in Frameworks */,
 				F9CE4E9B2CC73D4A00D91E96 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,6 +120,7 @@
 			name = DogPalApp;
 			packageProductDependencies = (
 				F9CE4E9A2CC73D4A00D91E96 /* FirebaseAuth */,
+				08925FEF2CD29B8F00FE96EB /* FirebaseDatabase */,
 			);
 			productName = DogPalApp;
 			productReference = 0819B3012CC18460007A780D /* DogPalApp.app */;
@@ -574,6 +577,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		08925FEF2CD29B8F00FE96EB /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F9CE4E992CC73D4A00D91E96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
 		F9CE4E9A2CC73D4A00D91E96 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F9CE4E992CC73D4A00D91E96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProfileView: View {
+struct SettingsView: View {
     let userEmail: String
     @StateObject private var userManager = UserManager()
     @State private var showingSignOutAlert = false
@@ -77,7 +77,7 @@ struct ProfileView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            ProfileView(userEmail: "test@example.com")
+            SettingsView(userEmail: "test@example.com")
         }
     }
 }

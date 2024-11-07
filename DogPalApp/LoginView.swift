@@ -8,6 +8,7 @@
 import Firebase
 import FirebaseAuth
 import SwiftUI
+import FirebaseDatabase
 
 struct LoginView: View {
     @State private var email: String = ""
@@ -17,6 +18,7 @@ struct LoginView: View {
     @State private var alertMessage: String = ""
     @State private var isLoading: Bool = false
     @State private var navigateToHome: Bool = false
+    @State private var navigateToUserProfileCreation: Bool = false
     @StateObject private var authManager = AuthManager()
     
     @State private var isSignedIn: Bool = false 
@@ -108,7 +110,7 @@ struct LoginView: View {
                 Spacer()
                 
                 //Sent for Dog registration
-                NavigationLink(destination: DogRegistrationScreenView(), isActive: $isSignedIn) {
+                NavigationLink(destination: UserProfileCreationView(), isActive: $navigateToUserProfileCreation) {
                     EmptyView()
                 }
             }
@@ -130,23 +132,31 @@ struct LoginView: View {
             showAlert = true
             return
         }
-          
+
         isLoading = true
-          
+
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             isLoading = false
-              
+
             if let error = error {
                 handleSignInError(error)
             } else {
-                // Sign in successful
-                navigateToHome = true
-                UserDefaults.standard.set(email, forKey: "userEmail")
-                               if let uid = Auth.auth().currentUser?.uid {
-                                   UserDefaults.standard.set(uid, forKey: "userId")
-                               }
-                               navigateToHome = true
-            
+                // Se o login for bem-sucedido, verificar se o perfil foi criado
+                guard let uid = Auth.auth().currentUser?.uid else { return }
+
+                let userRef = Database.database().reference().child("users").child(uid)
+
+                userRef.observeSingleEvent(of: .value) { snapshot in
+                    if let userData = snapshot.value as? [String: Any],
+                       let profileCreated = userData["profileCreated"] as? Bool,
+                       profileCreated {
+                        // Redireciona para HomeScreenView se o perfil já foi criado
+                        navigateToHome = true
+                    } else {
+                        // Redireciona para UserProfileCreationView se for o primeiro login
+                        navigateToUserProfileCreation = true
+                    }
+                }
             }
         }
     }

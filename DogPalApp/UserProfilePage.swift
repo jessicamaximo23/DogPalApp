@@ -1,13 +1,15 @@
 import SwiftUI
 import MapKit
 
-struct DogWalkerProfilePage: View {
+struct UserProfilePage: View {
     
-    var walkerName: String
-    var walkerAge: Int
-    var walkerExperience: String
-    var walkValue: Int
+    var userName: String
+    var userAge: Int
+    var dogBreed: String
+    var dogName: String
     var walkerPhoto: UIImage?
+    @State private var showHomeScreen = false
+    @State private var showProfileView = false // Estado para navegação para HomeScreenView
     
     @Environment(\.dismiss) var dismiss
     @State private var region = MKCoordinateRegion(
@@ -17,10 +19,8 @@ struct DogWalkerProfilePage: View {
     @State private var selectedDate = Date()
     
     var body: some View {
-        
-        
         NavigationView {
-            ScrollView{
+            ScrollView {
                 VStack {
                     Image("DogPalLogo2")
                         .resizable()
@@ -28,7 +28,7 @@ struct DogWalkerProfilePage: View {
                         .padding()
                         .frame(width: 350, height: 150)
                     
-                    Text(walkerName)
+                    Text(userName)
                         .font(.largeTitle)
                     
                     if let photo = walkerPhoto {
@@ -46,27 +46,27 @@ struct DogWalkerProfilePage: View {
                             .foregroundColor(.gray)
                     }
                     
-                    
-                    VStack(alignment: .leading, spacing: 10) { // Ajuste o espaçamento para 10 ou outro valor que você prefira
+                    VStack(alignment: .leading, spacing: 10) {
                         Text("About Me")
                             .font(.headline)
                         
-                        Text(walkerExperience) // Exibe toda a experiência
+                        Text(dogBreed)
                             .font(.subheadline)
-                            .padding(5) // Adiciona um espaçamento interno ao redor do texto
+                            .padding(5)
                             .background(Color(.systemGray6))
                             .cornerRadius(8)
-                            .frame(width: 380) // Apenas define a largura, a altura se ajusta ao conteúdo
+                            .frame(width: 380)
                     }
                     .padding(.horizontal)
                     
-                    
-                    //                HStack {
                     VStack(alignment: .leading) {
-                        Text("Age: \(walkerAge)")
+                        Text("User Age: \(userAge)")
                             .font(.headline)
                         
-                        Text("Price: $\(walkValue) per hour")
+                        Text("Dog Name: \(dogName)")
+                            .font(.headline)
+                        
+                        Text("Dog Breed: \(dogBreed)")
                             .font(.headline)
                         
                         Map(coordinateRegion: $region, showsUserLocation: true)
@@ -75,12 +75,10 @@ struct DogWalkerProfilePage: View {
                             .padding(.top, 10)
                     }
                     .padding()
-                    //                }
                     
                     VStack(alignment: .leading) {
                         Text("Reviews")
                             .font(.headline)
-                        
                         
                         Text("⭐️⭐️⭐️⭐️⭐️ - \"Great experience! My dog loved the walk!\"")
                         Text("⭐️⭐️⭐️⭐️ - \"Very reliable and caring!\"")
@@ -90,9 +88,9 @@ struct DogWalkerProfilePage: View {
                     Spacer()
                     
                     Button(action: {
-                        print("Reserva realizada para \(selectedDate.formatted())!")
+                        showHomeScreen = true
                     }) {
-                        Text("Confirm Booking")
+                        Text("Go to Home Screen")
                             .font(.headline)
                             .foregroundColor(.white)
                             .padding()
@@ -100,6 +98,31 @@ struct DogWalkerProfilePage: View {
                             .cornerRadius(10)
                     }
                     .padding(20)
+                    
+                    NavigationLink(
+                        destination: HomeScreenView(),  // Substitua por sua HomeScreenView
+                        isActive: $showHomeScreen
+                    ) {
+                        EmptyView()
+                    }
+                    
+                    .navigationBarItems(trailing: Button(action: {
+                                    showProfileView = true
+                                }) {
+                                    Image(systemName: "gearshape")
+                                        .font(.title2)
+                                        .foregroundColor(.blue)
+                                })
+                                .background(
+                                    NavigationLink(
+                                        destination: SettingsView(
+                                            userEmail: userName
+                                        ),
+                                        isActive: $showProfileView
+                                    ) {
+                                        EmptyView()
+                                    }
+                                )
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
@@ -124,8 +147,8 @@ struct DogWalkerProfilePage: View {
 }
 
 #Preview {
-    DogWalkerProfilePage(walkerName: "aaaa",
-                         walkerAge: 0,
-                         walkerExperience: "I have over 3 years of experience in dog walking, ensuring your furry friend gets the best care during our walks!",
-                         walkValue: 20)
+    UserProfilePage(userName: "",
+                    userAge: 0,
+                    dogBreed: "",
+                    dogName: "")
 }

@@ -36,12 +36,12 @@ struct HomeScreenView: View {
                     HStack{
                         Spacer()
                         
-                
-//                        NavigationLink(destination: ProfileView()) {
-//                            Image(systemName: "gearshape.fill")
-//                                .font(.title)
-//                                .foregroundColor(.black)
-//                        }
+                        NavigationLink(destination: SettingsView()) {
+                            Image(systemName: "gearshape.fill")
+                                .font(.title)
+                                .foregroundColor(.black)
+                        }
+
                                            }
                     Button(action: {
                         showingImagePicker = true

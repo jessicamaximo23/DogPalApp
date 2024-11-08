@@ -19,55 +19,54 @@ struct SettingsView: View {
     @State private var language: String = "English"
     @State private var locationEnabled: Bool = true
     @Environment(\.presentationMode) var presentationMode
+    
+    @State private var shouldNavigateToLogin: Bool = false
 
     var body: some View {
         NavigationView {
             VStack(alignment: .center){
                 List {
                     
-                    Section(header: Text("User Profile")) {
-                        Button(action: {
-                            showingImagePicker = true
-                        }) {
-                            if let image = userImage {
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .clipShape(Circle())
-                                    .frame(width: 100, height: 100)
-                            } else {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .foregroundColor(.gray)
-                                    .frame(width: 100, height: 100)
+                    Section(header: Text("Edit Profile")) {
+                        VStack{
+                            Button(action: {
+                                showingImagePicker = true
+                            }) {
+                                if let image = userImage {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .clipShape(Circle())
+                                        .frame(width: 100, height: 100)
+                                } else {
+                                    Image(systemName: "person.circle.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .foregroundColor(.gray)
+                                        .frame(width: 100, height: 100)
+                                }
+                            }
+                            .sheet(isPresented: $showingImagePicker) {
+                                ImagePicker(image: $userImage)
+                            }
+                            
+                            TextField("Name", text: $userName)
+                                .padding()
+                                .background(Color(UIColor.systemGray6))
+                                .cornerRadius(8)
+                        }
+                            Button("Reset Password") {
+                                resetPassword()
                             }
                         }
-                        .sheet(isPresented: $showingImagePicker) {
-                            ImagePicker(image: $userImage)
-                        }
-                        
-                        TextField("Name", text: $userName)
-                            .padding()
-                            .background(Color(UIColor.systemGray6))
-                            .cornerRadius(8)
-                        
-                        Button("Reset Password") {
-                            resetPassword()
-                        }
-                    }
-                    
                     
                     Section(header: Text("Notifications")) {
                         Toggle("Push Notifications", isOn: $notificationsEnabled).onChange(of: notificationsEnabled)
                         { value in
                             handleNotificationsToggle(value)
                         }
-
                     }
-                    
-                    
-                    Section(header: Text("Location Preferences")) {
+         Section(header: Text("Location Preferences")) {
                         Toggle("Enable Location", isOn: $locationEnabled)
                     }
                     
@@ -81,16 +80,7 @@ struct SettingsView: View {
                         
                         Toggle("Dark Mode", isOn: $isDarkMode)
                     }
-                    
-                    
-                    Section(header: Text("Data and Storage")) {
-                        Button("Clear Cache") {
-                            clearCache()
-                        }
-                    }
-                    
-                    
-                    
+                      
                     Section {
                         Button("Logout") {
                             logout()
@@ -102,6 +92,9 @@ struct SettingsView: View {
                 .navigationBarItems(trailing: Button("Close") {
                     presentationMode.wrappedValue.dismiss()
                 })
+                NavigationLink(destination: LoginView(), isActive: $shouldNavigateToLogin) {
+                               EmptyView()
+                           }
             }
             .onAppear {
                 loadUserProfile()
@@ -156,17 +149,16 @@ struct SettingsView: View {
         print("Push notifications are disabled.")
     }
 
-    func clearCache() {
-        // Código para limpar cache, se necessário
-        print("Cache limpo.")
-    }
+   
 
     func logout() {
         do {
             try Auth.auth().signOut()
-            print("Logout bem-sucedido.")
+            print("Logout successful.")
+            
+            shouldNavigateToLogin = true 
         } catch {
-            print("Erro ao fazer logout: \(error.localizedDescription)")
+            print("Error signing out: \(error.localizedDescription)")
         }
     }
 }

@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  DogPalApp
+
+  Created by Jessica Maximo on 2024-11-08.
+  
+*/
+/* Settings Screen */
+"Settings" = "Paramètres";
+"Edit Profile" = "Modifier le profil";
+"Push Notifications" = "Notifications push";
+"Enable Location" = "Activer la localisation";
+"Language and Theme" = "Langue et thème";
+"Dark Mode" = "Mode sombre";
+"Logout" = "Se déconnecter";
+"Close" = "Fermer";
+"Reset Password" = "Réinitialiser le mot de passe";
+

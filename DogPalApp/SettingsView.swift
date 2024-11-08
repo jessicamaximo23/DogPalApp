@@ -3,7 +3,8 @@
 //  DogPalApp
 //
 //  Created by Jessica Maximo on 2024-11-08.
-//FALTA FAZER O PUSH NOTIFICATIONS E ENABLE LOCATION E NAME
+
+//FALTA FAZER O PUSH NOTIFICATIONS E ENABLE LOCATION E NAME***
 
 import SwiftUI
 import Firebase
@@ -107,6 +108,10 @@ value in
             }
             .onAppear {
                 loadUserProfile()
+                NotificationCenter.default.addObserver(forName: NSNotification.Name("LanguageChanged"), object: nil, queue: .main) { _ in
+                      
+                       self.language = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
+                   }
             }
         }
     }
@@ -178,8 +183,10 @@ value in
         
     private func setAppLanguage(to language: String) {
         self.language = language
-               UserDefaults.standard.set(language, forKey: "appLanguage")
-               print("App set to \(language).")
+            
+        UserDefaults.standard.set(language, forKey: "appLanguage")
+        NotificationCenter.default.post(name: NSNotification.Name("LanguageChanged"), object: nil)
+        print("App set to \(language).")
         }
     }
    

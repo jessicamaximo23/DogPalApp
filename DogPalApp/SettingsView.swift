@@ -3,7 +3,7 @@
 //  DogPalApp
 //
 //  Created by Jessica Maximo on 2024-11-08.
-//
+//FALTA FAZER O PUSH NOTIFICATIONS E ENABLE LOCATION E NAME
 
 import SwiftUI
 import Firebase
@@ -14,12 +14,12 @@ struct SettingsView: View {
     @State private var userImage: UIImage?
     @State private var showingImagePicker: Bool = false
     @State private var userName: String = Auth.auth().currentUser?.displayName ?? ""
-    @State private var isDarkMode: Bool = false
     @State private var notificationsEnabled: Bool = true
-    @State private var language: String = "English"
     @State private var locationEnabled: Bool = true
     @Environment(\.presentationMode) var presentationMode
     
+    @State private var isDarkMode: Bool = UserDefaults.standard.bool(forKey: "isDarkMode")
+    @State private var language: String = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
     @State private var shouldNavigateToLogin: Bool = false
 
     var body: some View {
@@ -77,8 +77,15 @@ struct SettingsView: View {
                             Text("Français").tag("Français")
                         }
                         .pickerStyle(MenuPickerStyle())
+                        .onChange(of: language) { value in
+                                setAppLanguage(to: value)
+                                               }
                         
                         Toggle("Dark Mode", isOn: $isDarkMode)
+                            .onChange(of: isDarkMode) {
+value in
+                                setAppTheme(darkMode: value)
+                                                       }
                     }
                       
                     Section {
@@ -92,6 +99,8 @@ struct SettingsView: View {
                 .navigationBarItems(trailing: Button("Close") {
                     presentationMode.wrappedValue.dismiss()
                 })
+                .preferredColorScheme(isDarkMode ? .dark : .light)
+                
                 NavigationLink(destination: LoginView(), isActive: $shouldNavigateToLogin) {
                                EmptyView()
                            }
@@ -101,6 +110,7 @@ struct SettingsView: View {
             }
         }
     }
+    
     func loadUserProfile() {
         if let user = Auth.auth().currentUser {
             userName = user.displayName ?? ""
@@ -148,20 +158,31 @@ struct SettingsView: View {
         UIApplication.shared.unregisterForRemoteNotifications()
         print("Push notifications are disabled.")
     }
-
-   
-
+    
     func logout() {
         do {
             try Auth.auth().signOut()
             print("Logout successful.")
-            
-            shouldNavigateToLogin = true 
+            shouldNavigateToLogin = true
         } catch {
             print("Error signing out: \(error.localizedDescription)")
         }
     }
-}
+
+
+    private func setAppTheme(darkMode: Bool) {
+            isDarkMode = darkMode
+            print(darkMode ? "Dark Mode activated." : "Light Mode activated.")
+        }
+        
+        
+    private func setAppLanguage(to language: String) {
+        self.language = language
+               UserDefaults.standard.set(language, forKey: "appLanguage")
+               print("App set to \(language).")
+        }
+    }
+   
 
 struct UserImagePicker: UIViewControllerRepresentable {
     @Binding var image: UIImage?

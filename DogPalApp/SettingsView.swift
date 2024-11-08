@@ -22,87 +22,92 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationView {
-            List {
-               
-                Section(header: Text("User Profile")) {
-                    Button(action: {
-                        showingImagePicker = true
-                    }) {
-                        if let image = userImage {
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFit()
-                                .clipShape(Circle())
-                                .frame(width: 100, height: 100)
-                        } else {
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(.gray)
-                                .frame(width: 100, height: 100)
+            VStack(alignment: .center){
+                List {
+                    
+                    Section(header: Text("User Profile")) {
+                        Button(action: {
+                            showingImagePicker = true
+                        }) {
+                            if let image = userImage {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .clipShape(Circle())
+                                    .frame(width: 100, height: 100)
+                            } else {
+                                Image(systemName: "person.circle.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .foregroundColor(.gray)
+                                    .frame(width: 100, height: 100)
+                            }
+                        }
+                        .sheet(isPresented: $showingImagePicker) {
+                            ImagePicker(image: $userImage)
+                        }
+                        
+                        TextField("Name", text: $userName)
+                            .padding()
+                            .background(Color(UIColor.systemGray6))
+                            .cornerRadius(8)
+                        
+                        Button("Reset Password") {
+                            resetPassword()
                         }
                     }
-                    .sheet(isPresented: $showingImagePicker) {
-                        ImagePicker(image: $userImage)
+                    
+                    
+                    Section(header: Text("Notifications")) {
+                        Toggle("Push Notifications", isOn: $notificationsEnabled).onChange(of: notificationsEnabled)
+                        { value in
+                            handleNotificationsToggle(value)
+                        }
+
                     }
-
-                    TextField("Name", text: $userName)
-                        .padding()
-                        .background(Color(UIColor.systemGray6))
-                        .cornerRadius(8)
-
-                    Button("Reset Password") {
-                        resetPassword()
+                    
+                    
+                    Section(header: Text("Location Preferences")) {
+                        Toggle("Enable Location", isOn: $locationEnabled)
+                    }
+                    
+                    
+                    Section(header: Text("Language and Theme")) {
+                        Picker("Language", selection: $language) {
+                            Text("English").tag("English")
+                            Text("Français").tag("Français")
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        
+                        Toggle("Dark Mode", isOn: $isDarkMode)
+                    }
+                    
+                    
+                    Section(header: Text("Data and Storage")) {
+                        Button("Clear Cache") {
+                            clearCache()
+                        }
+                    }
+                    
+                    
+                    
+                    Section {
+                        Button("Logout") {
+                            logout()
+                        }
+                        .foregroundColor(.red)
                     }
                 }
-
-               
-                Section(header: Text("Notifications")) {
-                    Toggle("Push Notifications", isOn: $notificationsEnabled)
-                }
-
-               
-                Section(header: Text("Location Preferences")) {
-                    Toggle("Enable Location", isOn: $locationEnabled)
-                }
-
-    
-                Section(header: Text("Language and Theme")) {
-                    Picker("Language", selection: $language) {
-                        Text("English").tag("English")
-                        Text("Français").tag("Français")
-                    }
-                    .pickerStyle(MenuPickerStyle())
-
-                    Toggle("Dark Mode", isOn: $isDarkMode)
-                }
-
-              
-                Section(header: Text("Dados e Armazenamento")) {
-                    Button("Limpar Cache") {
-                        clearCache()
-                    }
-                }
-
-              
-
-                Section {
-                    Button("Logout") {
-                        logout()
-                    }
-                    .foregroundColor(.red)
-                }
+                .navigationTitle("Settings")
+                .navigationBarItems(trailing: Button("Close") {
+                    presentationMode.wrappedValue.dismiss()
+                })
             }
-            .navigationTitle("Settings")
-            .navigationBarItems(trailing: Button("Close") {
-                presentationMode.wrappedValue.dismiss()
-            })
-        }
-        .onAppear {
-            loadUserProfile()
+            .onAppear {
+                loadUserProfile()
+            }
         }
     }
-
     func loadUserProfile() {
         if let user = Auth.auth().currentUser {
             userName = user.displayName ?? ""
@@ -119,6 +124,36 @@ struct SettingsView: View {
                 }
             }
         }
+    }
+    
+    func handleNotificationsToggle(_ isEnabled: Bool) {
+        print("Notifications toggled: \(isEnabled)")
+    
+        if isEnabled {
+               enableNotifications()
+           } else {
+               disableNotifications()
+           }
+        
+    }
+    func enableNotifications() {
+       
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+            if granted {
+                print("Push notifications are enabled.")
+                
+            } else {
+                print("Permission for push notifications denied.")
+               
+            }
+        }
+    }
+
+    func disableNotifications() {
+      
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        UIApplication.shared.unregisterForRemoteNotifications()
+        print("Push notifications are disabled.")
     }
 
     func clearCache() {

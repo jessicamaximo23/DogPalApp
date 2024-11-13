@@ -77,6 +77,17 @@ struct HomeScreenView: View {
                         .padding()
                         .frame(width: 350, height: 250)
                     
+                    NavigationLink(destination: ParksView()) {
+                        Text("Available Parks next to me")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.accentColor)
+                            .cornerRadius(10)
+                            .padding(.top, 5)
+                    }
+
+                    
                     Text("Best Parks in Montreal")
                         .font(.title)
                         .fontWeight(.bold)

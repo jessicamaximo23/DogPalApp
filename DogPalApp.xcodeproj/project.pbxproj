@@ -93,14 +93,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0819B3112CC18462007A780D /* DogPalAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DogPalAppTests.xctest; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalApp.app/PlugIns/DogPalAppTests.xctest"; sourceTree = "<absolute>"; };
-		0819B31B2CC18462007A780D /* DogPalAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DogPalAppUITests.xctest; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalAppUITests-Runner.app/PlugIns/DogPalAppUITests.xctest"; sourceTree = "<absolute>"; };
 		086E4EE32CDEA0C4005CF78E /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
 		08EA36352CE53187006B1466 /* GoogleMaps_framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleMaps_framework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		08EA363E2CE53187006B1466 /* GoogleMaps.frameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoogleMaps.frameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08EA364C2CE53187006B1466 /* DogPalApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogPalApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08EA365A2CE531B1006B1466 /* GoogleMapsUtils_framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleMapsUtils_framework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		08EA36632CE531B1006B1466 /* GoogleMapsUtils.frameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoogleMapsUtils.frameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		08EA37042CE54001006B1466 /* DogPalAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		08EA37052CE54001006B1466 /* DogPalAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -239,6 +239,8 @@
 				08EA365B2CE531B1006B1466 /* GoogleMapsUtils.framework */,
 				08EA36632CE531B1006B1466 /* GoogleMapsUtils.frameworkTests.xctest */,
 				08EA36692CE531B1006B1466 /* GoogleMapsUtils.frameworkTests */,
+				08EA37042CE54001006B1466 /* DogPalAppTests.xctest */,
+				08EA37052CE54001006B1466 /* DogPalAppUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -309,7 +311,7 @@
 			packageProductDependencies = (
 			);
 			productName = DogPalAppTests;
-			productReference = 0819B3112CC18462007A780D /* DogPalAppTests.xctest */;
+			productReference = 08EA37042CE54001006B1466 /* DogPalAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		0819B31A2CC18462007A780D /* DogPalAppUITests */ = {
@@ -332,7 +334,7 @@
 			packageProductDependencies = (
 			);
 			productName = DogPalAppUITests;
-			productReference = 0819B31B2CC18462007A780D /* DogPalAppUITests.xctest */;
+			productReference = 08EA37052CE54001006B1466 /* DogPalAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		08EA36342CE53187006B1466 /* GoogleMaps.framework */ = {

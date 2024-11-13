@@ -4,7 +4,6 @@
 //
 //  Created by Jessica Maximo on 2024-11-08.
 
-//FALTA FAZER O PUSH NOTIFICATIONS E ENABLE LOCATION E NAME***
 
 import SwiftUI
 import Firebase
@@ -85,6 +84,9 @@ struct SettingsView: View  {
                     Section(header: Text("Notifications")) {
                         Toggle("Push Notifications", isOn: $notificationsEnabled).onChange(of: notificationsEnabled)
                         { value in
+                            
+                            UserDefaults.standard.set(value, forKey: "notificationsEnabled")
+                            
                             if !showLocationAlert {
                                     showNotificationAlert = true
                                 }
@@ -94,9 +96,11 @@ struct SettingsView: View  {
          Section(header: Text("Location Preferences")) {
                         Toggle("Enable Location", isOn: $locationEnabled)
                  .onChange(of: locationEnabled) { value in
-                     if !showNotificationAlert { 
-                            showLocationAlert = true
-                        }
+                     
+                     UserDefaults.standard.set(value, forKey: "locationEnabled")
+                     
+                     showLocationAlert = true
+                    
                         }
                     }
                     
@@ -111,8 +115,7 @@ struct SettingsView: View  {
                                                }
                         
                         Toggle("Dark Mode", isOn: $isDarkMode)
-                            .onChange(of: isDarkMode) {
-value in
+                            .onChange(of: isDarkMode) { value in
                                 setAppTheme(darkMode: value)
                                                        }
                     }
@@ -144,12 +147,18 @@ value in
                     }
 
                 loadUserProfile()
+                
+                notificationsEnabled = UserDefaults.standard.bool(forKey: "notificationsEnabled")
+                    locationEnabled = UserDefaults.standard.bool(forKey: "locationEnabled")
+                
+                isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+                
                 NotificationCenter.default.addObserver(forName: NSNotification.Name("LanguageChanged"), object: nil, queue: .main) { _ in
                       
                        self.language = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
                 }
             }
-            .alert(isPresented: $showLocationAlert) {  // Definir o alerta
+            .alert(isPresented: $showLocationAlert) {
                 Alert(
                     title: Text("Location Settings Changed"),
                     message: Text(locationEnabled ? "Location services have been enabled." : "Location services have been disabled."),
@@ -157,7 +166,7 @@ value in
                     secondaryButton: .cancel()
                 )
             }
-            .alert(isPresented: $showNotificationAlert) { // Alerta para notificações
+            .alert(isPresented: $showNotificationAlert) {
                 Alert(
                     title: Text("Notifications Settings Changed"),
                     message: Text(notificationsEnabled ? "Push notifications have been enabled." : "Push notifications have been disabled."),
@@ -230,6 +239,9 @@ value in
 
     private func setAppTheme(darkMode: Bool) {
             isDarkMode = darkMode
+        
+            UserDefaults.standard.set(darkMode, forKey: "isDarkMode")
+        
             print(darkMode ? "Dark Mode activated." : "Light Mode activated.")
         }
         

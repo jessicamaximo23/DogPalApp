@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		086E4EE42CDEA0CA005CF78E /* Untitled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086E4EE32CDEA0C4005CF78E /* Untitled.swift */; };
 		08925FF02CD29B8F00FE96EB /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 08925FEF2CD29B8F00FE96EB /* FirebaseDatabase */; };
 		08EA363F2CE53187006B1466 /* GoogleMaps_framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA36352CE53187006B1466 /* GoogleMaps_framework.framework */; };
 		08EA364A2CE53187006B1466 /* GoogleMaps_framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA36352CE53187006B1466 /* GoogleMaps_framework.framework */; };
@@ -93,7 +92,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		086E4EE32CDEA0C4005CF78E /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
 		08EA36352CE53187006B1466 /* GoogleMaps_framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleMaps_framework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		08EA363E2CE53187006B1466 /* GoogleMaps.frameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoogleMaps.frameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08EA364C2CE53187006B1466 /* DogPalApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogPalApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,6 +99,8 @@
 		08EA36632CE531B1006B1466 /* GoogleMapsUtils.frameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoogleMapsUtils.frameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08EA37042CE54001006B1466 /* DogPalAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08EA37052CE54001006B1466 /* DogPalAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		886F865F7206E896F2E0D1F9 /* Pods-DogPalApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DogPalApp.release.xcconfig"; path = "Target Support Files/Pods-DogPalApp/Pods-DogPalApp.release.xcconfig"; sourceTree = "<group>"; };
+		FEA4D923766409739AA770AD /* Pods-DogPalApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DogPalApp.debug.xcconfig"; path = "Target Support Files/Pods-DogPalApp/Pods-DogPalApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -229,7 +229,6 @@
 				0819B3032CC18460007A780D /* DogPalApp */,
 				0819B3142CC18462007A780D /* DogPalAppTests */,
 				0819B31E2CC18462007A780D /* DogPalAppUITests */,
-				086E4EE32CDEA0C4005CF78E /* Untitled.swift */,
 				08EA36352CE53187006B1466 /* GoogleMaps_framework.framework */,
 				08EA36362CE53187006B1466 /* GoogleMaps.framework */,
 				08EA363E2CE53187006B1466 /* GoogleMaps.frameworkTests.xctest */,
@@ -241,7 +240,25 @@
 				08EA36692CE531B1006B1466 /* GoogleMapsUtils.frameworkTests */,
 				08EA37042CE54001006B1466 /* DogPalAppTests.xctest */,
 				08EA37052CE54001006B1466 /* DogPalAppUITests.xctest */,
+				5BE145683333DA551316395B /* Pods */,
+				0F21F5C38DB753C075EFF9CE /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		0F21F5C38DB753C075EFF9CE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5BE145683333DA551316395B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FEA4D923766409739AA770AD /* Pods-DogPalApp.debug.xcconfig */,
+				886F865F7206E896F2E0D1F9 /* Pods-DogPalApp.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,10 +285,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0819B3252CC18462007A780D /* Build configuration list for PBXNativeTarget "DogPalApp" */;
 			buildPhases = (
+				395AEE20902BEE009F572161 /* [CP] Check Pods Manifest.lock */,
 				0819B2FD2CC18460007A780D /* Sources */,
 				0819B2FE2CC18460007A780D /* Frameworks */,
 				0819B2FF2CC18460007A780D /* Resources */,
 				08EA36512CE53187006B1466 /* Embed Frameworks */,
+				65463A6BA3376914845E641E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -308,8 +327,6 @@
 				0819B3142CC18462007A780D /* DogPalAppTests */,
 			);
 			name = DogPalAppTests;
-			packageProductDependencies = (
-			);
 			productName = DogPalAppTests;
 			productReference = 08EA37042CE54001006B1466 /* DogPalAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -331,8 +348,6 @@
 				0819B31E2CC18462007A780D /* DogPalAppUITests */,
 			);
 			name = DogPalAppUITests;
-			packageProductDependencies = (
-			);
 			productName = DogPalAppUITests;
 			productReference = 08EA37052CE54001006B1466 /* DogPalAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -354,8 +369,6 @@
 				08EA36362CE53187006B1466 /* GoogleMaps.framework */,
 			);
 			name = GoogleMaps.framework;
-			packageProductDependencies = (
-			);
 			productName = GoogleMaps.framework;
 			productReference = 08EA36352CE53187006B1466 /* GoogleMaps_framework.framework */;
 			productType = "com.apple.product-type.framework";
@@ -378,8 +391,6 @@
 				08EA36442CE53187006B1466 /* GoogleMaps.frameworkTests */,
 			);
 			name = GoogleMaps.frameworkTests;
-			packageProductDependencies = (
-			);
 			productName = GoogleMaps.frameworkTests;
 			productReference = 08EA363E2CE53187006B1466 /* GoogleMaps.frameworkTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -401,8 +412,6 @@
 				08EA365B2CE531B1006B1466 /* GoogleMapsUtils.framework */,
 			);
 			name = GoogleMapsUtils.framework;
-			packageProductDependencies = (
-			);
 			productName = GoogleMapsUtils.framework;
 			productReference = 08EA365A2CE531B1006B1466 /* GoogleMapsUtils_framework.framework */;
 			productType = "com.apple.product-type.framework";
@@ -425,8 +434,6 @@
 				08EA36692CE531B1006B1466 /* GoogleMapsUtils.frameworkTests */,
 			);
 			name = GoogleMapsUtils.frameworkTests;
-			packageProductDependencies = (
-			);
 			productName = GoogleMapsUtils.frameworkTests;
 			productReference = 08EA36632CE531B1006B1466 /* GoogleMapsUtils.frameworkTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -550,12 +557,53 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		395AEE20902BEE009F572161 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DogPalApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		65463A6BA3376914845E641E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DogPalApp/Pods-DogPalApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DogPalApp/Pods-DogPalApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DogPalApp/Pods-DogPalApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0819B2FD2CC18460007A780D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				086E4EE42CDEA0CA005CF78E /* Untitled.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -768,6 +816,7 @@
 		};
 		0819B3262CC18462007A780D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FEA4D923766409739AA770AD /* Pods-DogPalApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -796,6 +845,7 @@
 		};
 		0819B3272CC18462007A780D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 886F865F7206E896F2E0D1F9 /* Pods-DogPalApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		086E4EE42CDEA0CA005CF78E /* Untitled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086E4EE32CDEA0C4005CF78E /* Untitled.swift */; };
 		08925FF02CD29B8F00FE96EB /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 08925FEF2CD29B8F00FE96EB /* FirebaseDatabase */; };
+		08EA363F2CE53187006B1466 /* GoogleMaps_framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA36352CE53187006B1466 /* GoogleMaps_framework.framework */; };
+		08EA364A2CE53187006B1466 /* GoogleMaps_framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA36352CE53187006B1466 /* GoogleMaps_framework.framework */; };
+		08EA364B2CE53187006B1466 /* GoogleMaps_framework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA36352CE53187006B1466 /* GoogleMaps_framework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		08EA36642CE531B1006B1466 /* GoogleMapsUtils_framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA365A2CE531B1006B1466 /* GoogleMapsUtils_framework.framework */; };
+		08EA366F2CE531B1006B1466 /* GoogleMapsUtils_framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA365A2CE531B1006B1466 /* GoogleMapsUtils_framework.framework */; };
+		08EA36702CE531B1006B1466 /* GoogleMapsUtils_framework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA365A2CE531B1006B1466 /* GoogleMapsUtils_framework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9CE4E9B2CC73D4A00D91E96 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F9CE4E9A2CC73D4A00D91E96 /* FirebaseAuth */; };
 /* End PBXBuildFile section */
 
@@ -27,14 +33,92 @@
 			remoteGlobalIDString = 0819B3002CC18460007A780D;
 			remoteInfo = DogPalApp;
 		};
+		08EA36402CE53187006B1466 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0819B2F92CC18460007A780D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 08EA36342CE53187006B1466;
+			remoteInfo = GoogleMaps.framework;
+		};
+		08EA36422CE53187006B1466 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0819B2F92CC18460007A780D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0819B3002CC18460007A780D;
+			remoteInfo = DogPalApp;
+		};
+		08EA36482CE53187006B1466 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0819B2F92CC18460007A780D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 08EA36342CE53187006B1466;
+			remoteInfo = GoogleMaps.framework;
+		};
+		08EA36652CE531B1006B1466 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0819B2F92CC18460007A780D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 08EA36592CE531B1006B1466;
+			remoteInfo = GoogleMapsUtils.framework;
+		};
+		08EA36672CE531B1006B1466 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0819B2F92CC18460007A780D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0819B3002CC18460007A780D;
+			remoteInfo = DogPalApp;
+		};
+		08EA366D2CE531B1006B1466 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0819B2F92CC18460007A780D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 08EA36592CE531B1006B1466;
+			remoteInfo = GoogleMapsUtils.framework;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		08EA36512CE53187006B1466 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				08EA364B2CE53187006B1466 /* GoogleMaps_framework.framework in Embed Frameworks */,
+				08EA36702CE531B1006B1466 /* GoogleMapsUtils_framework.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		0819B3012CC18460007A780D /* DogPalApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = DogPalApp.app; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalApp.app"; sourceTree = "<absolute>"; };
 		0819B3112CC18462007A780D /* DogPalAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DogPalAppTests.xctest; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalApp.app/PlugIns/DogPalAppTests.xctest"; sourceTree = "<absolute>"; };
 		0819B31B2CC18462007A780D /* DogPalAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DogPalAppUITests.xctest; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalAppUITests-Runner.app/PlugIns/DogPalAppUITests.xctest"; sourceTree = "<absolute>"; };
 		086E4EE32CDEA0C4005CF78E /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
+		08EA36352CE53187006B1466 /* GoogleMaps_framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleMaps_framework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		08EA363E2CE53187006B1466 /* GoogleMaps.frameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoogleMaps.frameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		08EA364C2CE53187006B1466 /* DogPalApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogPalApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		08EA365A2CE531B1006B1466 /* GoogleMapsUtils_framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleMapsUtils_framework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		08EA36632CE531B1006B1466 /* GoogleMapsUtils.frameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoogleMapsUtils.frameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		08EA364D2CE53187006B1466 /* Exceptions for "GoogleMaps.framework" folder in "GoogleMaps.framework" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			publicHeaders = (
+				GoogleMaps_framework.h,
+			);
+			target = 08EA36342CE53187006B1466 /* GoogleMaps.framework */;
+		};
+		08EA36712CE531B1006B1466 /* Exceptions for "GoogleMapsUtils.framework" folder in "GoogleMapsUtils.framework" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			publicHeaders = (
+				GoogleMapsUtils_framework.h,
+			);
+			target = 08EA36592CE531B1006B1466 /* GoogleMapsUtils.framework */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0819B3032CC18460007A780D /* DogPalApp */ = {
@@ -52,6 +136,32 @@
 			path = DogPalAppUITests;
 			sourceTree = "<group>";
 		};
+		08EA36362CE53187006B1466 /* GoogleMaps.framework */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				08EA364D2CE53187006B1466 /* Exceptions for "GoogleMaps.framework" folder in "GoogleMaps.framework" target */,
+			);
+			path = GoogleMaps.framework;
+			sourceTree = "<group>";
+		};
+		08EA36442CE53187006B1466 /* GoogleMaps.frameworkTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GoogleMaps.frameworkTests;
+			sourceTree = "<group>";
+		};
+		08EA365B2CE531B1006B1466 /* GoogleMapsUtils.framework */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				08EA36712CE531B1006B1466 /* Exceptions for "GoogleMapsUtils.framework" folder in "GoogleMapsUtils.framework" target */,
+			);
+			path = GoogleMapsUtils.framework;
+			sourceTree = "<group>";
+		};
+		08EA36692CE531B1006B1466 /* GoogleMapsUtils.frameworkTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GoogleMapsUtils.frameworkTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,8 +169,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08EA364A2CE53187006B1466 /* GoogleMaps_framework.framework in Frameworks */,
 				08925FF02CD29B8F00FE96EB /* FirebaseDatabase in Frameworks */,
 				F9CE4E9B2CC73D4A00D91E96 /* FirebaseAuth in Frameworks */,
+				08EA366F2CE531B1006B1466 /* GoogleMapsUtils_framework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +190,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		08EA36322CE53187006B1466 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08EA363B2CE53187006B1466 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08EA363F2CE53187006B1466 /* GoogleMaps_framework.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08EA36572CE531B1006B1466 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08EA36602CE531B1006B1466 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08EA36642CE531B1006B1466 /* GoogleMapsUtils_framework.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -88,10 +230,36 @@
 				0819B3142CC18462007A780D /* DogPalAppTests */,
 				0819B31E2CC18462007A780D /* DogPalAppUITests */,
 				086E4EE32CDEA0C4005CF78E /* Untitled.swift */,
+				08EA36352CE53187006B1466 /* GoogleMaps_framework.framework */,
+				08EA36362CE53187006B1466 /* GoogleMaps.framework */,
+				08EA363E2CE53187006B1466 /* GoogleMaps.frameworkTests.xctest */,
+				08EA36442CE53187006B1466 /* GoogleMaps.frameworkTests */,
+				08EA364C2CE53187006B1466 /* DogPalApp.app */,
+				08EA365A2CE531B1006B1466 /* GoogleMapsUtils_framework.framework */,
+				08EA365B2CE531B1006B1466 /* GoogleMapsUtils.framework */,
+				08EA36632CE531B1006B1466 /* GoogleMapsUtils.frameworkTests.xctest */,
+				08EA36692CE531B1006B1466 /* GoogleMapsUtils.frameworkTests */,
 			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		08EA36302CE53187006B1466 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08EA36552CE531B1006B1466 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		0819B3002CC18460007A780D /* DogPalApp */ = {
@@ -101,10 +269,13 @@
 				0819B2FD2CC18460007A780D /* Sources */,
 				0819B2FE2CC18460007A780D /* Frameworks */,
 				0819B2FF2CC18460007A780D /* Resources */,
+				08EA36512CE53187006B1466 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				08EA36492CE53187006B1466 /* PBXTargetDependency */,
+				08EA366E2CE531B1006B1466 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				0819B3032CC18460007A780D /* DogPalApp */,
@@ -115,7 +286,7 @@
 				08925FEF2CD29B8F00FE96EB /* FirebaseDatabase */,
 			);
 			productName = DogPalApp;
-			productReference = 0819B3012CC18460007A780D /* DogPalApp.app */;
+			productReference = 08EA364C2CE53187006B1466 /* DogPalApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		0819B3102CC18462007A780D /* DogPalAppTests */ = {
@@ -164,6 +335,100 @@
 			productReference = 0819B31B2CC18462007A780D /* DogPalAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		08EA36342CE53187006B1466 /* GoogleMaps.framework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08EA364E2CE53187006B1466 /* Build configuration list for PBXNativeTarget "GoogleMaps.framework" */;
+			buildPhases = (
+				08EA36302CE53187006B1466 /* Headers */,
+				08EA36312CE53187006B1466 /* Sources */,
+				08EA36322CE53187006B1466 /* Frameworks */,
+				08EA36332CE53187006B1466 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				08EA36362CE53187006B1466 /* GoogleMaps.framework */,
+			);
+			name = GoogleMaps.framework;
+			packageProductDependencies = (
+			);
+			productName = GoogleMaps.framework;
+			productReference = 08EA36352CE53187006B1466 /* GoogleMaps_framework.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		08EA363D2CE53187006B1466 /* GoogleMaps.frameworkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08EA36522CE53187006B1466 /* Build configuration list for PBXNativeTarget "GoogleMaps.frameworkTests" */;
+			buildPhases = (
+				08EA363A2CE53187006B1466 /* Sources */,
+				08EA363B2CE53187006B1466 /* Frameworks */,
+				08EA363C2CE53187006B1466 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				08EA36412CE53187006B1466 /* PBXTargetDependency */,
+				08EA36432CE53187006B1466 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				08EA36442CE53187006B1466 /* GoogleMaps.frameworkTests */,
+			);
+			name = GoogleMaps.frameworkTests;
+			packageProductDependencies = (
+			);
+			productName = GoogleMaps.frameworkTests;
+			productReference = 08EA363E2CE53187006B1466 /* GoogleMaps.frameworkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		08EA36592CE531B1006B1466 /* GoogleMapsUtils.framework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08EA36722CE531B1006B1466 /* Build configuration list for PBXNativeTarget "GoogleMapsUtils.framework" */;
+			buildPhases = (
+				08EA36552CE531B1006B1466 /* Headers */,
+				08EA36562CE531B1006B1466 /* Sources */,
+				08EA36572CE531B1006B1466 /* Frameworks */,
+				08EA36582CE531B1006B1466 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				08EA365B2CE531B1006B1466 /* GoogleMapsUtils.framework */,
+			);
+			name = GoogleMapsUtils.framework;
+			packageProductDependencies = (
+			);
+			productName = GoogleMapsUtils.framework;
+			productReference = 08EA365A2CE531B1006B1466 /* GoogleMapsUtils_framework.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		08EA36622CE531B1006B1466 /* GoogleMapsUtils.frameworkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08EA36752CE531B1006B1466 /* Build configuration list for PBXNativeTarget "GoogleMapsUtils.frameworkTests" */;
+			buildPhases = (
+				08EA365F2CE531B1006B1466 /* Sources */,
+				08EA36602CE531B1006B1466 /* Frameworks */,
+				08EA36612CE531B1006B1466 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				08EA36662CE531B1006B1466 /* PBXTargetDependency */,
+				08EA36682CE531B1006B1466 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				08EA36692CE531B1006B1466 /* GoogleMapsUtils.frameworkTests */,
+			);
+			name = GoogleMapsUtils.frameworkTests;
+			packageProductDependencies = (
+			);
+			productName = GoogleMapsUtils.frameworkTests;
+			productReference = 08EA36632CE531B1006B1466 /* GoogleMapsUtils.frameworkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -182,6 +447,20 @@
 						TestTargetID = 0819B3002CC18460007A780D;
 					};
 					0819B31A2CC18462007A780D = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 0819B3002CC18460007A780D;
+					};
+					08EA36342CE53187006B1466 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					08EA363D2CE53187006B1466 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 0819B3002CC18460007A780D;
+					};
+					08EA36592CE531B1006B1466 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					08EA36622CE531B1006B1466 = {
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = 0819B3002CC18460007A780D;
 					};
@@ -209,6 +488,10 @@
 				0819B3002CC18460007A780D /* DogPalApp */,
 				0819B3102CC18462007A780D /* DogPalAppTests */,
 				0819B31A2CC18462007A780D /* DogPalAppUITests */,
+				08EA36342CE53187006B1466 /* GoogleMaps.framework */,
+				08EA363D2CE53187006B1466 /* GoogleMaps.frameworkTests */,
+				08EA36592CE531B1006B1466 /* GoogleMapsUtils.framework */,
+				08EA36622CE531B1006B1466 /* GoogleMapsUtils.frameworkTests */,
 			);
 		};
 /* End PBXProject section */
@@ -229,6 +512,34 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0819B3192CC18462007A780D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08EA36332CE53187006B1466 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08EA363C2CE53187006B1466 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08EA36582CE531B1006B1466 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08EA36612CE531B1006B1466 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -260,6 +571,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		08EA36312CE53187006B1466 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08EA363A2CE53187006B1466 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08EA36562CE531B1006B1466 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08EA365F2CE531B1006B1466 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -272,6 +611,36 @@
 			isa = PBXTargetDependency;
 			target = 0819B3002CC18460007A780D /* DogPalApp */;
 			targetProxy = 0819B31C2CC18462007A780D /* PBXContainerItemProxy */;
+		};
+		08EA36412CE53187006B1466 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 08EA36342CE53187006B1466 /* GoogleMaps.framework */;
+			targetProxy = 08EA36402CE53187006B1466 /* PBXContainerItemProxy */;
+		};
+		08EA36432CE53187006B1466 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0819B3002CC18460007A780D /* DogPalApp */;
+			targetProxy = 08EA36422CE53187006B1466 /* PBXContainerItemProxy */;
+		};
+		08EA36492CE53187006B1466 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 08EA36342CE53187006B1466 /* GoogleMaps.framework */;
+			targetProxy = 08EA36482CE53187006B1466 /* PBXContainerItemProxy */;
+		};
+		08EA36662CE531B1006B1466 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 08EA36592CE531B1006B1466 /* GoogleMapsUtils.framework */;
+			targetProxy = 08EA36652CE531B1006B1466 /* PBXContainerItemProxy */;
+		};
+		08EA36682CE531B1006B1466 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0819B3002CC18460007A780D /* DogPalApp */;
+			targetProxy = 08EA36672CE531B1006B1466 /* PBXContainerItemProxy */;
+		};
+		08EA366E2CE531B1006B1466 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 08EA36592CE531B1006B1466 /* GoogleMapsUtils.framework */;
+			targetProxy = 08EA366D2CE531B1006B1466 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -519,6 +888,206 @@
 			};
 			name = Release;
 		};
+		08EA364F2CE53187006B1466 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jessicamaximo.GoogleMaps-framework";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		08EA36502CE53187006B1466 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jessicamaximo.GoogleMaps-framework";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		08EA36532CE53187006B1466 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jessicamaximo.GoogleMaps-frameworkTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DogPalApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DogPalApp";
+			};
+			name = Debug;
+		};
+		08EA36542CE53187006B1466 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jessicamaximo.GoogleMaps-frameworkTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DogPalApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DogPalApp";
+			};
+			name = Release;
+		};
+		08EA36732CE531B1006B1466 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jessicamaximo.GoogleMapsUtils-framework";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		08EA36742CE531B1006B1466 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jessicamaximo.GoogleMapsUtils-framework";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		08EA36762CE531B1006B1466 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jessicamaximo.GoogleMapsUtils-frameworkTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DogPalApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DogPalApp";
+			};
+			name = Debug;
+		};
+		08EA36772CE531B1006B1466 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jessicamaximo.GoogleMapsUtils-frameworkTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DogPalApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DogPalApp";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -554,6 +1123,42 @@
 			buildConfigurations = (
 				0819B32C2CC18462007A780D /* Debug */,
 				0819B32D2CC18462007A780D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		08EA364E2CE53187006B1466 /* Build configuration list for PBXNativeTarget "GoogleMaps.framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08EA364F2CE53187006B1466 /* Debug */,
+				08EA36502CE53187006B1466 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		08EA36522CE53187006B1466 /* Build configuration list for PBXNativeTarget "GoogleMaps.frameworkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08EA36532CE53187006B1466 /* Debug */,
+				08EA36542CE53187006B1466 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		08EA36722CE531B1006B1466 /* Build configuration list for PBXNativeTarget "GoogleMapsUtils.framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08EA36732CE531B1006B1466 /* Debug */,
+				08EA36742CE531B1006B1466 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		08EA36752CE531B1006B1466 /* Build configuration list for PBXNativeTarget "GoogleMapsUtils.frameworkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08EA36762CE531B1006B1466 /* Debug */,
+				08EA36772CE531B1006B1466 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -12,7 +12,20 @@ import FirebaseAuth
 import CoreLocation
 import MapKit
 
-struct SettingsView: View ,CLLocationManagerDelegate {
+class LocationManagerDelegate: NSObject, CLLocationManagerDelegate {
+    var locationUpdated: ((CLLocationCoordinate2D) -> Void)?
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let newLocation = locations.last else { return }
+        locationUpdated?(newLocation.coordinate)
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Error getting location: \(error.localizedDescription)")
+    }
+}
+
+struct SettingsView: View  {
     
     @State private var userImage: UIImage?
     @State private var showingImagePicker: Bool = false
@@ -24,8 +37,12 @@ struct SettingsView: View ,CLLocationManagerDelegate {
     @State private var isDarkMode: Bool = UserDefaults.standard.bool(forKey: "isDarkMode")
     @State private var language: String = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
     @State private var shouldNavigateToLogin: Bool = false
+    @State private var showLocationAlert: Bool = false
+    @State private var showNotificationAlert: Bool = false
     
     @State private var locationManager = CLLocationManager()
+    private var locationManagerDelegate = LocationManagerDelegate()
+
 
     var body: some View {
         NavigationView {
@@ -68,13 +85,20 @@ struct SettingsView: View ,CLLocationManagerDelegate {
                     Section(header: Text("Notifications")) {
                         Toggle("Push Notifications", isOn: $notificationsEnabled).onChange(of: notificationsEnabled)
                         { value in
-                            handleNotificationsToggle(value)
+                            if !showLocationAlert {
+                                    showNotificationAlert = true
+                                }
+                                handleNotificationsToggle(value)
                         }
                     }
          Section(header: Text("Location Preferences")) {
                         Toggle("Enable Location", isOn: $locationEnabled)
+                 .onChange(of: locationEnabled) { value in
+                     if !showNotificationAlert { 
+                            showLocationAlert = true
+                        }
+                        }
                     }
-                    
                     
                     Section(header: Text("Language and Theme")) {
                         Picker("Language", selection: $language) {
@@ -108,44 +132,43 @@ value in
                            }
             }
             .onAppear {
-                locationManager.delegate = self
-                   locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-                   
-                   
-                   locationManager.requestWhenInUseAuthorization()
+                locationManager.delegate = locationManagerDelegate
+                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                locationManager.requestWhenInUseAuthorization()
 
-                   
-                   if CLLocationManager.locationServicesEnabled() {
-                       locationManager.startUpdatingLocation()
-                   } else {
-                       print("Location services are not enabled.")
-                   }
+                if CLLocationManager.locationServicesEnabled() {
+                    locationManager.startUpdatingLocation()
+                    
+                } else {
+                    print("Location services are not enabled.")
+                    }
 
                 loadUserProfile()
                 NotificationCenter.default.addObserver(forName: NSNotification.Name("LanguageChanged"), object: nil, queue: .main) { _ in
                       
                        self.language = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
-                   }
+                }
+            }
+            .alert(isPresented: $showLocationAlert) {  // Definir o alerta
+                Alert(
+                    title: Text("Location Settings Changed"),
+                    message: Text(locationEnabled ? "Location services have been enabled." : "Location services have been disabled."),
+                    primaryButton: .default(Text("OK")),
+                    secondaryButton: .cancel()
+                )
+            }
+            .alert(isPresented: $showNotificationAlert) { // Alerta para notificações
+                Alert(
+                    title: Text("Notifications Settings Changed"),
+                    message: Text(notificationsEnabled ? "Push notifications have been enabled." : "Push notifications have been disabled."),
+                    primaryButton: .default(Text("OK")),
+                    secondaryButton: .cancel()
+                )
             }
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let newLocation = locations.last else { return }
-        print("Localização atual: \(newLocation.coordinate.latitude), \(newLocation.coordinate.longitude)")
-       
-    }
-
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Erro ao obter localização: \(error.localizedDescription)")
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let newLocation = locations.last else { return }
-        print("Localização atual: \(newLocation.coordinate.latitude), \(newLocation.coordinate.longitude)")
-    }
-
-    
+ 
     func loadUserProfile() {
         if let user = Auth.auth().currentUser {
             userName = user.displayName ?? ""

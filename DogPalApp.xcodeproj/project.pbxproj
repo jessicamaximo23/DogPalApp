@@ -30,9 +30,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0819B3012CC18460007A780D /* DogPalApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogPalApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0819B3112CC18462007A780D /* DogPalAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0819B31B2CC18462007A780D /* DogPalAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0819B3012CC18460007A780D /* DogPalApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = DogPalApp.app; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalApp.app"; sourceTree = "<absolute>"; };
+		0819B3112CC18462007A780D /* DogPalAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DogPalAppTests.xctest; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalApp.app/PlugIns/DogPalAppTests.xctest"; sourceTree = "<absolute>"; };
+		0819B31B2CC18462007A780D /* DogPalAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DogPalAppUITests.xctest; path = "/Users/jessicamaximo/Desktop/DogPalApp/build/Debug-iphoneos/DogPalAppUITests-Runner.app/PlugIns/DogPalAppUITests.xctest"; sourceTree = "<absolute>"; };
 		086E4EE32CDEA0C4005CF78E /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,19 +87,8 @@
 				0819B3032CC18460007A780D /* DogPalApp */,
 				0819B3142CC18462007A780D /* DogPalAppTests */,
 				0819B31E2CC18462007A780D /* DogPalAppUITests */,
-				0819B3022CC18460007A780D /* Products */,
 				086E4EE32CDEA0C4005CF78E /* Untitled.swift */,
 			);
-			sourceTree = "<group>";
-		};
-		0819B3022CC18460007A780D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0819B3012CC18460007A780D /* DogPalApp.app */,
-				0819B3112CC18462007A780D /* DogPalAppTests.xctest */,
-				0819B31B2CC18462007A780D /* DogPalAppUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,6 +193,8 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
+				"en 2",
 			);
 			mainGroup = 0819B2F82CC18460007A780D;
 			minimizedProjectReferenceProxies = 1;
@@ -211,7 +202,7 @@
 				F9CE4E992CC73D4A00D91E96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 0819B3022CC18460007A780D /* Products */;
+			productRefGroup = 0819B2F82CC18460007A780D;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (

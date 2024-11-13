@@ -9,8 +9,10 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
+import CoreLocation
+import MapKit
 
-struct SettingsView: View {
+struct SettingsView: View ,CLLocationManagerDelegate {
     
     @State private var userImage: UIImage?
     @State private var showingImagePicker: Bool = false
@@ -22,6 +24,8 @@ struct SettingsView: View {
     @State private var isDarkMode: Bool = UserDefaults.standard.bool(forKey: "isDarkMode")
     @State private var language: String = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
     @State private var shouldNavigateToLogin: Bool = false
+    
+    @State private var locationManager = CLLocationManager()
 
     var body: some View {
         NavigationView {
@@ -38,7 +42,7 @@ struct SettingsView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .clipShape(Circle())
-                                        .frame(width: 100, height: 100)
+                                        .frame(width: 200, height: 200)
                                 } else {
                                     Image(systemName: "person.circle.fill")
                                         .resizable()
@@ -97,9 +101,6 @@ value in
                     }
                 }
                 .navigationTitle("Settings")
-                .navigationBarItems(trailing: Button("Close") {
-                    presentationMode.wrappedValue.dismiss()
-                })
                 .preferredColorScheme(isDarkMode ? .dark : .light)
                 
                 NavigationLink(destination: LoginView(), isActive: $shouldNavigateToLogin) {
@@ -107,6 +108,19 @@ value in
                            }
             }
             .onAppear {
+                locationManager.delegate = self
+                   locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                   
+                   
+                   locationManager.requestWhenInUseAuthorization()
+
+                   
+                   if CLLocationManager.locationServicesEnabled() {
+                       locationManager.startUpdatingLocation()
+                   } else {
+                       print("Location services are not enabled.")
+                   }
+
                 loadUserProfile()
                 NotificationCenter.default.addObserver(forName: NSNotification.Name("LanguageChanged"), object: nil, queue: .main) { _ in
                       
@@ -115,6 +129,22 @@ value in
             }
         }
     }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let newLocation = locations.last else { return }
+        print("Localização atual: \(newLocation.coordinate.latitude), \(newLocation.coordinate.longitude)")
+       
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Erro ao obter localização: \(error.localizedDescription)")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let newLocation = locations.last else { return }
+        print("Localização atual: \(newLocation.coordinate.latitude), \(newLocation.coordinate.longitude)")
+    }
+
     
     func loadUserProfile() {
         if let user = Auth.auth().currentUser {

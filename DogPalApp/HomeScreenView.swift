@@ -29,7 +29,7 @@ struct HomeScreenView: View {
     var body: some View {
         
         TabView {
-                   // Home tab
+                  
                    NavigationView {
                        ScrollView(.vertical, showsIndicators: false) {
                            VStack {
@@ -122,7 +122,7 @@ struct HomeScreenView: View {
                                .font(.title)
                                .padding()
                            
-                           // Adicionar elementos de edição de perfil aqui
+
                        }
                        .navigationBarTitle("Profile", displayMode: .inline)
                    }

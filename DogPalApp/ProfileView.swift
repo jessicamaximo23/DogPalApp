@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct ProfileView: View {
-    let userEmail: String
+    
+   var userEmail: String
+    
     @StateObject private var userManager = UserManager()
     @State private var showingSignOutAlert = false
     
     var body: some View {
+        
         VStack(spacing: 20) {
             Image(systemName: "person.circle.fill")
                 .resizable()
@@ -21,7 +24,7 @@ struct ProfileView: View {
                 .foregroundColor(.blue)
                 .padding()
             
-            Text("Welcome!")
+            Text("Welcome, \(userEmail)")
                 .font(.largeTitle)
                 .fontWeight(.bold)
             

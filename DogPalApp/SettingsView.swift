@@ -22,6 +22,9 @@ struct SettingsView: View {
     @State private var isDarkMode: Bool = UserDefaults.standard.bool(forKey: "isDarkMode")
     @State private var language: String = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
     @State private var shouldNavigateToLogin: Bool = false
+    @State private var showLocationAlert: Bool = false
+    @State private var showNotificationAlert: Bool = false
+    
 
     var body: some View {
         NavigationView {
@@ -64,13 +67,25 @@ struct SettingsView: View {
                     Section(header: Text("Notifications")) {
                         Toggle("Push Notifications", isOn: $notificationsEnabled).onChange(of: notificationsEnabled)
                         { value in
-                            handleNotificationsToggle(value)
+                            
+                            UserDefaults.standard.set(value, forKey: "notificationsEnabled")
+                            
+                            if !showLocationAlert {
+                                    showNotificationAlert = true
+                                }
+                                handleNotificationsToggle(value)
                         }
                     }
-         Section(header: Text("Location Preferences")) {
+                    Section(header: Text("Location Preferences")) {
                         Toggle("Enable Location", isOn: $locationEnabled)
-                    }
+                            .onChange(of: locationEnabled) { value in
+                     
+                     UserDefaults.standard.set(value, forKey: "locationEnabled")
+                     
+                     showLocationAlert = true
                     
+                        }
+                    }
                     
                     Section(header: Text("Language and Theme")) {
                         Picker("Language", selection: $language) {
@@ -83,8 +98,7 @@ struct SettingsView: View {
                                                }
                         
                         Toggle("Dark Mode", isOn: $isDarkMode)
-                            .onChange(of: isDarkMode) {
-value in
+                            .onChange(of: isDarkMode) { value in
                                 setAppTheme(darkMode: value)
                                                        }
                     }
@@ -107,11 +121,29 @@ value in
                            }
             }
             .onAppear {
+                
                 loadUserProfile()
+                
                 NotificationCenter.default.addObserver(forName: NSNotification.Name("LanguageChanged"), object: nil, queue: .main) { _ in
                       
                        self.language = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
                    }
+            }
+            .alert(isPresented: $showLocationAlert) {
+                Alert(
+                    title: Text("Location Settings Changed"),
+                    message: Text(locationEnabled ? "Location services have been enabled." : "Location services have been disabled."),
+                    primaryButton: .default(Text("OK")),
+                    secondaryButton: .cancel()
+                )
+            }
+            .alert(isPresented: $showNotificationAlert) {
+                Alert(
+                    title: Text("Notifications Settings Changed"),
+                    message: Text(notificationsEnabled ? "Push notifications have been enabled." : "Push notifications have been disabled."),
+                    primaryButton: .default(Text("OK")),
+                    secondaryButton: .cancel()
+                )
             }
         }
     }
@@ -123,6 +155,7 @@ value in
     }
 
     func resetPassword() {
+        
         if let email = Auth.auth().currentUser?.email {
             Auth.auth().sendPasswordReset(withEmail: email) { error in
                 if let error = error {
@@ -177,6 +210,9 @@ value in
 
     private func setAppTheme(darkMode: Bool) {
             isDarkMode = darkMode
+        
+            UserDefaults.standard.set(darkMode, forKey: "isDarkMode")
+        
             print(darkMode ? "Dark Mode activated." : "Light Mode activated.")
         }
         

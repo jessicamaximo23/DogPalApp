@@ -4,7 +4,6 @@
 //
 //  Created by Jessica Maximo on 2024-10-30.
 
-//DA HOME VIEW ENVIAR PARA OUTRA PAGINA DE FAZER O PERFIL
 
 import SwiftUI
 import Firebase
@@ -76,6 +75,16 @@ struct HomeScreenView: View {
                         .scaledToFit()
                         .padding()
                         .frame(width: 350, height: 250)
+                    
+                    NavigationLink(destination: ParksView()) {
+                        Text("Available Parks next to me")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.accentColor)
+                            .cornerRadius(10)
+                            .padding(.top, 5)
+                    }
                     
                     Text("Best Parks in Montreal")
                         .font(.title)

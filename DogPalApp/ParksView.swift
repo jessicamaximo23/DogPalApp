@@ -16,6 +16,8 @@ struct ParksView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     )
     @State private var location: ParkLocation?
+    @State private var directions: [MKRoute] = []
+    @State private var parkInfo: String = "Park Information: Beautiful park to walk your dog."
 
     var body: some View {
         VStack {
@@ -24,7 +26,8 @@ struct ParksView: View {
                 geocodeAddress(address: searchText)
             })
             .textFieldStyle(RoundedBorderTextFieldStyle())
-            .padding()
+            .padding(.horizontal)
+            .frame(height: 50)
 
           
             Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: location == nil ? [] : [location!]) { parkLocation in

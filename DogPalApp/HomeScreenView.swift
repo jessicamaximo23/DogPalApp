@@ -28,92 +28,136 @@ struct HomeScreenView: View {
     
     var body: some View {
         
-        NavigationView {
-            
-            ScrollView(.vertical, showsIndicators: false){
-                VStack {
-                    HStack{
-                        Spacer()
-                        
-                        NavigationLink(destination: SettingsView()) {
-                            Image(systemName: "gearshape.fill")
-                                .font(.title)
-                                .foregroundColor(Color.primary)
-                        }
-
-                                           }
-                    Button(action: {
-                        showingImagePicker = true
-                                }) {
-                                if let image = userImage {
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFit()
-                                .clipShape(Circle())
-                                .frame(width: 250, height: 250)
-                                
-                                    } else {
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(Color.gray)
-                                .frame(width: 130, height: 130)
-                                .padding()
-                                }
-                            }
-                    .sheet(isPresented: $showingImagePicker) {
-                        ImagePicker(image: $userImage)
-                                }
-                    
-                    Text("Hello, \(userName)")
-                        .font(.system(size: 20))
-                        .padding()
-                        .foregroundColor(Color.primary)
-                    
-                    Image("map")
-                        .resizable()
-                        .scaledToFit()
-                        .padding()
-                        .frame(width: 350, height: 250)
-                    
-                    NavigationLink(destination: ParksView()) {
-                        Text("Available Parks next to me")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.accentColor)
-                            .cornerRadius(10)
-                            .padding(.top, 5)
-                    }
-                    
-                    Text("Best Parks in Montreal")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .padding()
-                        .foregroundColor(Color.primary)
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        
-                        HStack(spacing: 15) {
-                            ForEach(parks) { park in
-                                ParkCardView(park: park)
-                            }
-                        }
-                        .padding()
-                    }
-                }
-                .padding()
-                .onAppear {
-                    if Auth.auth().currentUser != nil {
-                            fetchUserName()
-                        } else {
-                            print("User not logged in")
-                        }
-                }
-            }
-          
-        }
-    }
+        TabView {
+                   // Home tab
+                   NavigationView {
+                       ScrollView(.vertical, showsIndicators: false) {
+                           VStack {
+                               HStack {
+                                   Spacer()
+                                   NavigationLink(destination: SettingsView()) {
+                                       Image(systemName: "gearshape.fill")
+                                           .font(.title)
+                                           .foregroundColor(Color.primary)
+                                   }
+                               }
+                               
+                               Button(action: {
+                                   showingImagePicker = true
+                               }) {
+                                   if let image = userImage {
+                                       Image(uiImage: image)
+                                           .resizable()
+                                           .scaledToFit()
+                                           .clipShape(Circle())
+                                           .frame(width: 250, height: 250)
+                                   } else {
+                                       Image(systemName: "person.circle.fill")
+                                           .resizable()
+                                           .scaledToFit()
+                                           .foregroundColor(Color.gray)
+                                           .frame(width: 130, height: 130)
+                                           .padding()
+                                   }
+                               }
+                               .sheet(isPresented: $showingImagePicker) {
+                                   ImagePicker(image: $userImage)
+                               }
+                               
+                               Text("Hello, \(userName)")
+                                   .font(.system(size: 20))
+                                   .padding()
+                                   .foregroundColor(Color.primary)
+                               
+                               Image("map")
+                                   .resizable()
+                                   .scaledToFit()
+                                   .padding()
+                                   .frame(width: 350, height: 250)
+                               
+                               NavigationLink(destination: ParksView()) {
+                                   Text("Available Parks next to me")
+                                       .font(.headline)
+                                       .foregroundColor(.white)
+                                       .padding()
+                                       .background(Color.accentColor)
+                                       .cornerRadius(10)
+                                       .padding(.top, 5)
+                               }
+                               
+                               Text("Best Parks in Montreal")
+                                   .font(.title)
+                                   .fontWeight(.bold)
+                                   .padding()
+                                   .foregroundColor(Color.primary)
+                               
+                               ScrollView(.horizontal, showsIndicators: false) {
+                                   HStack(spacing: 15) {
+                                       ForEach(parks) { park in
+                                           ParkCardView(park: park)
+                                       }
+                                   }
+                                   .padding()
+                               }
+                           }
+                           .padding()
+                       }
+                       .onAppear {
+                           if Auth.auth().currentUser != nil {
+                               fetchUserName()
+                           } else {
+                               print("User not logged in")
+                           }
+                       }
+                   }
+                   .tabItem {
+                       Image(systemName: "house.fill")
+                       Text("Home")
+                   }
+                   
+                   // Profile tab
+                   NavigationView {
+                       VStack {
+                           Text("Profile Page")
+                               .font(.title)
+                               .padding()
+                           
+                           // Adicionar elementos de edição de perfil aqui
+                       }
+                       .navigationBarTitle("Profile", displayMode: .inline)
+                   }
+                   .tabItem {
+                       Image(systemName: "person.fill")
+                       Text("Profile")
+                   }
+                   
+                   // Reviews tab
+                   NavigationView {
+                       VStack {
+                           Text("Reviews Page")
+                               .font(.title)
+                               .padding()
+                           
+                           // Adicionar elementos de revisão aqui
+                       }
+                       .navigationBarTitle("Reviews", displayMode: .inline)
+                   }
+                   .tabItem {
+                       Image(systemName: "star.fill")
+                       Text("Reviews")
+                   }
+                   
+                   // Parks tab
+                   NavigationView {
+                       ParksView()
+                   }
+                   .tabItem {
+                       Image(systemName: "map.fill")
+                       Text("Parks")
+                   }
+               }
+               .accentColor(.blue) // Cor da barra de navegação
+           }
     
     func fetchUserName() {
         guard let user = Auth.auth().currentUser else {

@@ -7,7 +7,7 @@ struct UserProfilePage: View {
     var userAge: Int
     var dogBreed: String
     var dogName: String
-    var walkerPhoto: UIImage?
+    var userImage: Data?
     @State private var showHomeScreen = false
     @State private var showProfileView = false // Estado para navegação para HomeScreenView
     
@@ -31,13 +31,12 @@ struct UserProfilePage: View {
                     Text(userName)
                         .font(.largeTitle)
                     
-                    if let photo = walkerPhoto {
-                        Image(uiImage: photo)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 100)
-                            .clipShape(Circle())
-                            .shadow(radius: 10)
+                    if let imageData = userImage, let image = UIImage(data: imageData) {
+                                   Image(uiImage: image)
+                                       .resizable()
+                                       .scaledToFit()
+                                       .clipShape(Circle())
+                                       .shadow(radius: 10)
                     } else {
                         Image(systemName: "person.circle")
                             .resizable()

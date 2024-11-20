@@ -17,14 +17,16 @@ struct UserProfileCreationView: View {
     @State private var userAge: String = ""
     @State private var dogName: String = ""
     @State private var dogBreed: String = ""
-    @State private var navigateToUserProfilePage = false
-   
     
+    @State private var userImage: UIImage?
+    @State private var showImagePicker = false
+    @State private var navigateToUserProfilePage = false
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationView {
             VStack {
+                // Logo
                 Image("DogPalLogo2")
                     .resizable()
                     .scaledToFit()
@@ -34,8 +36,6 @@ struct UserProfileCreationView: View {
                 Text("Set up your account")
                     .font(.largeTitle)
                     .padding(.bottom, 20)
-                
-                // Campos de entrada de dados
                 Section {
                     TextField("Your Name", text: $userName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -57,6 +57,36 @@ struct UserProfileCreationView: View {
                     TextField("Dog Breed", text: $dogBreed)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal)
+                    
+                    // Foto opcional
+                    Section(header: Text("Insert a picture of yourself! (optional)")) {
+                        if let image = userImage {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 100)
+                                .clipShape(Circle())
+                                .shadow(radius: 10)
+                        } else {
+                            Button(action: {
+                                showImagePicker = true
+                            }) {
+                                HStack {
+                                    Image(systemName: "camera")
+                                        .font(.largeTitle)
+                                        .foregroundColor(.brown)
+                                    
+                                    Text("Select a Photo")
+                                        .font(.headline)
+                                        .foregroundColor(.brown)
+                                }
+                            }
+                        }
+                    }
+                    .sheet(isPresented: $showImagePicker) {
+                        CustomImagePicker(selectedImage: $userImage)
+                    }
+                    
                 }
                 
                 // Botão de envio
@@ -72,46 +102,47 @@ struct UserProfileCreationView: View {
                         .padding(20)
                 }
                 .disabled(userEmail.isEmpty || userName.isEmpty || userAge.isEmpty || dogName.isEmpty || dogBreed.isEmpty)
-                
-                NavigationLink(
-                    destination: UserProfilePage(
-                        userName: userName,
-                        userAge: Int(userAge) ?? 0,
-                        dogBreed: dogBreed,
-                        dogName: dogName
-                    ),
-                    isActive: $navigateToUserProfilePage
-                ) {
-                    EmptyView()
-                }
-                
+            }
+        
+            NavigationLink(
+                destination: UserProfilePage(
+                    userName: userName,
+                    userAge: Int(userAge) ?? 0,
+                    dogBreed: dogBreed,
+                    dogName: dogName,
+                    userImage: userImage?.pngData()
+                ),
+                isActive: $navigateToUserProfilePage
+            ) {
+                EmptyView()
             }
         }
     }
+    
+    func updateUserProfileStatus() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        func updateUserProfileStatus() {
-            guard let uid = Auth.auth().currentUser?.uid else { return }
-            
-            let userRef = Database.database().reference().child("users").child(uid)
-            let userData: [String: Any] = [
-                "profileCreated": true,
-                "userName": userName,
-                "userEmail": userEmail,
-                "userAge": userAge,
-                "dogName": dogName,
-                "dogBreed": dogBreed
-            ]
-            
-            userRef.updateChildValues(userData) { error, _ in
-                if let error = error {
-                    print("Failed to update profile status: \(error.localizedDescription)")
-                } else {
-                    navigateToUserProfilePage = true
-                }
+        let userRef = Database.database().reference().child("users").child(uid)
+        let userData: [String: Any] = [
+            "profileCreated": true,
+            "userName": userName,
+            "userEmail": userEmail,
+            "userAge": userAge,
+            "dogName": dogName,
+            "dogBreed": dogBreed,
+            "userImage": userImage
+        ]
         
+        userRef.updateChildValues(userData) { error, _ in
+            if let error = error {
+                print("Failed to update profile status: \(error.localizedDescription)")
+            } else {
+                navigateToUserProfilePage = true
+            }
         }
     }
 }
+
 
 
 #Preview {

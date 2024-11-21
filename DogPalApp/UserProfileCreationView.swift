@@ -122,6 +122,9 @@ struct UserProfileCreationView: View {
     func updateUserProfileStatus() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
+        // Convertendo a imagem para Data (caso exista)
+        let userImageData = userImage?.pngData()
+        
         let userRef = Database.database().reference().child("users").child(uid)
         let userData: [String: Any] = [
             "profileCreated": true,
@@ -130,14 +133,14 @@ struct UserProfileCreationView: View {
             "userAge": userAge,
             "dogName": dogName,
             "dogBreed": dogBreed,
-            "userImage": userImage
+            "userImage": userImageData as Any // Armazenando a imagem como Data
         ]
         
         userRef.updateChildValues(userData) { error, _ in
             if let error = error {
                 print("Failed to update profile status: \(error.localizedDescription)")
             } else {
-                navigateToUserProfilePage = true
+                navigateToUserProfilePage = true // Navegação após sucesso
             }
         }
     }

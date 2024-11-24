@@ -1,3 +1,10 @@
+//
+//  SignUpView.swift
+//  DogPalApp
+//
+//  Created by Wandrey Haagensen on 2024-11-06.
+//
+
 import SwiftUI
 import MapKit
 
@@ -115,7 +122,7 @@ struct UserProfilePage: View {
                                 .background(
                                     NavigationLink(
                                         destination: SettingsView(
-                                            userEmail: userName
+                                            
                                         ),
                                         isActive: $showProfileView
                                     ) {

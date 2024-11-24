@@ -1,4 +1,4 @@
-//
+
 //  HomeScreenView.swift
 //  DogPalApp
 //
@@ -24,6 +24,7 @@ struct HomeScreenView: View {
     
     @Environment(\.dismiss) var dismiss
     @State private var userName: String = ""
+    @State private var userEmail: String = ""
     @State private var userImage:  UIImage?
     @State private var showingImagePicker: Bool = false
     
@@ -35,13 +36,13 @@ struct HomeScreenView: View {
                 VStack {
                     HStack{
                         Spacer()
-                        
-                
-//                        NavigationLink(destination: ProfileView()) {
-//                            Image(systemName: "gearshape.fill")
-//                                .font(.title)
-//                                .foregroundColor(.black)
-//                        }
+                        //possivel erro ao colocar userEmail dentro de SettingsView
+                        NavigationLink(destination: SettingsView()) {
+                            Image(systemName: "gearshape.fill")
+                                .font(.title)
+                                .foregroundColor(Color.primary)
+                        }
+
                                            }
                     Button(action: {
                         showingImagePicker = true
@@ -57,7 +58,7 @@ struct HomeScreenView: View {
                             Image(systemName: "person.circle.fill")
                                 .resizable()
                                 .scaledToFit()
-                                .foregroundColor(.gray)
+                                .foregroundColor(Color.gray)
                                 .frame(width: 130, height: 130)
                                 .padding()
                                 }
@@ -69,6 +70,7 @@ struct HomeScreenView: View {
                     Text("Hello, \(userName)")
                         .font(.system(size: 20))
                         .padding()
+                        .foregroundColor(Color.primary)
                     
                     Image("map")
                         .resizable()
@@ -80,6 +82,7 @@ struct HomeScreenView: View {
                         .font(.title)
                         .fontWeight(.bold)
                         .padding()
+                        .foregroundColor(Color.primary)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         
@@ -100,6 +103,7 @@ struct HomeScreenView: View {
                         }
                 }
             }
+          
         }
     }
     
@@ -133,6 +137,7 @@ struct HomeScreenView: View {
                 Text(park.name)
                     .font(.headline)
                     .padding(.top, 5)
+                    .foregroundColor(Color.primary)
                 
                 Text("Rating: \(park.rating, specifier: "%.1f")")
                     .font(.subheadline)
@@ -143,14 +148,14 @@ struct HomeScreenView: View {
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding()
-                        .background(Color.textFields)
+                        .background(Color.accentColor)
                         .cornerRadius(10)
                         .padding(.top, 5)
                 }
             }
             .frame(width: 150)
             .padding()
-            .background(Color.white)
+            .background(Color(UIColor.systemBackground))
             .cornerRadius(15)
             .shadow(radius: 5)
         }

@@ -3,6 +3,9 @@ import Firebase
 import FirebaseAuth
 import UIKit
 
+//Wandrey
+//Page created to show the idea of the ratings and comments by user. Need to polish and finish.
+
 struct ReviewRateView: View {
     @State private var parks = [
         ParkReviewData(name: "Park Lafontaine", rating: 4.8, imageName: "parclafontaine", description: "One of the most popular parks in Montreal, ideal for picnics and walks.", reviews: [

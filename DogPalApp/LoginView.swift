@@ -18,6 +18,9 @@ struct LoginView: View {
     @State private var isLoading: Bool = false
     @State private var navigateToHome: Bool = false
     @State private var navigateToUserProfileCreation: Bool = false
+    @StateObject private var authManager = AuthManager()
+    
+    @State private var isSignedIn: Bool = false
     
     var body: some View {
         NavigationView {
@@ -180,6 +183,15 @@ struct LoginView: View {
         }
             
         showAlert = true
+    }
+}
+
+class AuthManager: ObservableObject {
+    @Published var isAuthenticated = false
+    
+    init() {
+        // Check if user is already signed in
+        isAuthenticated = Auth.auth().currentUser != nil
     }
 }
 

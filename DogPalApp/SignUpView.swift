@@ -105,7 +105,7 @@ struct SignUpView: View {
             Text(alertMessage)
         }
         .navigationDestination(isPresented: $navigateToProfile){
-            SettingsView(userEmail: email)
+            SettingsView()
         }
     }
                     

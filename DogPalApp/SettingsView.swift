@@ -4,55 +4,70 @@
 //
 //  Created by Jessica Maximo on 2024-11-08.
 
-//FALTA FAZER O PUSH NOTIFICATIONS E ENABLE LOCATION E NAME***
-
 import SwiftUI
 import Firebase
 import FirebaseAuth
 
 struct SettingsView: View {
     
-    @State private var userImage: UIImage?
-    @State private var showingImagePicker: Bool = false
+   
+    @State private var selectedProfileImage: String = ""
     @State private var userName: String = Auth.auth().currentUser?.displayName ?? ""
     @State private var notificationsEnabled: Bool = true
     @State private var locationEnabled: Bool = true
     @Environment(\.presentationMode) var presentationMode
-    
     @State private var isDarkMode: Bool = UserDefaults.standard.bool(forKey: "isDarkMode")
-    @State private var language: String = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
     @State private var shouldNavigateToLogin: Bool = false
     @State private var showLocationAlert: Bool = false
     @State private var showNotificationAlert: Bool = false
+    @State private var showPicker: Bool = false
     
+    @AppStorage("selectedProfileImage") var storedProfileImage: String = ""
+    // Ícon
+    let profileIcons = ["star.fill", "heart.fill", "moon.fill", "cloud.fill"]
 
     var body: some View {
         NavigationView {
             VStack(alignment: .center){
                 List {
                     
-                    Section(header: Text("Edit Profile")) {
-                        VStack{
-                            Button(action: {
-                                showingImagePicker = true
-                            }) {
-                                if let image = userImage {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .clipShape(Circle())
-                                        .frame(width: 100, height: 100)
-                                } else {
-                                    Image(systemName: "person.circle.fill")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .foregroundColor(.gray)
-                                        .frame(width: 100, height: 100)
-                                }
-                            }
-                            .sheet(isPresented: $showingImagePicker) {
-                                ImagePicker(image: $userImage)
-                            }
+                Section(header: Text("Edit Profile")) {
+                    VStack{
+                            //User can choose 4 icons for show in profile
+
+                        Button(action: {
+                            showPicker.toggle()}) {
+                                Text("Choose the image")
+                                    .foregroundColor(.black)
+                                    .fontWeight(.bold)
+                                    .padding()
+                                   }
+                                                       
+                                                       
+                                    if showPicker {
+                                        Picker("Escolha um ícone", selection: $selectedProfileImage) {
+                                            ForEach(profileIcons, id: \.self) { icon in
+                                Image(systemName: icon)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 60, height: 60)
+                                    .tag(icon)
+                                            }
+                                    }
+                                        .pickerStyle(WheelPickerStyle())
+                                        .padding()
+                                        .onChange(of: selectedProfileImage) { newValue in
+                                                               storedProfileImage = newValue
+                                                           }
+                                                       }
+                                                       
+                                        if !selectedProfileImage.isEmpty {
+                                        Image(systemName: selectedProfileImage)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 100, height: 100)
+                                            .padding()
+                                                }
                             
                             TextField("Name", text: $userName)
                                 .padding()
@@ -86,18 +101,7 @@ struct SettingsView: View {
                     
                         }
                     }
-                    
-                    Section(header: Text("Language and Theme")) {
-                        Picker("Language", selection: $language) {
-                            Text("English").tag("English")
-                            Text("Français").tag("Français")
-                        }
-                        .pickerStyle(MenuPickerStyle())
-                        .onChange(of: language) { value in
-                                setAppLanguage(to: value)
-                                               }
-                        
-                        Toggle("Dark Mode", isOn: $isDarkMode)
+                    Toggle("Dark Mode", isOn: $isDarkMode)
                             .onChange(of: isDarkMode) { value in
                                 setAppTheme(darkMode: value)
                                                        }
@@ -121,13 +125,7 @@ struct SettingsView: View {
                            }
             }
             .onAppear {
-                
                 loadUserProfile()
-                
-                NotificationCenter.default.addObserver(forName: NSNotification.Name("LanguageChanged"), object: nil, queue: .main) { _ in
-                      
-                       self.language = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
-                   }
             }
             .alert(isPresented: $showLocationAlert) {
                 Alert(
@@ -146,7 +144,6 @@ struct SettingsView: View {
                 )
             }
         }
-    }
     
     func loadUserProfile() {
         if let user = Auth.auth().currentUser {
@@ -214,15 +211,6 @@ struct SettingsView: View {
             UserDefaults.standard.set(darkMode, forKey: "isDarkMode")
         
             print(darkMode ? "Dark Mode activated." : "Light Mode activated.")
-        }
-        
-        
-    private func setAppLanguage(to language: String) {
-        self.language = language
-            
-        UserDefaults.standard.set(language, forKey: "appLanguage")
-        NotificationCenter.default.post(name: NSNotification.Name("LanguageChanged"), object: nil)
-        print("App set to \(language).")
         }
     }
    

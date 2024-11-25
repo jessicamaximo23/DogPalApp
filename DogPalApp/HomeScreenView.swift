@@ -92,11 +92,7 @@ struct HomeScreenView: View {
                     }
                 }
                 .navigationBarTitle("Home", displayMode: .inline)
-                .navigationBarItems(trailing: NavigationLink(destination: SettingsView()) {
-                    Image(systemName: "gearshape.fill")
-                        .font(.title)
-                        .foregroundColor(Color.primary)
-                })
+                
             }
             .tabItem {
                 Image(systemName: "house.fill")
@@ -121,14 +117,14 @@ struct HomeScreenView: View {
                 Text("Profile")
             }
             
-            // Reviews tab
+          
             NavigationView {
                 VStack {
                     Text("Reviews Page")
                         .font(.title)
                         .padding()
                     
-                    // Adicionar elementos de revisão aqui
+                  
                 }
                 .navigationBarTitle("Reviews", displayMode: .inline)
             }

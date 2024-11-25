@@ -1,10 +1,8 @@
-//
 //  HomeScreenView.swift
 //  DogPalApp
 //
 //  Created by Jessica Maximo on 2024-10-30.
 
-//DA HOME VIEW ENVIAR PARA OUTRA PAGINA DE FAZER O PERFIL
 
 import SwiftUI
 import Firebase

@@ -39,9 +39,6 @@ struct SettingsView: View  {
     @State private var showLocationAlert: Bool = false
     @State private var showNotificationAlert: Bool = false
     
-    @State private var locationManager = CLLocationManager()
-    private var locationManagerDelegate = LocationManagerDelegate()
-
 
     var body: some View {
         NavigationView {
@@ -93,9 +90,10 @@ struct SettingsView: View  {
                                 handleNotificationsToggle(value)
                         }
                     }
-         Section(header: Text("Location Preferences")) {
+                    Section(header: Text("Location Preferences")) {
                         Toggle("Enable Location", isOn: $locationEnabled)
                  .onChange(of: locationEnabled) { value in
+
                      
                      UserDefaults.standard.set(value, forKey: "locationEnabled")
                      
@@ -135,17 +133,8 @@ struct SettingsView: View  {
                            }
             }
             .onAppear {
-                locationManager.delegate = locationManagerDelegate
-                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-                locationManager.requestWhenInUseAuthorization()
 
-                if CLLocationManager.locationServicesEnabled() {
-                    locationManager.startUpdatingLocation()
-                    
-                } else {
-                    print("Location services are not enabled.")
-                    }
-
+            
                 loadUserProfile()
                 
                 notificationsEnabled = UserDefaults.standard.bool(forKey: "notificationsEnabled")
@@ -153,10 +142,29 @@ struct SettingsView: View  {
                 
                 isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
                 
+                
+                loadUserProfile()
+                
                 NotificationCenter.default.addObserver(forName: NSNotification.Name("LanguageChanged"), object: nil, queue: .main) { _ in
                       
                        self.language = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
                 }
+            }
+            .alert(isPresented: $showLocationAlert) {
+                Alert(
+                    title: Text("Location Settings Changed"),
+                    message: Text(locationEnabled ? "Location services have been enabled." : "Location services have been disabled."),
+                    primaryButton: .default(Text("OK")),
+                    secondaryButton: .cancel()
+                )
+            }
+            .alert(isPresented: $showNotificationAlert) {
+                Alert(
+                    title: Text("Notifications Settings Changed"),
+                    message: Text(notificationsEnabled ? "Push notifications have been enabled." : "Push notifications have been disabled."),
+                    primaryButton: .default(Text("OK")),
+                    secondaryButton: .cancel()
+                )
             }
             .alert(isPresented: $showLocationAlert) {
                 Alert(
@@ -185,6 +193,7 @@ struct SettingsView: View  {
     }
 
     func resetPassword() {
+        
         if let email = Auth.auth().currentUser?.email {
             Auth.auth().sendPasswordReset(withEmail: email) { error in
                 if let error = error {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     
-   var userEmail: String
+    var userEmail: String
     
     @StateObject private var userManager = UserManager()
     @State private var showingSignOutAlert = false

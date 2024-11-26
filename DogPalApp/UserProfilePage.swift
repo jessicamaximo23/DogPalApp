@@ -18,7 +18,7 @@ struct UserProfilePage: View {
     var dogName: String
     var userImage: Data?
     @State private var showHomeScreen = false
-    @State private var showProfileView = false // Estado para navegação para HomeScreenView
+    @State private var showProfileView = false
     @State private var showingSignOutAlert = false
     @State private var navigateToLogin = false
     
@@ -55,38 +55,47 @@ struct UserProfilePage: View {
                     
                     VStack(alignment: .leading, spacing: 10) {
                         Text("About Me")
-                            .font(.headline)
+                            .font(.title)
+                            .padding()
                       
                     }
                     .padding(.horizontal)
                     
-                    VStack(alignment: .leading) {
-                        Text("User Email: \(userEmail)")
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Email: \(userEmail)")
                             .font(.headline)
-                        
-                        Text("User Age: \(userAge)")
+                            .foregroundColor(.blue)
+                            .padding(.bottom, 4)
+
+                        Text("Age: \(userAge)")
                             .font(.headline)
+                            .foregroundColor(.green)
+                            .padding(.bottom, 4)
                         
                         Text("Dog Name: \(dogName)")
                             .font(.headline)
+                            .foregroundColor(.purple) /
+                            .padding(.bottom, 4)
                         
                         Text("Dog Breed: \(dogBreed)")
                             .font(.headline)
-            }
-                    .padding()
-
-                    
-                    Spacer()
+                            .foregroundColor(.orange)
+                            .padding(.bottom, 4)
+                        
+                        Spacer()
+                    }
                     
                     Button(role: .destructive) {
                         showingSignOutAlert = true
                     } label: {
                         Text("Sign Out")
+                            .font(.title)
+                            .padding()
                     }
                 }
             }
         .navigationDestination(isPresented: $navigateToLogin) {
-            LoginView()  // Direciona para a LoginView
+            LoginView()  
         }
         .alert("Sign Out", isPresented: $showingSignOutAlert) {
             Button("Cancel", role: .cancel) { }
@@ -97,23 +106,7 @@ struct UserProfilePage: View {
             Text("Are you sure you want to sign out?")
         }
             
-            .navigationBarItems(trailing: Button(action: {
-                showProfileView = true
-            }) {
-                Image(systemName: "gearshape")
-                    .font(.title2)
-                    .foregroundColor(.blue)
-            })
-            .background(
-                NavigationLink(
-                    destination: SettingsView(
-                        
-                    ),
-                    isActive: $showProfileView
-                ) {
-                    EmptyView()
-                }
-            )
+
         }
     }
     func signOutFirebase() {

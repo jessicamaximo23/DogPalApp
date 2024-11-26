@@ -23,8 +23,14 @@ struct SettingsView: View {
 
 
     var body: some View {
-        NavigationView {
             VStack(alignment: .center){
+                
+                
+                Image("DogPalLogo2")
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+                    .frame(width: 350, height: 150)
                 List {
                     
                     Section(header: Text("Edit Profile")) {
@@ -70,8 +76,6 @@ struct SettingsView: View {
          Section(header: Text("Location Preferences")) {
                         Toggle("Enable Location", isOn: $locationEnabled)
                     }
-                    
-                    
 
                     Section(header: Text("Theme")) {
                      Toggle("Dark Mode", isOn: $isDarkMode)
@@ -88,7 +92,6 @@ struct SettingsView: View {
                         .foregroundColor(.red)
                     }
                 }
-                .navigationTitle("Settings")
                 .navigationBarItems(trailing: Button("Close") {
                     presentationMode.wrappedValue.dismiss()
                 })
@@ -104,7 +107,7 @@ struct SettingsView: View {
 
             }
 
-        }
+        
     }
     
     func loadUserProfile() {

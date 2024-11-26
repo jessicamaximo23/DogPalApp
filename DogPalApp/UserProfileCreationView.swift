@@ -108,6 +108,7 @@ struct UserProfileCreationView: View {
                 destination: UserProfilePage(
                     userName: userName,
                     userAge: Int(userAge) ?? 0,
+                    userEmail: userEmail,
                     dogBreed: dogBreed,
                     dogName: dogName,
                     userImage: userImage?.pngData()

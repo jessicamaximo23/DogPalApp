@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    var userEmail: String
+   var userEmail: String
     
     @StateObject private var userManager = UserManager()
     @State private var showingSignOutAlert = false
@@ -27,9 +27,6 @@ struct ProfileView: View {
             Text("Welcome, \(userEmail)")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-            
-            Text("Logged in as: \(userEmail)")
-                .font(.title2)
             
             // Add some example profile sections
             List {

@@ -34,7 +34,7 @@ struct ParksView: View {
                 MapPin(coordinate: parkLocation.coordinate, tint: .blue)
 
             }
-            .edgesIgnoringSafeArea(.all)
+            .edgesIgnoringSafeArea(.all)z
         }
         .padding()
     }

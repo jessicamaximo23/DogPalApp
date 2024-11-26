@@ -103,13 +103,13 @@ struct HomeScreenView: View {
             
             // Profile tab
             NavigationView {
-                UserProfilePage(
-                    userName: userName,
-                    userAge: Int(userAge) ?? 0,
-                    userEmail: userEmail,
-                    dogBreed: dogBreed,
-                    dogName: dogName
-                )
+//                UserProfilePage(
+//                    userName: userName,
+//                    userAge: Int(userAge) ?? 0,
+//                    userEmail: userEmail,
+//                    dogBreed: dogBreed,
+//                    dogName: dogName
+//                )
             }
             .tabItem {
                 Image(systemName: "person.fill")
@@ -118,7 +118,7 @@ struct HomeScreenView: View {
             
           
             NavigationView {
-                ReviewRateView()
+//                ReviewRateView()
                     
                   
                 }

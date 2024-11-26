@@ -4,22 +4,23 @@
 //
 //  Created by Julien Villanti on 2024-10-20.
 //
-
 import Firebase
 import FirebaseAuth
 import SwiftUI
+import FirebaseDatabase
 
 struct LoginView: View {
     @State private var email: String = ""
-    @State private var password: String = ""
+    @State private var password: String = ""    
     @State private var isSignUpPresented: Bool = false
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     @State private var isLoading: Bool = false
     @State private var navigateToHome: Bool = false
+    @State private var navigateToUserProfileCreation: Bool = false
     @StateObject private var authManager = AuthManager()
     
-    @State private var isSignedIn: Bool = false 
+    @State private var isSignedIn: Bool = false
     
     var body: some View {
         NavigationView {
@@ -43,7 +44,6 @@ struct LoginView: View {
                 
                 HStack {
                     Text("No account yet? Sign-up")
-                    //                Need to put the logic for the here in this spot
                     NavigationLink(destination: SignUpView(
                         isPresented: $isSignUpPresented,
                         email: $email,
@@ -54,6 +54,7 @@ struct LoginView: View {
                             .fontWeight(.bold)
                     }
                 }
+                
                 TextField("Email", text: $email)
                     .padding()
                     .autocapitalization(.none)
@@ -74,7 +75,6 @@ struct LoginView: View {
                         .stroke(Color.textFields, lineWidth: 2))
                     .padding()
                 
-                //                Button container
                 VStack(spacing: 10) {
                     Button(action: signIn) {
                         ZStack {
@@ -107,8 +107,13 @@ struct LoginView: View {
                                    
                 Spacer()
                 
-                //Sent for Dog registration
-                NavigationLink(destination: DogRegistrationScreenView(), isActive: $isSignedIn) {
+                // Navegação para UserProfileCreationView
+                NavigationLink(destination: UserProfileCreationView(), isActive: $navigateToUserProfileCreation) {
+                    EmptyView()
+                }
+                
+                // Navegação para HomeScreenView
+                NavigationLink(destination: HomeScreenView(), isActive: $navigateToHome) {
                     EmptyView()
                 }
             }
@@ -117,9 +122,6 @@ struct LoginView: View {
                 Button("OK", role: .cancel) {}
             } message: {
                 Text(alertMessage)
-            }
-            .fullScreenCover(isPresented: $navigateToHome) {
-                           HomeScreenView()
             }
         }
     }
@@ -130,23 +132,34 @@ struct LoginView: View {
             showAlert = true
             return
         }
-          
+
         isLoading = true
-          
+
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             isLoading = false
-              
+
             if let error = error {
                 handleSignInError(error)
-            } else {
-                // Sign in successful
-                navigateToHome = true
-                UserDefaults.standard.set(email, forKey: "userEmail")
-                               if let uid = Auth.auth().currentUser?.uid {
-                                   UserDefaults.standard.set(uid, forKey: "userId")
-                               }
-                               navigateToHome = true
-            
+                return
+            }
+
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+
+            // Verifica o estado de profileCreated no Firebase
+            let userRef = Database.database().reference().child("users").child(uid)
+
+            userRef.observeSingleEvent(of: .value) { snapshot in
+                if let userData = snapshot.value as? [String: Any],
+                   let profileCreated = userData["profileCreated"] as? Bool {
+                    if profileCreated {
+                        navigateToHome = true
+                    } else {
+                        navigateToUserProfileCreation = true
+                    }
+                } else {
+                    // Se o usuário não tem dados configurados, tratamos como primeiro login
+                    navigateToUserProfileCreation = true
+                }
             }
         }
     }

@@ -4,8 +4,6 @@
 //
 //  Created by Jessica Maximo on 2024-11-08.
 
-//FALTA FAZER O PUSH NOTIFICATIONS E ENABLE LOCATION E NAME***
-
 import SwiftUI
 import Firebase
 import FirebaseAuth
@@ -66,9 +64,8 @@ struct SettingsView: View {
                     Section(header: Text("Notifications")) {
                         Toggle("Push Notifications", isOn: $notificationsEnabled).onChange(of: notificationsEnabled)
                         { value in
-
-                            handleNotificationsToggle(value)
-                        }
+                    handleNotificationsToggle(value)
+          }
                     }
          Section(header: Text("Location Preferences")) {
                         Toggle("Enable Location", isOn: $locationEnabled)

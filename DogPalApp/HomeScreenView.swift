@@ -102,6 +102,56 @@ struct HomeScreenView: View {
                 
             }
 
+   .tabItem {
+                Image(systemName: "house.fill")
+                Text("Home")
+            }
+            
+            // Profile tab
+            NavigationView {
+                UserProfilePage(
+                    userName: userName,
+                    userAge: Int(userAge) ?? 0,
+                    userEmail: userEmail,
+                    dogBreed: dogBreed,
+                    dogName: dogName
+                )
+            }
+            .tabItem {
+                Image(systemName: "person.fill")
+                Text("Profile")
+            }
+            
+          
+            NavigationView {
+                ReviewRateView()
+                    
+                  
+                }
+        
+            .tabItem {
+                Image(systemName: "star.fill")
+                Text("Reviews")
+            }
+            
+            // Parks tab
+            NavigationView {
+                ParksView()
+            }
+            .tabItem {
+                Image(systemName: "map.fill")
+                Text("Parks")
+            }
+            // Settings tab
+            NavigationView {
+                SettingsView()
+            }
+            .tabItem {
+                Image(systemName: "gearshape.fill")
+                Text("Settings")
+            }
+            
+
         }
         .accentColor(.blue)
     }
@@ -114,7 +164,7 @@ struct HomeScreenView: View {
            
         
            if let email = user.email {
-               self.userName = email
+               self.userEmail = email
            } else {
                print("No display name found for the user")
            }

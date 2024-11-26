@@ -47,8 +47,6 @@ struct HomeScreenView: View {
                             .padding()
                             .frame(width: 350, height: 150)
                         
-                        Text(userName)
-                            .font(.largeTitle)
                         
                         if let image = userImage {
                             Image(uiImage: image)

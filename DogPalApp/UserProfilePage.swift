@@ -37,7 +37,7 @@ struct UserProfilePage: View {
                         .frame(width: 350, height: 150)
                     
                     Text(userName)
-                        .font(.largeTitle)
+                        .font(.title)
                     
                     if let imageData = userImage, let image = UIImage(data: imageData) {
                         Image(uiImage: image)
@@ -114,23 +114,6 @@ struct UserProfilePage: View {
                     EmptyView()
                 }
             )
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    dismiss()
-                }) {
-                    Label("Back", systemImage: "arrow.left")
-                }
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    dismiss()
-                }) {
-//                    Label("Cancel", systemImage: "xmark")
-//                        .foregroundColor(.blue)
-                }
-            }
         }
     }
     func signOutFirebase() {

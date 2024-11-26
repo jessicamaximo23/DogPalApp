@@ -26,9 +26,16 @@ struct ReviewRateView: View {
     ]
     
     var body: some View {
-        NavigationView {
+       
             ScrollView {
                 VStack {
+                    
+                    Image("DogPalLogo2")
+                        .resizable()
+                        .scaledToFit()
+                        .padding()
+                        .frame(width: 350, height: 150)
+                    
                     Text("Park Reviews")
                         .font(.title)
                         .fontWeight(.bold)
@@ -55,7 +62,7 @@ struct ReviewRateView: View {
                 }
                 .padding()
             }
-        }
+
     }
 }
 

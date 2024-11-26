@@ -27,8 +27,7 @@ struct UserProfilePage: View {
     @State private var selectedDate = Date()
     
     var body: some View {
-        NavigationView {
-            ScrollView {
+       
                 VStack {
                     Image("DogPalLogo2")
                         .resizable()
@@ -65,22 +64,18 @@ struct UserProfilePage: View {
                         Text("Email: \(userEmail)")
                             .font(.headline)
                             .foregroundColor(.blue)
-                            .padding(.bottom, 4)
 
                         Text("Age: \(userAge)")
                             .font(.headline)
                             .foregroundColor(.green)
-                            .padding(.bottom, 4)
                         
                         Text("Dog Name: \(dogName)")
                             .font(.headline)
-                            .foregroundColor(.purple) /
-                            .padding(.bottom, 4)
+                            .foregroundColor(.purple)
                         
                         Text("Dog Breed: \(dogBreed)")
                             .font(.headline)
                             .foregroundColor(.orange)
-                            .padding(.bottom, 4)
                         
                         Spacer()
                     }
@@ -93,9 +88,9 @@ struct UserProfilePage: View {
                             .padding()
                     }
                 }
-            }
+            
         .navigationDestination(isPresented: $navigateToLogin) {
-            LoginView()  
+            LoginView()
         }
         .alert("Sign Out", isPresented: $showingSignOutAlert) {
             Button("Cancel", role: .cancel) { }
@@ -107,7 +102,7 @@ struct UserProfilePage: View {
         }
             
 
-        }
+        
     }
     func signOutFirebase() {
            do {

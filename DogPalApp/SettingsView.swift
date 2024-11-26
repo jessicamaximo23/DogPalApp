@@ -18,7 +18,6 @@ struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State private var isDarkMode: Bool = UserDefaults.standard.bool(forKey: "isDarkMode")
-    @State private var language: String = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
     @State private var shouldNavigateToLogin: Bool = false
 
 
@@ -64,8 +63,9 @@ struct SettingsView: View {
                     Section(header: Text("Notifications")) {
                         Toggle("Push Notifications", isOn: $notificationsEnabled).onChange(of: notificationsEnabled)
                         { value in
+
                     handleNotificationsToggle(value)
-          }
+           }
                     }
          Section(header: Text("Location Preferences")) {
                         Toggle("Enable Location", isOn: $locationEnabled)
@@ -73,20 +73,9 @@ struct SettingsView: View {
                     
                     
 
-                    Section(header: Text("Language and Theme")) {
-                        Picker("Language", selection: $language) {
-                            Text("English").tag("English")
-                            Text("Français").tag("Français")
-                        }
-                        .pickerStyle(MenuPickerStyle())
-                        .onChange(of: language) { value in
-                                setAppLanguage(to: value)
-                                               }
-                        
-                        Toggle("Dark Mode", isOn: $isDarkMode)
-
-                            .onChange(of: isDarkMode) {
-value in
+                    Section(header: Text("Theme")) {
+                     Toggle("Dark Mode", isOn: $isDarkMode)
+                                .onChange(of: isDarkMode) { value in
 
                                 setAppTheme(darkMode: value)
                                                        }
@@ -113,10 +102,6 @@ value in
 
                 loadUserProfile()
 
-                NotificationCenter.default.addObserver(forName: NSNotification.Name("LanguageChanged"), object: nil, queue: .main) { _ in
-                      
-                       self.language = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
-                   }
             }
 
         }
@@ -183,18 +168,9 @@ value in
 
 
     private func setAppTheme(darkMode: Bool) {
-            isDarkMode = darkMode
-
-            print(darkMode ? "Dark Mode activated." : "Light Mode activated.")
-        }
+        isDarkMode = darkMode
         
-        
-    private func setAppLanguage(to language: String) {
-        self.language = language
-            
-        UserDefaults.standard.set(language, forKey: "appLanguage")
-        NotificationCenter.default.post(name: NSNotification.Name("LanguageChanged"), object: nil)
-        print("App set to \(language).")
+        print(darkMode ? "Dark Mode activated." : "Light Mode activated.")
         }
     }
    

@@ -31,6 +31,7 @@ struct HomeScreenView: View {
     @State private var dogBreed: String = ""
     @State private var userImage:  UIImage?
     @State private var showingImagePicker: Bool = false
+    @State private var selectedDate = Date()
     
     var body: some View {
         
@@ -40,29 +41,33 @@ struct HomeScreenView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
                         
-
-                        Button(action: {
-                            showingImagePicker = true
-                        }) {
-                            if let image = userImage {
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .clipShape(Circle())
-                                    .frame(width: 250, height: 250)
-                            } else {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .foregroundColor(Color.gray)
-                                    .frame(width: 130, height: 130)
-                                    .padding()
-
-                            }
+                        Image("DogPalLogo2")
+                            .resizable()
+                            .scaledToFit()
+                            .padding()
+                            .frame(width: 350, height: 150)
+                        
+                        Text(userName)
+                            .font(.largeTitle)
+                        
+                        if let image = userImage {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(Circle())
+                                .shadow(radius: 10)
+                        } else {
+                            Image(systemName: "person.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 100)
+                                .foregroundColor(.gray)
                         }
-                        .sheet(isPresented: $showingImagePicker) {
-                            ImagePicker(image: $userImage)
-                        }
+
+                      
+//                        .sheet(isPresented: $showingImagePicker) {
+//                            ImagePicker(image: $userImage)
+//                        }
                         
                         Text("Hello, \(userEmail)")
                             .font(.system(size: 20))
@@ -163,9 +168,10 @@ struct HomeScreenView: View {
            }
            
         
-           if let email = user.email {
-               self.userEmail = email
-           } else {
+        if let email = user.email {
+                self.userEmail = email
+                self.userName = email
+            } else {
                print("No display name found for the user")
            }
        }

@@ -9,8 +9,8 @@ import SwiftUI
 import MapKit
 
 struct ParksView: View {
-    @State private var searchText = ""
     
+    @State private var searchText = ""
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 45.5017, longitude: -73.5673),
         span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
@@ -18,10 +18,25 @@ struct ParksView: View {
     @State private var location: ParkLocation?
     @State private var directions: [MKRoute] = []
     @State private var parkInfo: String = "Park Information: Beautiful park to walk your dog."
+    
+    // Lista de parques em Montreal
+      let parks = [
+          ParkLocation(coordinate: CLLocationCoordinate2D(latitude: 45.5017, longitude: -73.5673)),
+          ParkLocation(coordinate: CLLocationCoordinate2D(latitude: 45.5088, longitude: -73.5530)),
+          ParkLocation(coordinate: CLLocationCoordinate2D(latitude: 45.5200, longitude: -73.6167)),
+          ParkLocation(coordinate: CLLocationCoordinate2D(latitude: 45.4230, longitude: -73.6032)),
+          ParkLocation(coordinate: CLLocationCoordinate2D(latitude: 45.4710, longitude: -73.5590))
+      ]
 
     var body: some View {
         VStack {
-           
+            
+            Image("DogPalLogo2")
+                .resizable()
+                .scaledToFit()
+                .padding()
+                .frame(width: 350, height: 150)
+            
             TextField("Find the best park next to you", text: $searchText, onCommit: {
                 geocodeAddress(address: searchText)
             })
@@ -29,12 +44,10 @@ struct ParksView: View {
             .padding(.horizontal)
             .frame(height: 50)
 
-          
-            Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: location == nil ? [] : [location!]) { parkLocation in
-                MapPin(coordinate: parkLocation.coordinate, tint: .blue)
-
-            }
-            .edgesIgnoringSafeArea(.all)
+            Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: parks) { park in
+                               MapPin(coordinate: park.coordinate, tint: .red) // Pin RED
+                           }
+                           .edgesIgnoringSafeArea(.all)
         }
         .padding()
     }

@@ -6,119 +6,155 @@
 //
 
 import SwiftUI
-import MapKit
 import FirebaseAuth
+import FirebaseDatabase
 
 struct UserProfilePage: View {
     
-    var userName: String
-    var userAge: Int
-    var userEmail: String
-    var dogBreed: String
-    var dogName: String
-    var userImage: Data?
-    @State private var showHomeScreen = false
-    @State private var showProfileView = false
+    @State private var userName: String = ""
+    @State private var userAge: Int = 0
+    @State private var userEmail: String = ""
+    @State private var dogBreed: String = ""
+    @State private var dogName: String = ""
+    @State private var userImage: UIImage?
+    
     @State private var showingSignOutAlert = false
     @State private var navigateToLogin = false
     
     @Environment(\.dismiss) var dismiss
- 
-    @State private var selectedDate = Date()
     
     var body: some View {
-       
-                VStack {
+        NavigationStack {
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [Color.white, Color.gray.opacity(0.1)]),
+                               startPoint: .topLeading,
+                               endPoint: .bottomTrailing)
+                    .edgesIgnoringSafeArea(.all)
+                
+                VStack(spacing: 20) {
+                    // Logo
                     Image("DogPalLogo2")
                         .resizable()
                         .scaledToFit()
-                        .padding()
-                        .frame(width: 350, height: 150)
+                        .frame(width: 250, height: 100)
+                        .padding(.top, 20)
                     
-                    Text(userName)
-                        .font(.title)
-                    
-                    if let imageData = userImage, let image = UIImage(data: imageData) {
+                    // User Image
+                    if let image = userImage {
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFit()
                             .clipShape(Circle())
                             .shadow(radius: 10)
+                            .frame(width: 120, height: 120)
                     } else {
-                        Image(systemName: "person.circle")
+                        Image(systemName: "person.circle.fill")
                             .resizable()
                             .scaledToFit()
-                            .frame(height: 100)
+                            .frame(width: 120, height: 120)
                             .foregroundColor(.gray)
                     }
                     
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("About Me")
-                            .font(.title)
-                            .padding()
-                      
+                    Text(userName)
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.primary)
+                    
+                    // User Details Section
+                    VStack(alignment: .leading, spacing: 15) {
+                        DetailRow(title: "Email", value: userEmail, color: .blue)
+                        DetailRow(title: "Age", value: "\(userAge)", color: .green)
+                        DetailRow(title: "Dog Name", value: dogName, color: .purple)
+                        DetailRow(title: "Dog Breed", value: dogBreed, color: .orange)
                     }
+                    .padding(15)
+                    .background(RoundedRectangle(cornerRadius: 20).fill(Color.white).shadow(radius: 5))
                     .padding(.horizontal)
                     
-                    VStack(alignment: .leading, spacing: 16) {
-                        Text("Email: \(userEmail)")
-                            .font(.headline)
-                            .foregroundColor(.blue)
-
-                        Text("Age: \(userAge)")
-                            .font(.headline)
-                            .foregroundColor(.green)
-                        
-                        Text("Dog Name: \(dogName)")
-                            .font(.headline)
-                            .foregroundColor(.purple)
-                        
-                        Text("Dog Breed: \(dogBreed)")
-                            .font(.headline)
-                            .foregroundColor(.orange)
-                        
-                        Spacer()
-                    }
                     
-                    Button(role: .destructive) {
+                    
+                    // Logout Button
+                    Button(action: {
                         showingSignOutAlert = true
-                    } label: {
+                    }) {
                         Text("Sign Out")
-                            .font(.title)
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: 150)
                             .padding()
+                            .background(Color.textFields)
+                            .cornerRadius(20)
+                            .shadow(radius: 5)
                     }
+                    .padding(25)
                 }
-            
-        .navigationDestination(isPresented: $navigateToLogin) {
-            LoginView()
-        }
-        .alert("Sign Out", isPresented: $showingSignOutAlert) {
-            Button("Cancel", role: .cancel) { }
-            Button("Sign Out", role: .destructive) {
-                    signOutFirebase()  // Chama a função de logout
             }
-        } message: {
-            Text("Are you sure you want to sign out?")
+            .navigationDestination(isPresented: $navigateToLogin) {
+                LoginView()
+            }
+            .alert("Sign Out", isPresented: $showingSignOutAlert) {
+                Button("Cancel", role: .cancel) { }
+                Button("Sign Out", role: .destructive) {
+                    signOutFirebase()
+                }
+            }
+            .onAppear {
+                fetchUserProfile()
+            }
         }
-            
-
-        
     }
+    
     func signOutFirebase() {
-           do {
-               try Auth.auth().signOut()  // Realiza o logout no Firebase
-               navigateToLogin = true     // Atualiza o estado para navegar
-           } catch {
-               print("Error signing out: \(error.localizedDescription)")
+        do {
+            try Auth.auth().signOut()
+            navigateToLogin = true
+        } catch {
+            print("Error signing out: \(error.localizedDescription)")
         }
+    }
+    
+    func fetchUserProfile() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let userRef = Database.database().reference().child("users").child(uid)
+        
+        userRef.observeSingleEvent(of: .value) { snapshot in
+            if let userData = snapshot.value as? [String: Any] {
+                self.userName = userData["userName"] as? String ?? "Unknown User"
+                self.userEmail = userData["userEmail"] as? String ?? "No Email"
+                self.userAge = Int(userData["userAge"] as? String ?? "0") ?? 0
+                self.dogName = userData["dogName"] as? String ?? "No Dog Name"
+                self.dogBreed = userData["dogBreed"] as? String ?? "No Breed"
+                
+                if let imageData = userData["userImage"] as? Data {
+                    self.userImage = UIImage(data: imageData)
+                }
+            }
+        } withCancel: { error in
+            print("Error fetching user data: \(error.localizedDescription)")
+        }
+    }
+}
+
+// Reusable component for user details
+struct DetailRow: View {
+    var title: String
+    var value: String
+    var color: Color
+    
+    var body: some View {
+        HStack {
+            Text("\(title):")
+                .fontWeight(.bold)
+                .foregroundColor(color)
+            Spacer()
+            Text(value)
+                .foregroundColor(.secondary)
+        }
+        .padding(.vertical, 5)
     }
 }
 
 
 #Preview {
-    UserProfilePage(userName: "",
-                    userAge: 0,
-                    userEmail: "",
-                    dogBreed: "",
-                    dogName: "")
+    UserProfilePage()
 }

@@ -20,7 +20,7 @@ struct UserProfileCreationView: View {
     
     @State private var userImage: UIImage?
     @State private var showImagePicker = false
-    @State private var navigateToUserProfilePage = false
+    @State private var navigateToHomeScreen = false
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -102,20 +102,13 @@ struct UserProfileCreationView: View {
                         .padding(20)
                 }
                 .disabled(userEmail.isEmpty || userName.isEmpty || userAge.isEmpty || dogName.isEmpty || dogBreed.isEmpty)
-            }
-        
-            NavigationLink(
-                destination: UserProfilePage(
-                    userName: userName,
-                    userAge: Int(userAge) ?? 0,
-                    userEmail: userEmail,
-                    dogBreed: dogBreed,
-                    dogName: dogName,
-                    userImage: userImage?.pngData()
-                ),
-                isActive: $navigateToUserProfilePage
-            ) {
-                EmptyView()
+                
+                NavigationLink(
+                    destination: HomeScreenView (),
+                    isActive: $navigateToHomeScreen
+                ) {
+                    EmptyView()
+                }
             }
         }
     }
@@ -141,7 +134,8 @@ struct UserProfileCreationView: View {
             if let error = error {
                 print("Failed to update profile status: \(error.localizedDescription)")
             } else {
-                navigateToUserProfilePage = true // Navegação após sucesso
+                print("Profile created successfully!")
+                navigateToHomeScreen = true // Navegação após sucesso
             }
         }
     }

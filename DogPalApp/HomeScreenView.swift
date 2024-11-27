@@ -108,24 +108,16 @@ struct HomeScreenView: View {
             
             // Profile tab
             NavigationView {
-                UserProfilePage(
-                    userName: userName,
-                    userAge: Int(userAge) ?? 0,
-                    userEmail: userEmail,
-                    dogBreed: dogBreed,
-                    dogName: dogName
-                )
+                UserProfilePage()
             }
             .tabItem {
                 Image(systemName: "person.fill")
                 Text("Profile")
             }
-            
           
             NavigationView {
                 ReviewRateView()
-                    
-                  
+                 
                 }
         
             .tabItem {

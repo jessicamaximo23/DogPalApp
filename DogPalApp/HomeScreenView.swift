@@ -114,12 +114,10 @@ struct HomeScreenView: View {
                 Image(systemName: "person.fill")
                 Text("Profile")
             }
-            
           
             NavigationView {
                 ReviewRateView()
-                    
-                  
+                 
                 }
         
             .tabItem {

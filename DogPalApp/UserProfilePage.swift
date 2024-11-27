@@ -19,75 +19,84 @@ struct UserProfilePage: View {
     @State private var userImage: UIImage?
     
     @State private var showingSignOutAlert = false
-    @State private var navigateToLogin = false  // Controla a navegação para LoginView
+    @State private var navigateToLogin = false
     
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationStack {
-            VStack {
-                Image("DogPalLogo2")
-                    .resizable()
-                    .scaledToFit()
-                    .padding()
-                    .frame(width: 350, height: 150)
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [Color.white, Color.gray.opacity(0.1)]),
+                               startPoint: .topLeading,
+                               endPoint: .bottomTrailing)
+                    .edgesIgnoringSafeArea(.all)
                 
-                Text(userName)
-                    .font(.title)
-                
-                if let image = userImage {
-                    Image(uiImage: image)
+                VStack(spacing: 20) {
+                    // Logo
+                    Image("DogPalLogo2")
                         .resizable()
                         .scaledToFit()
-                        .clipShape(Circle())
-                        .shadow(radius: 10)
-                } else {
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 100)
-                        .foregroundColor(.gray)
-                }
-                
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Email: \(userEmail)")
-                        .font(.headline)
-                        .foregroundColor(.blue)
+                        .frame(width: 250, height: 100)
+                        .padding(.top, 20)
                     
-                    Text("Age: \(userAge)")
-                        .font(.headline)
-                        .foregroundColor(.green)
+                    // User Image
+                    if let image = userImage {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .clipShape(Circle())
+                            .shadow(radius: 10)
+                            .frame(width: 120, height: 120)
+                    } else {
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 120, height: 120)
+                            .foregroundColor(.gray)
+                    }
                     
-                    Text("Dog Name: \(dogName)")
-                        .font(.headline)
-                        .foregroundColor(.purple)
-                    
-                    Text("Dog Breed: \(dogBreed)")
-                        .font(.headline)
-                        .foregroundColor(.orange)
-                    
-                    Spacer()
-                }
-                
-                Button(role: .destructive) {
-                    showingSignOutAlert = true
-                } label: {
-                    Text("Sign Out")
+                    Text(userName)
                         .font(.title)
-                        .padding()
+                        .fontWeight(.bold)
+                        .foregroundColor(.primary)
+                    
+                    // User Details Section
+                    VStack(alignment: .leading, spacing: 15) {
+                        DetailRow(title: "Email", value: userEmail, color: .blue)
+                        DetailRow(title: "Age", value: "\(userAge)", color: .green)
+                        DetailRow(title: "Dog Name", value: dogName, color: .purple)
+                        DetailRow(title: "Dog Breed", value: dogBreed, color: .orange)
+                    }
+                    .padding(15)
+                    .background(RoundedRectangle(cornerRadius: 20).fill(Color.white).shadow(radius: 5))
+                    .padding(.horizontal)
+                    
+                    
+                    
+                    // Logout Button
+                    Button(action: {
+                        showingSignOutAlert = true
+                    }) {
+                        Text("Sign Out")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: 150)
+                            .padding()
+                            .background(Color.textFields)
+                            .cornerRadius(20)
+                            .shadow(radius: 5)
+                    }
+                    .padding(25)
                 }
+            }
+            .navigationDestination(isPresented: $navigateToLogin) {
+                LoginView()
             }
             .alert("Sign Out", isPresented: $showingSignOutAlert) {
                 Button("Cancel", role: .cancel) { }
                 Button("Sign Out", role: .destructive) {
                     signOutFirebase()
                 }
-            } message: {
-                Text("Are you sure you want to sign out?")
-            }
-            // Navegação para LoginView
-            .navigationDestination(isPresented: $navigateToLogin) {
-                LoginView()
             }
             .onAppear {
                 fetchUserProfile()
@@ -97,8 +106,8 @@ struct UserProfilePage: View {
     
     func signOutFirebase() {
         do {
-            try Auth.auth().signOut()  // Realiza o logout no Firebase
-            navigateToLogin = true     // Atualiza o estado para navegar
+            try Auth.auth().signOut()
+            navigateToLogin = true
         } catch {
             print("Error signing out: \(error.localizedDescription)")
         }
@@ -125,6 +134,26 @@ struct UserProfilePage: View {
         }
     }
 }
+
+// Reusable component for user details
+struct DetailRow: View {
+    var title: String
+    var value: String
+    var color: Color
+    
+    var body: some View {
+        HStack {
+            Text("\(title):")
+                .fontWeight(.bold)
+                .foregroundColor(color)
+            Spacer()
+            Text(value)
+                .foregroundColor(.secondary)
+        }
+        .padding(.vertical, 5)
+    }
+}
+
 
 #Preview {
     UserProfilePage()

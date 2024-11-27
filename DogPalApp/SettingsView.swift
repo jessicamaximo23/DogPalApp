@@ -115,20 +115,21 @@ struct SettingsView: View {
                                                        }
                     }
                       
-                    Section {
+                  
                         Button("Logout") {
                             logout()
                         }
-                        .foregroundColor(.red)
-                    }
+                        .foregroundColor(Color.textFields)
+                    
                     
                     Button("Save Changes") {
                         saveProfileData()
                                    }
-                                   .padding()
-                                   .background(Color.textFields)
-                                   .foregroundColor(.white)
-                                   .cornerRadius(8)
+                            .padding()
+                            .background(Color.textFields)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                            .frame(maxWidth: .infinity, alignment: .center)
                 }
                 .navigationBarItems(trailing: Button("Close") {
                     presentationMode.wrappedValue.dismiss()

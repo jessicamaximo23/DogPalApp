@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 //
 //  HomeScreenView.swift
 //  DogPalApp
@@ -6,8 +6,7 @@
 //  Created by Jessica Maximo on 2024-10-30.
 
 
-=======
->>>>>>> wandrey-local
+
 import SwiftUI
 import Firebase
 import FirebaseAuth
@@ -32,6 +31,7 @@ struct HomeScreenView: View {
     @State private var dogBreed: String = ""
     @State private var userImage:  UIImage?
     @State private var showingImagePicker: Bool = false
+    @State private var selectedDate = Date()
     
     var body: some View {
         
@@ -41,92 +41,31 @@ struct HomeScreenView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
                         
-<<<<<<< HEAD
-                        NavigationLink(destination: SettingsView()) {
-                            Image(systemName: "gearshape.fill")
-                                .font(.title)
-                                .foregroundColor(Color.primary)
-                        }
-
-                                           }
-                    Button(action: {
-                        showingImagePicker = true
-                                }) {
-                                if let image = userImage {
+                        Image("DogPalLogo2")
+                            .resizable()
+                            .scaledToFit()
+                            .padding()
+                            .frame(width: 350, height: 150)
+                        
+                        
+                        if let image = userImage {
                             Image(uiImage: image)
                                 .resizable()
                                 .scaledToFit()
                                 .clipShape(Circle())
-                                .frame(width: 250, height: 250)
-                                
-                                    } else {
-                            Image(systemName: "person.circle.fill")
+                                .shadow(radius: 10)
+                        } else {
+                            Image(systemName: "person.circle")
                                 .resizable()
                                 .scaledToFit()
-                                .foregroundColor(Color.gray)
-                                .frame(width: 130, height: 130)
-                                .padding()
-                                }
-                            }
-                    .sheet(isPresented: $showingImagePicker) {
-                        ImagePicker(image: $userImage)
-                                }
-                    
-                    Text("Hello, \(userName)")
-                        .font(.system(size: 20))
-                        .padding()
-                        .foregroundColor(Color.primary)
-                    
-                    Image("map")
-                        .resizable()
-                        .scaledToFit()
-                        .padding()
-                        .frame(width: 350, height: 250)
-                    
-                    NavigationLink(destination: ParksView()) {
-                        Text("Available Parks next to me")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.accentColor)
-                            .cornerRadius(10)
-                            .padding(.top, 5)
-                    }
-                    
-                    Text("Best Parks in Montreal")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .padding()
-                        .foregroundColor(Color.primary)
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        
-                        HStack(spacing: 15) {
-                            ForEach(parks) { park in
-                                ParkCardView(park: park)
-=======
-                        Button(action: {
-                            showingImagePicker = true
-                        }) {
-                            if let image = userImage {
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .clipShape(Circle())
-                                    .frame(width: 250, height: 250)
-                            } else {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .foregroundColor(Color.gray)
-                                    .frame(width: 130, height: 130)
-                                    .padding()
->>>>>>> wandrey-local
-                            }
+                                .frame(height: 100)
+                                .foregroundColor(.gray)
                         }
-                        .sheet(isPresented: $showingImagePicker) {
-                            ImagePicker(image: $userImage)
-                        }
+
+                      
+//                        .sheet(isPresented: $showingImagePicker) {
+//                            ImagePicker(image: $userImage)
+//                        }
                         
                         Text("Hello, \(userEmail)")
                             .font(.system(size: 20))
@@ -165,10 +104,8 @@ struct HomeScreenView: View {
                 }
                 
             }
-<<<<<<< HEAD
-          
-=======
-            .tabItem {
+
+   .tabItem {
                 Image(systemName: "house.fill")
                 Text("Home")
             }
@@ -217,7 +154,7 @@ struct HomeScreenView: View {
                 Text("Settings")
             }
             
->>>>>>> wandrey-local
+
         }
         .accentColor(.blue)
     }
@@ -229,9 +166,10 @@ struct HomeScreenView: View {
            }
            
         
-           if let email = user.email {
-               self.userName = email
-           } else {
+        if let email = user.email {
+                self.userEmail = email
+                self.userName = email
+            } else {
                print("No display name found for the user")
            }
        }

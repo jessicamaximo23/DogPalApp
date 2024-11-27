@@ -147,17 +147,17 @@ struct SettingsView: View {
     func loadUserProfile() {
         
         if let user = Auth.auth().currentUser {
-                    let userId = user.uid
-                    ref.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
-                        if let value = snapshot.value as? [String: Any] {
-                            userName = value["name"] as? String ?? ""
-                            userEmail = value["email"] as? String ?? ""
-                            userAge = value["age"] as? String ?? ""
-                            dogName = value["dogName"] as? String ?? ""
-                            dogBreed = value["dogBreed"] as? String ?? ""
-                        }
+                let userId = user.uid
+                ref.child("users").child(userId).observe(.value) { snapshot in
+                    if let value = snapshot.value as? [String: Any] {
+                        userName = value["name"] as? String ?? ""
+                        userEmail = value["email"] as? String ?? ""
+                        userAge = value["age"] as? String ?? ""
+                        dogName = value["dogName"] as? String ?? ""
+                        dogBreed = value["dogBreed"] as? String ?? ""
                     }
                 }
+            }
     }
 
 func saveProfileData() {

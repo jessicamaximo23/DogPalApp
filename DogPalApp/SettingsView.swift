@@ -10,9 +10,17 @@ import FirebaseAuth
 
 struct SettingsView: View {
     
+    
+    @State private var userName: String = ""
+    @State private var userEmail: String = ""
+    @State private var userAge: String = ""
+    @State private var dogName: String = ""
+    @State private var dogBreed: String = ""
+    private var ref: DatabaseReference = Database.database().reference()
+    
     @State private var userImage: UIImage?
     @State private var showingImagePicker: Bool = false
-    @State private var userName: String = Auth.auth().currentUser?.displayName ?? ""
+    
     @State private var notificationsEnabled: Bool = true
     @State private var locationEnabled: Bool = true
     @Environment(\.presentationMode) var presentationMode
@@ -60,10 +68,31 @@ struct SettingsView: View {
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
+                                               
+                            TextField("Email", text: $userEmail)
+                                .padding()
+                                .background(Color(UIColor.systemGray6))
+                                .cornerRadius(8)
+                                               
+                            TextField("Age", text: $userAge)
+                                 .padding()
+                                 .background(Color(UIColor.systemGray6))
+                                 .cornerRadius(8)
+                                               
+                            TextField("Dog Name", text: $dogName)
+                                .padding()
+                                .background(Color(UIColor.systemGray6))
+                                .cornerRadius(8)
+                                               
+                            TextField("Dog Breed", text: $dogBreed)
+                                .padding()
+                                .background(Color(UIColor.systemGray6))
+                                .cornerRadius(8)
                         }
                             Button("Reset Password") {
                                 resetPassword()
                             }
+                            .foregroundColor(.black)
                         }
                     
                     Section(header: Text("Notifications")) {
@@ -91,6 +120,14 @@ struct SettingsView: View {
                         }
                         .foregroundColor(.red)
                     }
+                    
+                    Button("Save Changes") {
+                        saveProfileData()
+                                   }
+                                   .padding()
+                                   .background(Color.textFields)
+                                   .foregroundColor(.white)
+                                   .cornerRadius(8)
                 }
                 .navigationBarItems(trailing: Button("Close") {
                     presentationMode.wrappedValue.dismiss()
@@ -99,20 +136,46 @@ struct SettingsView: View {
                 
                 NavigationLink(destination: LoginView(), isActive: $shouldNavigateToLogin) {
                                EmptyView()
-                           }
+                        }
             }
             .onAppear {
 
                 loadUserProfile()
-
             }
-
-        
     }
     
     func loadUserProfile() {
+        
         if let user = Auth.auth().currentUser {
-            userName = user.displayName ?? ""
+                    let userId = user.uid
+                    ref.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
+                        if let value = snapshot.value as? [String: Any] {
+                            userName = value["name"] as? String ?? ""
+                            userEmail = value["email"] as? String ?? ""
+                            userAge = value["age"] as? String ?? ""
+                            dogName = value["dogName"] as? String ?? ""
+                            dogBreed = value["dogBreed"] as? String ?? ""
+                        }
+                    }
+                }
+    }
+
+func saveProfileData() {
+        if let user = Auth.auth().currentUser {
+            let userId = user.uid
+            ref.child("users").child(userId).setValue([
+                "name": userName,
+                "email": userEmail,
+                "age": userAge,
+                "dogName": dogName,
+                "dogBreed": dogBreed
+            ]) { error, _ in
+                if let error = error {
+                    print("Error saving data: \(error.localizedDescription)")
+                } else {
+                    print("Profile updated successfully")
+                }
+            }
         }
     }
 

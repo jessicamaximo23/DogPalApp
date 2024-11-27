@@ -33,6 +33,7 @@ struct HomeScreenView: View {
     @State private var showingImagePicker: Bool = false
     @State private var selectedDate = Date()
     
+    
     var body: some View {
         
         TabView {
@@ -61,11 +62,6 @@ struct HomeScreenView: View {
                                 .frame(height: 100)
                                 .foregroundColor(.gray)
                         }
-
-                      
-//                        .sheet(isPresented: $showingImagePicker) {
-//                            ImagePicker(image: $userImage)
-//                        }
                         
                         Text("Hello, \(userEmail)")
                             .font(.system(size: 20))

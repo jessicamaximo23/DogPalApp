@@ -18,7 +18,7 @@ struct UserProfilePage: View {
     var dogName: String
     var userImage: Data?
     @State private var showHomeScreen = false
-    @State private var showProfileView = false // Estado para navegação para HomeScreenView
+    @State private var showProfileView = false
     @State private var showingSignOutAlert = false
     @State private var navigateToLogin = false
     
@@ -27,8 +27,7 @@ struct UserProfilePage: View {
     @State private var selectedDate = Date()
     
     var body: some View {
-        NavigationView {
-            ScrollView {
+       
                 VStack {
                     Image("DogPalLogo2")
                         .resizable()
@@ -37,7 +36,7 @@ struct UserProfilePage: View {
                         .frame(width: 350, height: 150)
                     
                     Text(userName)
-                        .font(.largeTitle)
+                        .font(.title)
                     
                     if let imageData = userImage, let image = UIImage(data: imageData) {
                         Image(uiImage: image)
@@ -55,38 +54,43 @@ struct UserProfilePage: View {
                     
                     VStack(alignment: .leading, spacing: 10) {
                         Text("About Me")
-                            .font(.headline)
+                            .font(.title)
+                            .padding()
                       
                     }
                     .padding(.horizontal)
                     
-                    VStack(alignment: .leading) {
-                        Text("User Email: \(userEmail)")
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Email: \(userEmail)")
                             .font(.headline)
-                        
-                        Text("User Age: \(userAge)")
+                            .foregroundColor(.blue)
+
+                        Text("Age: \(userAge)")
                             .font(.headline)
+                            .foregroundColor(.green)
                         
                         Text("Dog Name: \(dogName)")
                             .font(.headline)
+                            .foregroundColor(.purple)
                         
                         Text("Dog Breed: \(dogBreed)")
                             .font(.headline)
-            }
-                    .padding()
-
-                    
-                    Spacer()
+                            .foregroundColor(.orange)
+                        
+                        Spacer()
+                    }
                     
                     Button(role: .destructive) {
                         showingSignOutAlert = true
                     } label: {
                         Text("Sign Out")
+                            .font(.title)
+                            .padding()
                     }
                 }
-            }
+            
         .navigationDestination(isPresented: $navigateToLogin) {
-            LoginView()  // Direciona para a LoginView
+            LoginView()
         }
         .alert("Sign Out", isPresented: $showingSignOutAlert) {
             Button("Cancel", role: .cancel) { }
@@ -97,41 +101,8 @@ struct UserProfilePage: View {
             Text("Are you sure you want to sign out?")
         }
             
-            .navigationBarItems(trailing: Button(action: {
-                showProfileView = true
-            }) {
-                Image(systemName: "gearshape")
-                    .font(.title2)
-                    .foregroundColor(.blue)
-            })
-            .background(
-                NavigationLink(
-                    destination: SettingsView(
-                        
-                    ),
-                    isActive: $showProfileView
-                ) {
-                    EmptyView()
-                }
-            )
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    dismiss()
-                }) {
-                    Label("Back", systemImage: "arrow.left")
-                }
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    dismiss()
-                }) {
-//                    Label("Cancel", systemImage: "xmark")
-//                        .foregroundColor(.blue)
-                }
-            }
-        }
+
+        
     }
     func signOutFirebase() {
            do {

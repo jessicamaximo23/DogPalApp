@@ -4,8 +4,6 @@
 //
 //  Created by Jessica Maximo on 2024-11-08.
 
-//FALTA FAZER O PUSH NOTIFICATIONS E ENABLE LOCATION E NAME***
-
 import SwiftUI
 import Firebase
 import FirebaseAuth
@@ -20,12 +18,19 @@ struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State private var isDarkMode: Bool = UserDefaults.standard.bool(forKey: "isDarkMode")
-    @State private var language: String = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
     @State private var shouldNavigateToLogin: Bool = false
 
+
+
     var body: some View {
-        NavigationView {
             VStack(alignment: .center){
+                
+                
+                Image("DogPalLogo2")
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+                    .frame(width: 350, height: 150)
                 List {
                     
                     Section(header: Text("Edit Profile")) {
@@ -64,27 +69,18 @@ struct SettingsView: View {
                     Section(header: Text("Notifications")) {
                         Toggle("Push Notifications", isOn: $notificationsEnabled).onChange(of: notificationsEnabled)
                         { value in
-                            handleNotificationsToggle(value)
-                        }
+
+                    handleNotificationsToggle(value)
+           }
                     }
          Section(header: Text("Location Preferences")) {
                         Toggle("Enable Location", isOn: $locationEnabled)
                     }
-                    
-                    
-                    Section(header: Text("Language and Theme")) {
-                        Picker("Language", selection: $language) {
-                            Text("English").tag("English")
-                            Text("Français").tag("Français")
-                        }
-                        .pickerStyle(MenuPickerStyle())
-                        .onChange(of: language) { value in
-                                setAppLanguage(to: value)
-                                               }
-                        
-                        Toggle("Dark Mode", isOn: $isDarkMode)
-                            .onChange(of: isDarkMode) {
-value in
+
+                    Section(header: Text("Theme")) {
+                     Toggle("Dark Mode", isOn: $isDarkMode)
+                                .onChange(of: isDarkMode) { value in
+
                                 setAppTheme(darkMode: value)
                                                        }
                     }
@@ -96,7 +92,6 @@ value in
                         .foregroundColor(.red)
                     }
                 }
-                .navigationTitle("Settings")
                 .navigationBarItems(trailing: Button("Close") {
                     presentationMode.wrappedValue.dismiss()
                 })
@@ -107,13 +102,12 @@ value in
                            }
             }
             .onAppear {
+
                 loadUserProfile()
-                NotificationCenter.default.addObserver(forName: NSNotification.Name("LanguageChanged"), object: nil, queue: .main) { _ in
-                      
-                       self.language = UserDefaults.standard.string(forKey: "appLanguage") ?? "English"
-                   }
+
             }
-        }
+
+        
     }
     
     func loadUserProfile() {
@@ -123,6 +117,7 @@ value in
     }
 
     func resetPassword() {
+
         if let email = Auth.auth().currentUser?.email {
             Auth.auth().sendPasswordReset(withEmail: email) { error in
                 if let error = error {
@@ -176,17 +171,9 @@ value in
 
 
     private func setAppTheme(darkMode: Bool) {
-            isDarkMode = darkMode
-            print(darkMode ? "Dark Mode activated." : "Light Mode activated.")
-        }
+        isDarkMode = darkMode
         
-        
-    private func setAppLanguage(to language: String) {
-        self.language = language
-            
-        UserDefaults.standard.set(language, forKey: "appLanguage")
-        NotificationCenter.default.post(name: NSNotification.Name("LanguageChanged"), object: nil)
-        print("App set to \(language).")
+        print(darkMode ? "Dark Mode activated." : "Light Mode activated.")
         }
     }
    
@@ -229,3 +216,4 @@ struct UserImagePicker: UIViewControllerRepresentable {
 #Preview {
     SettingsView()
 }
+

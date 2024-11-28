@@ -31,8 +31,8 @@ struct SettingsView: View {
 
 
     var body: some View {
+        
             VStack(alignment: .center){
-                
                 
                 Image("DogPalLogo2")
                     .resizable()

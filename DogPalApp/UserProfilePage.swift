@@ -101,6 +101,8 @@ struct UserProfilePage: View {
             .onAppear {
                 fetchUserProfile()
             }
+            .navigationBarBackButtonHidden(true)  // Esconde o botão de voltar
+            .navigationBarHidden(true)            // Esconde a barra inteira
         }
     }
     

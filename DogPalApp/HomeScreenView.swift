@@ -98,7 +98,8 @@ struct HomeScreenView: View {
                         print("User not logged in")
                     }
                 }
-                
+                .navigationBarBackButtonHidden(true)  // Esconde o botão de voltar
+                .navigationBarHidden(true)            // Esconde a barra inteira
             }
 
    .tabItem {

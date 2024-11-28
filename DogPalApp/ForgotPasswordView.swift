@@ -77,6 +77,8 @@ struct ForgotPasswordView: View {
             } message: {
                 Text(alertMessage)
             }
+            .navigationBarBackButtonHidden(true)  // Esconde o botão de voltar
+            .navigationBarHidden(true)            // Esconde a barra inteira
         }
     }
     

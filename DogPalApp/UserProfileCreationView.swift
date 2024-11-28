@@ -110,6 +110,8 @@ struct UserProfileCreationView: View {
                     EmptyView()
                 }
             }
+            .navigationBarBackButtonHidden(true)  // Esconde o botão de voltar
+            .navigationBarHidden(true)            // Esconde a barra inteira
         }
     }
     

@@ -90,11 +90,19 @@ struct SettingsView: View {
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
                         }
-                            Button("Reset Password") {
-                                resetPassword()
-                            }
-                            .foregroundColor(.black)
+                        
+                        Button("Save Changes") {
+                            saveProfileData()
+                            
                         }
+                        .foregroundColor(Color.black)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(50)
+                        .padding(.top, 20)
+                        .shadow(radius: 5)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                           
                     
                     Section(header: Text("Notifications")) {
                         Toggle("Push Notifications", isOn: $notificationsEnabled).onChange(of: notificationsEnabled)
@@ -115,16 +123,18 @@ struct SettingsView: View {
                                                        }
                     }
             
-                    Button("Save Changes") {
-                        saveProfileData()
-                        
+                        Button("Reset Password") {
+                            resetPassword()
+                        }
+                        .foregroundColor(Color.black)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(50)
+                        .padding(.top, 20)
+                        .shadow(radius: 5)
+                        .frame(maxWidth: .infinity, alignment: .center)
+
                     }
-                    .foregroundColor(Color.black)
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(50)
-                    .padding(.top, 20)
-                    .shadow(radius: 5)
 
                 }
                 .navigationBarItems(trailing: Button("Close") {

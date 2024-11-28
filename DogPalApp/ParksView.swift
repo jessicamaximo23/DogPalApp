@@ -25,7 +25,7 @@ struct ParksView: View {
     let parks = [
         Parklist(name: "Mount Royal Park", coordinate: CLLocationCoordinate2D(latitude: 45.5017, longitude: -73.5673)),
         Parklist(name: "Jean-Drapeau Park", coordinate: CLLocationCoordinate2D(latitude: 45.5088, longitude: -73.5530)),
-        Parklist(name: "La Fontaine Park", coordinate: CLLocationCoordinate2D(latitude: 45.5200, longitude: -73.6167)),
+        Parklist(name: "La Fontaine Park", coordinate: CLLocationCoordinate2D(latitude: 45.527290, longitude: -73.570457)),
         Parklist(name: "Jarry Park", coordinate: CLLocationCoordinate2D(latitude: 45.4230, longitude: -73.6032)),
         Parklist(name: "Berri Park", coordinate: CLLocationCoordinate2D(latitude: 45.4710, longitude: -73.5590)),
         Parklist(name: "Lachine Canal Park", coordinate: CLLocationCoordinate2D(latitude: 45.4485, longitude: -73.5752)),

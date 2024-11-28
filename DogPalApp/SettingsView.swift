@@ -7,6 +7,7 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
+import FirebaseDatabase
 
 struct SettingsView: View {
     
@@ -114,20 +115,21 @@ struct SettingsView: View {
                                                        }
                     }
                       
-                    Section {
+                  
                         Button("Logout") {
                             logout()
                         }
-                        .foregroundColor(.red)
-                    }
+                        .foregroundColor(Color.textFields)
+                    
                     
                     Button("Save Changes") {
                         saveProfileData()
                                    }
-                                   .padding()
-                                   .background(Color.textFields)
-                                   .foregroundColor(.white)
-                                   .cornerRadius(8)
+                            .padding()
+                            .background(Color.textFields)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                            .frame(maxWidth: .infinity, alignment: .center)
                 }
                 .navigationBarItems(trailing: Button("Close") {
                     presentationMode.wrappedValue.dismiss()
@@ -147,20 +149,27 @@ struct SettingsView: View {
     func loadUserProfile() {
         
         if let user = Auth.auth().currentUser {
-                let userId = user.uid
-                ref.child("users").child(userId).observe(.value) { snapshot in
-                    if let value = snapshot.value as? [String: Any] {
-                        userName = value["name"] as? String ?? ""
-                        userEmail = value["email"] as? String ?? ""
-                        userAge = value["age"] as? String ?? ""
-                        dogName = value["dogName"] as? String ?? ""
-                        dogBreed = value["dogBreed"] as? String ?? ""
-                    }
+            let userId = user.uid
+            ref.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
+                if let value = snapshot.value as? [String: Any] {
+                  
+                    
+                    self.userName = value["name"] as? String ?? ""
+                    self.userEmail = value["email"] as? String ?? ""
+                    self.userAge = value["age"] as? String ?? ""
+                    self.dogName = value["dogName"] as? String ?? ""
+                    self.dogBreed = value["dogBreed"] as? String ?? ""
+                    
+                 
+                    print("User Profile Loaded: \(self.userName), \(self.userEmail), \(self.userAge), \(self.dogName), \(self.dogBreed)")
                 }
             }
+        }
     }
 
+
 func saveProfileData() {
+    
         if let user = Auth.auth().currentUser {
             let userId = user.uid
             ref.child("users").child(userId).setValue([

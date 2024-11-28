@@ -16,6 +16,7 @@ struct SettingsView: View {
     @State private var userAge: String = ""
     @State private var dogName: String = ""
     @State private var dogBreed: String = ""
+    @State private var profileCreated = true
     private var ref: DatabaseReference = Database.database().reference()
     
     @State private var userImage: UIImage?
@@ -155,6 +156,7 @@ struct SettingsView: View {
                         userAge = value["age"] as? String ?? ""
                         dogName = value["dogName"] as? String ?? ""
                         dogBreed = value["dogBreed"] as? String ?? ""
+                        profileCreated = true
                     }
                 }
             }
@@ -163,12 +165,17 @@ struct SettingsView: View {
 func saveProfileData() {
         if let user = Auth.auth().currentUser {
             let userId = user.uid
+            
+            let ageValue = Int(userAge) ?? 0 // convert string to int
+            
             ref.child("users").child(userId).setValue([
                 "name": userName,
                 "email": userEmail,
-                "age": userAge,
+                "age": ageValue, // saves as Int
                 "dogName": dogName,
-                "dogBreed": dogBreed
+                "dogBreed": dogBreed,
+                "profileCreated": true
+                
             ]) { error, _ in
                 if let error = error {
                     print("Error saving data: \(error.localizedDescription)")

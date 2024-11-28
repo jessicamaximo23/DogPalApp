@@ -12,7 +12,7 @@ import FirebaseDatabase
 struct UserProfilePage: View {
     
     @State private var userName: String = ""
-    @State private var userAge: Int = 0
+    @State private var userAge: String = ""
     @State private var userEmail: String = ""
     @State private var dogBreed: String = ""
     @State private var dogName: String = ""
@@ -101,8 +101,7 @@ struct UserProfilePage: View {
             .onAppear {
                 fetchUserProfile()
             }
-            .navigationBarBackButtonHidden(true)  // Esconde o botão de voltar
-            .navigationBarHidden(true)            // Esconde a barra inteira
+                   // Esconde a barra inteira
         }
     }
     
@@ -121,9 +120,13 @@ struct UserProfilePage: View {
         
         userRef.observeSingleEvent(of: .value) { snapshot in
             if let userData = snapshot.value as? [String: Any] {
-                self.userName = userData["userName"] as? String ?? "Unknown User"
-                self.userEmail = userData["userEmail"] as? String ?? "No Email"
-                self.userAge = Int(userData["userAge"] as? String ?? "0") ?? 0
+                self.userName = userData["name"] as? String ?? "Unknown User"
+                self.userEmail = userData["email"] as? String ?? "No Email"
+                if let age = userData["age"] as? Int {
+                                self.userAge = "\(age)"  // Convert Int to String
+                            } else {
+                                self.userAge = "0"
+                            }
                 self.dogName = userData["dogName"] as? String ?? "No Dog Name"
                 self.dogBreed = userData["dogBreed"] as? String ?? "No Breed"
                 

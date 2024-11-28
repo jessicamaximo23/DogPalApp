@@ -107,8 +107,7 @@ struct SignUpView: View {
                 
                 Spacer()
             }
-            .navigationBarBackButtonHidden(true)  // Esconde o botão de voltar
-            .navigationBarHidden(true)            // Esconde a barra inteira
+                
         }
         .padding(.bottom, 100)
         .alert("Sign Up Status", isPresented: $isShowingAlert) {

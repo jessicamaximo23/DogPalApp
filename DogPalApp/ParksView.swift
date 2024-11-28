@@ -7,28 +7,19 @@
 
 import SwiftUI
 import MapKit
-//
-//  ParksView.swift
-//  DogPalApp
-//
-//  Created by Jessica Maximo on 2024-11-14.
-//
 
-import SwiftUI
-import MapKit
-
-import SwiftUI
-import MapKit
 
 struct ParksView: View {
 
-    @State private var searchText = "" // Texto de busca (endereço ou código postal)
+    @State private var searchText = ""
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 45.5017, longitude: -73.5673),
         span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     )
     @State private var userLocation: CLLocationCoordinate2D?
     @State private var closestPark: Parklist?
+    
+    
 
     // Lista de parques com nome e coordenadas
     let parks = [
@@ -62,6 +53,7 @@ struct ParksView: View {
         Parklist(name: "Parc Léon-Provancher", coordinate: CLLocationCoordinate2D(latitude: 45.5654, longitude: -73.6026)),
         Parklist(name: "Parc de l'Anse-à-l'Orme", coordinate: CLLocationCoordinate2D(latitude: 45.4815, longitude: -73.9302))
     ]
+
     
     var body: some View {
         VStack {
@@ -81,23 +73,25 @@ struct ParksView: View {
             
             // Mapa com a localização do usuário e os parques
             Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: parks) { park in
-                MapPin(coordinate: park.coordinate, tint: .red) // Pin vermelho para cada parque
+                MapPin(coordinate: park.coordinate, tint: .red)
+                
             }
             .edgesIgnoringSafeArea(.all)
             
-            // Exibe o parque mais próximo se encontrado
+            // Show the closest park
             if let closestPark = closestPark {
-                Text("Closest Park: \(closestPark.name)")
-                    .font(.title)
-                    .padding()
+                
+                Text("The nearest park is: ") + Text("\(closestPark.name)")
+                    .foregroundColor(Color.textFields) +
+                Text("\nEnjoy your visit!")
+                Spacer()
             }
             
             NavigationLink(destination: ReviewRateView()) {
                 Text("Review Parks")
-                    .font(.title2)
                     .foregroundColor(.white)
                     .padding()
-                    .background(Color.textFields) // Ajuste a cor de fundo
+                    .background(Color.textFields)
                     .cornerRadius(50)
                     .padding(.top, 20)
             }
@@ -152,4 +146,3 @@ struct Parklist: Identifiable {
 #Preview {
     ParksView()
 }
-

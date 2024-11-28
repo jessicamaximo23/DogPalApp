@@ -38,7 +38,7 @@ struct HomeScreenView: View {
         
         TabView {
             
-            NavigationView {
+            NavigationStack {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
                         

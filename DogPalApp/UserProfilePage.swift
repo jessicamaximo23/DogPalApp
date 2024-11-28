@@ -25,11 +25,6 @@ struct UserProfilePage: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                LinearGradient(gradient: Gradient(colors: [Color.white, Color.gray.opacity(0.1)]),
-                               startPoint: .topLeading,
-                               endPoint: .bottomTrailing)
-                    .edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 20) {
                     // Logo
@@ -78,17 +73,15 @@ struct UserProfilePage: View {
                         showingSignOutAlert = true
                     }) {
                         Text("Sign Out")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: 150)
+                            .foregroundColor(Color.black)
                             .padding()
-                            .background(Color.textFields)
-                            .cornerRadius(20)
+                            .background(Color.white)
+                            .cornerRadius(50)
+                            .padding(.top, 20)
                             .shadow(radius: 5)
                     }
                     .padding(25)
                 }
-            }
             .navigationDestination(isPresented: $navigateToLogin) {
                 LoginView()
             }
@@ -153,7 +146,8 @@ struct DetailRow: View {
                 .foregroundColor(color)
             Spacer()
             Text(value)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.black)
+                .background(Color.white)
         }
         .padding(.vertical, 5)
     }

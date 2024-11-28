@@ -74,6 +74,8 @@ struct ReviewCardView: View {
             HStack {
                 Text(review.userName)
                     .font(.headline)
+                    .foregroundColor(Color.black)
+                    .background(Color.white)
                 
                 Spacer()
                 
@@ -88,7 +90,7 @@ struct ReviewCardView: View {
             Text(review.comment)
                 .font(.body)
                 .padding(.top, 2)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.black)
         }
         .padding()
         .background(Color.white)

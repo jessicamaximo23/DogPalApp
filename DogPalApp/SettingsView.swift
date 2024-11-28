@@ -114,21 +114,18 @@ struct SettingsView: View {
                                 setAppTheme(darkMode: value)
                                                        }
                     }
-                      
-                    Section {
-                        Button("Logout") {
-                            logout()
-                        }
-                        .foregroundColor(.red)
-                    }
-                    
+            
                     Button("Save Changes") {
                         saveProfileData()
-                                   }
-                                   .padding()
-                                   .background(Color.textFields)
-                                   .foregroundColor(.white)
-                                   .cornerRadius(8)
+                        
+                    }
+                    .foregroundColor(Color.black)
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(50)
+                    .padding(.top, 20)
+                    .shadow(radius: 5)
+
                 }
                 .navigationBarItems(trailing: Button("Close") {
                     presentationMode.wrappedValue.dismiss()

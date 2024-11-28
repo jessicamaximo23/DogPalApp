@@ -89,11 +89,12 @@ struct ParksView: View {
             
             NavigationLink(destination: ReviewRateView()) {
                 Text("Review Parks")
-                    .foregroundColor(.white)
+                    .foregroundColor(Color.black)
                     .padding()
-                    .background(Color.textFields)
+                    .background(Color.white)
                     .cornerRadius(50)
                     .padding(.top, 20)
+                    .shadow(radius: 5)
             }
         }
         .padding()

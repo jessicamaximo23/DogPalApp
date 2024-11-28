@@ -12,6 +12,8 @@ import FirebaseAuth
 
 @main
 struct DogPalAppApp: App {
+    
+    
     init(){
         FirebaseApp.configure()
     }

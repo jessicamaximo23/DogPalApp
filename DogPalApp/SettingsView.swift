@@ -32,6 +32,8 @@ struct SettingsView: View {
 
 
     var body: some View {
+        
+        NavigationStack {
             VStack(alignment: .center){
                 
                 
@@ -69,77 +71,75 @@ struct SettingsView: View {
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
-                                               
+                            
                             TextField("Email", text: $userEmail)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
-                                               
+                            
                             TextField("Age", text: $userAge)
-                                 .padding()
-                                 .background(Color(UIColor.systemGray6))
-                                 .cornerRadius(8)
-                                               
+                                .padding()
+                                .background(Color(UIColor.systemGray6))
+                                .cornerRadius(8)
+                            
                             TextField("Dog Name", text: $dogName)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
-                                               
+                            
                             TextField("Dog Breed", text: $dogBreed)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
                         }
-                            Button("Reset Password") {
-                                resetPassword()
-                            }
-                            .foregroundColor(.black)
+                        Button("Reset Password") {
+                            resetPassword()
                         }
+                        .foregroundColor(.black)
+                    }
                     
                     Section(header: Text("Notifications")) {
                         Toggle("Push Notifications", isOn: $notificationsEnabled).onChange(of: notificationsEnabled)
                         { value in
-
-                    handleNotificationsToggle(value)
-           }
+                            
+                            handleNotificationsToggle(value)
+                        }
                     }
-         Section(header: Text("Location Preferences")) {
+                    Section(header: Text("Location Preferences")) {
                         Toggle("Enable Location", isOn: $locationEnabled)
                     }
-
+                    
                     Section(header: Text("Theme")) {
-                     Toggle("Dark Mode", isOn: $isDarkMode)
-                                .onChange(of: isDarkMode) { value in
-
+                        Toggle("Dark Mode", isOn: $isDarkMode)
+                            .onChange(of: isDarkMode) { value in
+                                
                                 setAppTheme(darkMode: value)
-                                                       }
+                            }
                     }
-                      
-                  
-                        Button("Logout") {
-                            logout()
-                        }
-                        .foregroundColor(Color.textFields)
+                    
+                    
+                    Button("Logout") {
+                        logout()
+                    }
+                    .foregroundColor(Color.textFields)
                     
                     
                     Button("Save Changes") {
                         saveProfileData()
-                                   }
-                            .padding()
-                            .background(Color.textFields)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
+                    .padding()
+                    .background(Color.textFields)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
-                .navigationBarItems(trailing: Button("Close") {
-                    presentationMode.wrappedValue.dismiss()
-                })
                 .preferredColorScheme(isDarkMode ? .dark : .light)
                 
                 NavigationLink(destination: LoginView(), isActive: $shouldNavigateToLogin) {
-                               EmptyView()
-                        }
+                    EmptyView()
+                }
             }
+        }
             .onAppear {
 
                 loadUserProfile()

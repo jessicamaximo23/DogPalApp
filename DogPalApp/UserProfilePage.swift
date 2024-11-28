@@ -114,24 +114,24 @@ struct UserProfilePage: View {
     }
     
     func fetchUserProfile() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        let userRef = Database.database().reference().child("users").child(uid)
-        
-        userRef.observeSingleEvent(of: .value) { snapshot in
-            if let userData = snapshot.value as? [String: Any] {
-                self.userName = userData["userName"] as? String ?? "Unknown User"
-                self.userEmail = userData["userEmail"] as? String ?? "No Email"
-                self.userAge = Int(userData["userAge"] as? String ?? "0") ?? 0
-                self.dogName = userData["dogName"] as? String ?? "No Dog Name"
-                self.dogBreed = userData["dogBreed"] as? String ?? "No Breed"
-                
-                if let imageData = userData["userImage"] as? Data {
-                    self.userImage = UIImage(data: imageData)
-                }
-            }
-        } withCancel: { error in
-            print("Error fetching user data: \(error.localizedDescription)")
-        }
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
+//        let userRef = Database.database().reference().child("users").child(uid)
+//        
+//        userRef.observeSingleEvent(of: .value) { snapshot in
+//            if let userData = snapshot.value as? [String: Any] {
+//                self.userName = userData["userName"] as? String ?? "Unknown User"
+//                self.userEmail = userData["userEmail"] as? String ?? "No Email"
+//                self.userAge = Int(userData["userAge"] as? String ?? "0") ?? 0
+//                self.dogName = userData["dogName"] as? String ?? "No Dog Name"
+//                self.dogBreed = userData["dogBreed"] as? String ?? "No Breed"
+//                
+//                if let imageData = userData["userImage"] as? Data {
+//                    self.userImage = UIImage(data: imageData)
+//                }
+//            }
+//        } withCancel: { error in
+//            print("Error fetching user data: \(error.localizedDescription)")
+//        }
     }
 }
 

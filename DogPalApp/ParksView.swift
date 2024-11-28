@@ -56,6 +56,7 @@ struct ParksView: View {
 
     
     var body: some View {
+        
         VStack {
             Image("DogPalLogo2")
                 .resizable()
@@ -95,6 +96,7 @@ struct ParksView: View {
                     .cornerRadius(50)
                     .padding(.top, 20)
             }
+            
         }
         .padding()
     }

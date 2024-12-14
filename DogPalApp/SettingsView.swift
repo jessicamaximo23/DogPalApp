@@ -147,7 +147,6 @@ struct SettingsView: View {
                         }
             }
             .onAppear {
-
                 loadUserProfile()
             }
     }
@@ -158,12 +157,15 @@ struct SettingsView: View {
                 let userId = user.uid
                 ref.child("users").child(userId).observe(.value) { snapshot in
                     if let value = snapshot.value as? [String: Any] {
-                        userName = value["name"] as? String ?? ""
-                        userEmail = value["email"] as? String ?? ""
-                        userAge = value["age"] as? String ?? ""
-                        dogName = value["dogName"] as? String ?? ""
-                        dogBreed = value["dogBreed"] as? String ?? ""
-                        profileCreated = true
+                        
+                        DispatchQueue.main.async {
+                            userName = value["name"] as? String ?? ""
+                            userEmail = value["email"] as? String ?? ""
+                            userAge = value["age"] as? String ?? ""
+                            dogName = value["dogName"] as? String ?? ""
+                            dogBreed = value["dogBreed"] as? String ?? ""
+                            profileCreated = true
+                        }
                     }
                 }
             }
@@ -178,7 +180,7 @@ func saveProfileData() {
             ref.child("users").child(userId).setValue([
                 "name": userName,
                 "email": userEmail,
-                "age": ageValue, // saves as Int
+                "age": ageValue,
                 "dogName": dogName,
                 "dogBreed": dogBreed,
                 "profileCreated": true

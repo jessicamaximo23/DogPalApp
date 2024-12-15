@@ -12,15 +12,22 @@ import FirebaseAuth
 
 @main
 struct DogPalAppApp: App {
+<<<<<<< HEAD
     
     
     init(){
         FirebaseApp.configure()
+=======
+    init() {
+        FirebaseApp.configure()  // Configuração do Firebase
+>>>>>>> jessicamaximo-local
     }
     
     var body: some Scene {
-        WindowGroup {
-            SplashScreenView()
+            WindowGroup {
+                SplashScreenView()
+                    .navigationBarBackButtonHidden(true)  // Esconde o botão de voltar
+                    .navigationBarHidden(true)  // Oculta a barra de navegação globalmente
+            }
         }
-    }
 }

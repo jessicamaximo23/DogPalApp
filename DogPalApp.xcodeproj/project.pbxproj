@@ -413,10 +413,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DogPalApp/Preview Content\"";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				DEVELOPMENT_TEAM = "";
 =======
 				DEVELOPMENT_TEAM = V59R53464M;
 >>>>>>> 418ddba (fixing dark mode)
+=======
+				DEVELOPMENT_TEAM = V59R53464M;
+>>>>>>> jessicamaximo-local
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -429,6 +433,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+<<<<<<< HEAD
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jessicamaximo.DogPalApp-com.jessicamaximo.DogPalApp";
+>>>>>>> jessicamaximo-local
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -445,10 +453,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DogPalApp/Preview Content\"";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				DEVELOPMENT_TEAM = "";
 =======
 				DEVELOPMENT_TEAM = V59R53464M;
 >>>>>>> 418ddba (fixing dark mode)
+=======
+				DEVELOPMENT_TEAM = V59R53464M;
+>>>>>>> jessicamaximo-local
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -461,6 +473,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+<<<<<<< HEAD
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jessicamaximo.DogPalApp-com.jessicamaximo.DogPalApp";
+>>>>>>> jessicamaximo-local
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

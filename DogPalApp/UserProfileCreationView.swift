@@ -110,6 +110,7 @@ struct UserProfileCreationView: View {
                     EmptyView()
                 }
             }
+          
         }
     }
     

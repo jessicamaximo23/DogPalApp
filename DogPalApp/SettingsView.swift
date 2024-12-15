@@ -17,6 +17,7 @@ struct SettingsView: View {
     @State private var userAge: String = ""
     @State private var dogName: String = ""
     @State private var dogBreed: String = ""
+    @State private var profileCreated = true
     private var ref: DatabaseReference = Database.database().reference()
     
     @State private var userImage: UIImage?
@@ -33,9 +34,11 @@ struct SettingsView: View {
 
     var body: some View {
         
+<<<<<<< HEAD
         NavigationStack {
+=======
+>>>>>>> jessicamaximo-local
             VStack(alignment: .center){
-                
                 
                 Image("DogPalLogo2")
                     .resizable()
@@ -92,11 +95,27 @@ struct SettingsView: View {
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
                         }
+<<<<<<< HEAD
                         Button("Reset Password") {
                             resetPassword()
                         }
                         .foregroundColor(.black)
                     }
+=======
+                        
+                        Button("Save Changes") {
+                            saveProfileData()
+                            
+                        }
+                        .foregroundColor(Color.black)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(50)
+                        .padding(.top, 20)
+                        .shadow(radius: 5)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                           
+>>>>>>> jessicamaximo-local
                     
                     Section(header: Text("Notifications")) {
                         Toggle("Push Notifications", isOn: $notificationsEnabled).onChange(of: notificationsEnabled)
@@ -116,6 +135,7 @@ struct SettingsView: View {
                                 setAppTheme(darkMode: value)
                             }
                     }
+<<<<<<< HEAD
                     
                     
                     Button("Logout") {
@@ -132,6 +152,22 @@ struct SettingsView: View {
                     .foregroundColor(.white)
                     .cornerRadius(8)
                     .frame(maxWidth: .infinity, alignment: .center)
+=======
+            
+                        Button("Reset Password") {
+                            resetPassword()
+                        }
+                        .foregroundColor(Color.black)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(50)
+                        .padding(.top, 20)
+                        .shadow(radius: 5)
+                        .frame(maxWidth: .infinity, alignment: .center)
+
+                    }
+
+>>>>>>> jessicamaximo-local
                 }
                 .preferredColorScheme(isDarkMode ? .dark : .light)
                 
@@ -141,7 +177,6 @@ struct SettingsView: View {
             }
         }
             .onAppear {
-
                 loadUserProfile()
             }
     }
@@ -149,6 +184,7 @@ struct SettingsView: View {
     func loadUserProfile() {
         
         if let user = Auth.auth().currentUser {
+<<<<<<< HEAD
             let userId = user.uid
             ref.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
                 if let value = snapshot.value as? [String: Any] {
@@ -162,6 +198,21 @@ struct SettingsView: View {
                     
                  
                     print("User Profile Loaded: \(self.userName), \(self.userEmail), \(self.userAge), \(self.dogName), \(self.dogBreed)")
+=======
+                let userId = user.uid
+                ref.child("users").child(userId).observe(.value) { snapshot in
+                    if let value = snapshot.value as? [String: Any] {
+                        
+                        DispatchQueue.main.async {
+                            userName = value["name"] as? String ?? ""
+                            userEmail = value["email"] as? String ?? ""
+                            userAge = value["age"] as? String ?? ""
+                            dogName = value["dogName"] as? String ?? ""
+                            dogBreed = value["dogBreed"] as? String ?? ""
+                            profileCreated = true
+                        }
+                    }
+>>>>>>> jessicamaximo-local
                 }
             }
         }
@@ -172,12 +223,17 @@ func saveProfileData() {
     
         if let user = Auth.auth().currentUser {
             let userId = user.uid
+            
+            let ageValue = Int(userAge) ?? 0 // convert string to int
+            
             ref.child("users").child(userId).setValue([
                 "name": userName,
                 "email": userEmail,
-                "age": userAge,
+                "age": ageValue,
                 "dogName": dogName,
-                "dogBreed": dogBreed
+                "dogBreed": dogBreed,
+                "profileCreated": true
+                
             ]) { error, _ in
                 if let error = error {
                     print("Error saving data: \(error.localizedDescription)")

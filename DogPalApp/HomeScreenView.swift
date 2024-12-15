@@ -63,7 +63,7 @@ struct HomeScreenView: View {
                                 .foregroundColor(.gray)
                         }
                         
-                        Text("Hello, \(userEmail)")
+                        Text("Hello, \(userName)")
                             .font(.system(size: 20))
                             .padding()
                             .foregroundColor(Color.primary)
@@ -98,7 +98,6 @@ struct HomeScreenView: View {
                         print("User not logged in")
                     }
                 }
-                
             }
 
    .tabItem {

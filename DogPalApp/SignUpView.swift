@@ -17,86 +17,97 @@ struct SignUpView: View {
     @State private var alertMessage = ""
     @State private var isShowingAlert = false
     @State private var navigateToProfile = false
+    @State private var navigateToLogin = false
     @Environment(\.dismiss) private var dismiss
                     
     var body: some View {
         // Removed extra NavigationView since this view is already pushed through NavigationLink
-        VStack {
-            Image("DogPalLogo2")
-                .resizable()
-                .scaledToFit()
-                .padding()
-                .frame(width: 350, height: 150)
-                            
-            VStack(alignment: .leading) {
-                Text("Sign-Up") // Changed from Sign-In to Sign-Up
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.bottom, 20)
-            }
-                            
-            Text("Create your account!") // Changed text to be more appropriate for sign-up
-                .font(.title)
-                .padding()
-                            
-            // Removed redundant HStack since this is the sign-up view
-                            
-            TextField("Email", text: $email)
-                .padding()
-                .autocapitalization(.none)
-                .tint(.red)
-                .frame(width: 340, height: 40)
-                .padding([.leading, .trailing])
-                .overlay(RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.textFields, lineWidth: 2))
-                .padding()
-                            
-            SecureField("Password", text: $password)
-                .padding()
-                .autocapitalization(.none)
-                .tint(.red)
-                .frame(width: 340, height: 40)
-                .padding([.leading, .trailing])
-                .overlay(RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.textFields, lineWidth: 2))
-                .padding()
-            
-            SecureField("Confirm Password", text: $confirmPassword)
-                .padding()
-                .autocapitalization(.none)
-                .tint(.red)
-                .frame(width: 340, height: 40)
-                .padding([.leading, .trailing])
-                .overlay(RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.textFields, lineWidth: 2))
-                .padding()
-                            
-            VStack(spacing: 10) {
-                Button(action: {
-                    signUp()
-                }) {
-                    Text("Sign-Up")
+        NavigationView{
+            VStack {
+                Image("DogPalLogo2")
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+                    .frame(width: 350, height: 150)
+                
+                VStack(alignment: .leading) {
+                    Text("Sign-Up") // Changed from Sign-In to Sign-Up
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .padding(.bottom, 20)
                 }
-                .fontWeight(.semibold)
-                .foregroundStyle(.white)
-                .frame(width: 240, height: 40)
-                .background(
-                    Capsule()
-                        .fill(Color.textFields)
-                )
-                .shadow(radius: 5)
-                                
-                Button(action: {
-                    dismiss()// This will dismiss the view
-                }) {
-                    Text("Already have an account? Sign in") //
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Color.textFields)
+                
+                Text("Create your account!") // Changed text to be more appropriate for sign-up
+                    .font(.title)
+                    .padding()
+                
+                // Removed redundant HStack since this is the sign-up view
+                
+                TextField("Email", text: $email)
+                    .padding()
+                    .autocapitalization(.none)
+                    .tint(.red)
+                    .frame(width: 340, height: 40)
+                    .padding([.leading, .trailing])
+                    .overlay(RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.textFields, lineWidth: 2))
+                    .padding()
+                
+                SecureField("Password", text: $password)
+                    .padding()
+                    .autocapitalization(.none)
+                    .tint(.red)
+                    .frame(width: 340, height: 40)
+                    .padding([.leading, .trailing])
+                    .overlay(RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.textFields, lineWidth: 2))
+                    .padding()
+                
+                SecureField("Confirm Password", text: $confirmPassword)
+                    .padding()
+                    .autocapitalization(.none)
+                    .tint(.red)
+                    .frame(width: 340, height: 40)
+                    .padding([.leading, .trailing])
+                    .overlay(RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.textFields, lineWidth: 2))
+                    .padding()
+                
+                VStack(spacing: 10) {
+                    Button(action: {
+                        signUp()
+                    }) {
+                        Text("Sign-Up")
+                    }
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .frame(width: 240, height: 40)
+                    .background(
+                        Capsule()
+                            .fill(Color.textFields)
+                    )
+                    .shadow(radius: 5)
+                    
+                    NavigationLink(
+                        destination: LoginView(),
+                        isActive: $navigateToLogin
+                    ) {
+                        EmptyView()
+                    }
+                    
+                    Button(action: {
+                        dismiss()// This will dismiss the view
+                    }) {
+                        Text("Already have an account? Sign in") //
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Color.textFields)
+                    }
                 }
+                .padding(.top, 30)
+                
+                Spacer()
             }
-            .padding(.top, 30)
-                            
-            Spacer()
+                
         }
         .padding(.bottom, 100)
         .alert("Sign Up Status", isPresented: $isShowingAlert) {
@@ -105,7 +116,7 @@ struct SignUpView: View {
             Text(alertMessage)
         }
         .navigationDestination(isPresented: $navigateToProfile){
-            ProfileView(userEmail: email)
+            SettingsView()
         }
     }
                     
@@ -121,6 +132,7 @@ struct SignUpView: View {
                 // Optional: Add a delay before dismissing
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     isPresented = false
+                    navigateToLogin = true
                 }
             }
         }

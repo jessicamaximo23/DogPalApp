@@ -29,6 +29,7 @@ The app aims to build a community of dog owners who can support each other, shar
 
         Frontend: Swift for iOS app development.
         
-        Backend: Firebase for authentication, real-time database,  storage, Api Map
+        Backend: Firebase for authentication, real-time database,  storage, mapkit
         
+![dogpal](https://github.com/user-attachments/assets/54815919-2377-459a-acb6-3f531929408c)        
 

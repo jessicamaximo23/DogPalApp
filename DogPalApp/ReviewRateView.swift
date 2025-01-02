@@ -78,6 +78,30 @@ struct ReviewRateView: View {
        }
    }
 
+// Função para salvar o comentário no Firestore
+   private func saveReview() {
+       guard let park = park else { return }
+       
+       let reviewData: [String: Any] = [
+           "review": comment,
+           "userName": userName,
+           "dogBreed": dogBreed,
+           "dogName": dogName,
+           "userAge": userAge,
+           "timestamp": FieldValue.serverTimestamp() // Correção para usar o timestamp do Firestore
+       ]
+       
+       db.collection("parks").document(park.id.uuidString).collection("reviews").addDocument(data: reviewData) { error in
+           if let error = error {
+               print("Error saving review: \(error)")
+           } else {
+               print("Review saved successfully!")
+               fetchReviews() // Atualiza a lista após salvar
+               comment = "" // Limpa o campo de texto
+           }
+       }
+   }
+
 struct ReviewCardView: View {
     var review: Review
     

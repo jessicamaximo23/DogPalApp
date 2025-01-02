@@ -24,22 +24,25 @@ struct ReviewRateView: View {
             ScrollView {
                 VStack {
                     
-                    Image("DogPalLogo2")
-                        .resizable()
-                        .scaledToFit()
-                        .padding()
-                        .frame(width: 350, height: 150)
-                    
-                    Text("Park Reviews")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .padding()
-                    
-                    ForEach(parks) { park in
-                        VStack(alignment: .leading) {
-                            Text(park.name)
-                                .font(.headline)
-                                .padding(.bottom, 5)
+                    if let park = park {
+                                   Text("Review for \(park.name)")
+                                       .font(.title)
+                                       .padding()
+                                   
+                                   // Caixa de texto para o comentário
+                                   TextField("Enter your review", text: $comment)
+                                       .textFieldStyle(RoundedBorderTextFieldStyle())
+                                       .padding()
+                                   
+                                   // Botão para salvar o comentário
+                                   Button(action: saveReview) {
+                                       Text("Submit Review")
+                                           .foregroundColor(.white)
+                                           .padding()
+                                           .background(Color.blue)
+                                           .cornerRadius(10)
+                                   }
+                                   .padding()
                             
                             Text("Rating: \(park.rating, specifier: "%.1f")")
                                 .font(.subheadline)
@@ -93,14 +96,29 @@ struct ReviewCardView: View {
     }
 }
 
-struct ParkReviewData: Identifiable {
-    var id = UUID()
-    var name: String
-    var rating: Double
-    var imageName: String
-    var description: String
-    var reviews: [Review]
-}
+// Função para salvar o comentário no Firestore
+  private func saveReview() {
+      guard let park = park else { return }
+      
+      let reviewData: [String: Any] = [
+          "review": comment,
+          "userName": userName,
+          "dogBreed": dogBreed,
+          "dogName": dogName,
+          "userAge": userAge,
+          "timestamp": FieldValue.serverTimestamp() // Correção para usar o timestamp do Firestore
+      ]
+      
+      db.collection("parks").document(park.id.uuidString).collection("reviews").addDocument(data: reviewData) { error in
+          if let error = error {
+              print("Error saving review: \(error)")
+          } else {
+              print("Review saved successfully!")
+              fetchReviews() // Atualiza a lista após salvar
+              comment = "" // Limpa o campo de texto
+          }
+      }
+  }
 
 struct Review: Identifiable, Codable {
     @DocumentID var id: String? // Identificador do documento do comentário

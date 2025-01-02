@@ -62,6 +62,22 @@ struct ReviewRateView: View {
     }
 }
 
+// Função para buscar as informações do usuário no Firebase
+   private func fetchUserDetails() {
+       guard let userId = Auth.auth().currentUser?.uid else { return }
+       
+       db.collection("users").document(userId).getDocument { document, error in
+           if let document = document, document.exists {
+               self.userName = document.get("userName") as? String ?? ""
+               self.dogBreed = document.get("dogBreed") as? String ?? ""
+               self.dogName = document.get("dogName") as? String ?? ""
+               self.userAge = document.get("userAge") as? String ?? ""
+           } else {
+               print("User details not found")
+           }
+       }
+   }
+
 struct ReviewCardView: View {
     var review: Review
     

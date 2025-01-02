@@ -19,7 +19,6 @@ struct ParksView: View {
     @State private var userLocation: CLLocationCoordinate2D?
     @State private var closestPark: Parklist?
     
-    
 
     // Lista de parques com nome e coordenadas
     let parks = [
@@ -81,7 +80,8 @@ struct ParksView: View {
             // Show the closest park
             if let closestPark = closestPark {
                 
-                Text("The nearest park is: ") + Text("\(closestPark.name)")
+                Text("The nearest park is: ") +
+                Text("\(closestPark.name)")
                     .foregroundColor(Color.textFields) +
                 Text("\nEnjoy your visit!")
                 Spacer()

@@ -1,29 +1,23 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
+import FirebaseFirestore
 import UIKit
 
 //Wandrey
 //Page created to show the idea of the ratings and comments by user. Need to polish and finish.
 
 struct ReviewRateView: View {
-    @State private var parks = [
-        ParkReviewData(name: "Park Lafontaine", rating: 4.8, imageName: "parclafontaine", description: "One of the most popular parks in Montreal, ideal for picnics and walks.", reviews: [
-            ParkReview(userName: "John", rating: 5, comment: "Incredible!"),
-            ParkReview(userName: "Alice", rating: 4, comment: "Great place to relax."),
-            ParkReview(userName: "Bob", rating: 4, comment: "Very beautiful!")
-        ]),
-        
-        ParkReviewData(name: "Park Jean-Drapeau", rating: 4.7, imageName: "parcjeandrapeau", description: "A park with a view of the river and various outdoor activities.", reviews: [
-            ParkReview(userName: "David", rating: 4, comment: "I love running here."),
-            ParkReview(userName: "Emily", rating: 5, comment: "A perfect place for a family day.")
-        ]),
-        
-        ParkReviewData(name: "Park Angrignon", rating: 4.6, imageName: "parcangrignon", description: "A peaceful park with large green areas and lakes.", reviews: [
-            ParkReview(userName: "Eve", rating: 4, comment: "Excellent for walks."),
-            ParkReview(userName: "Jack", rating: 5, comment: "Very well maintained.")
-        ])
-    ]
+    var park: Parklist? // Parque passado como parâmetro
+    
+    @State private var comment = ""
+    @State private var reviews: [Review] = []
+    @State private var userName = ""
+    @State private var dogBreed = ""
+    @State private var dogName = ""
+    @State private var userAge = ""
+    
+    private var db = Firestore.firestore() // Instância do Firestore
     
     var body: some View {
        
@@ -67,7 +61,7 @@ struct ReviewRateView: View {
 }
 
 struct ReviewCardView: View {
-    var review: ParkReview
+    var review: Review
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -105,15 +99,19 @@ struct ParkReviewData: Identifiable {
     var rating: Double
     var imageName: String
     var description: String
-    var reviews: [ParkReview]
+    var reviews: [Review]
 }
 
-struct ParkReview: Identifiable {
-    var id = UUID()
+struct Review: Identifiable, Codable {
+    @DocumentID var id: String? // Identificador do documento do comentário
+    var review: String
     var userName: String
-    var rating: Int
-    var comment: String
+    var dogBreed: String
+    var dogName: String
+    var userAge: String
+    var timestamp: Timestamp
 }
+
 
 #Preview {
     ReviewRateView()

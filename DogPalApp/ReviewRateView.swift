@@ -44,21 +44,20 @@ struct ReviewRateView: View {
                                    }
                                    .padding()
                             
-                            Text("Rating: \(park.rating, specifier: "%.1f")")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                                .padding(.bottom, 10)
-                            
-                            ForEach(park.reviews) { review in
-                                ReviewCardView(review: review)
+                        // Lista de comentários existentes
+                                        List(reviews, id: \.id) { review in
+                                            Text("\(review.userName) (\(review.dogBreed) - \(review.dogName), \(review.userAge) years): \(review.review)")
+                                        }
+                                        .onAppear(perform: fetchReviews) // Carrega os comentários ao abrir a página
+                                    } else {
+                                        Text("No park selected.")
+                                            .font(.title)
+                                            .padding()
+                                    }
+                                }
+                                .padding()
+                                .onAppear(perform: fetchUserDetails) // Busca as informações do usuário ao abrir a página
                             }
-                            
-                            Divider().padding(.vertical)
-                        }
-                    }
-                }
-                .padding()
-            }
 
     }
 }

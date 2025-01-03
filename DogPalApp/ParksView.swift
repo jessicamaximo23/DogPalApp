@@ -87,7 +87,7 @@ struct ParksView: View {
                 Spacer()
             }
             
-            NavigationLink(destination: ReviewRateView()) {
+            NavigationLink(destination: ReviewRateView(park: closestPark)) {
                 Text("Review Parks")
                     .foregroundColor(Color.black)
                     .padding()

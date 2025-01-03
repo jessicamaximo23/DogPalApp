@@ -9,10 +9,11 @@ import UIKit
 
 struct ReviewRateView: View {
     
-    var park: Parklist? // Parque passado como parâmetro
+    var park: Parklist?
+    @State private var reviews: [Review] = [] // Lista de revisões existentes
+    @State private var newReview: String = "" // Nova revisão do usuário
     
     @State private var comment = ""
-    @State private var reviews: [Review] = []
     @State private var userName = ""
     @State private var dogBreed = ""
     @State private var dogName = ""
@@ -46,20 +47,30 @@ struct ReviewRateView: View {
                     .padding()
                     
                     // Lista de comentários existentes
-                    List(reviews, id: \.id) { review in
-                        Text("\(review.userName) (\(review.dogBreed) - \(review.dogName), \(review.userAge) years): \(review.review)")
-                    }
-                    .onAppear(perform: fetchReviews) // Carrega os comentários ao abrir a página
-                } else {
-                    Text("No park selected.")
-                        .font(.title)
+                    List(reviews.indices, id: \.self) { index in
+                        let review = reviews[index]
+                        VStack(alignment: .leading) {
+                            Text("\(review.userName) (\(review.dogBreed) - \(review.dogName), \(review.userAge) years):")
+                                .font(.headline)
+                            Text(review.review)
+                                .font(.body)
+                            Text("Posted on \(review.timestamp.dateValue(), formatter: dateFormatter)")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                            }
+                            .padding(.vertical, 5)
+                        }
+                        .onAppear(perform: fetchReviews)
+                        } else {
+                            Text("No park selected.")
+                                .font(.title)
+                                .padding()
+                            }
+                        }
                         .padding()
-                }
+                        .onAppear(perform: fetchUserDetails)
+                    }
             }
-            .padding()
-            .onAppear(perform: fetchUserDetails) // Busca  as informações do usuário ao abrir a página
-        }
-    }
         
         // Função para buscar as informações do usuário no Firebase
         private func fetchUserDetails() {

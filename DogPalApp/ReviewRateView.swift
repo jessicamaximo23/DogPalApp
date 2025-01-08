@@ -63,6 +63,22 @@ struct ReviewRateView: View {
                         .cornerRadius(10)
                         .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
                         .padding(.horizontal)
+                    
+                    // Seletor de estrelas para avaliação
+                               HStack {
+                                   ForEach(1...5, id: \.self) { star in
+                                       Image(systemName: star <= rating ? "star.fill" : "star")
+                                           .resizable()
+                                           .frame(width: 30, height: 30)
+                                           .foregroundColor(star <= rating ? .yellow : .gray)
+                                           .onTapGesture {
+                                               rating = star // Atualiza a nota
+                                           }
+                                   }
+                               }
+                               .padding()
+
+                              
                             
                     
                     ForEach(parks) { park in

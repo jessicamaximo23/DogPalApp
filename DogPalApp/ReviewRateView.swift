@@ -7,7 +7,14 @@ import UIKit
 //Page created to show the idea of the ratings and comments by user. Need to polish and finish.
 
 struct ReviewRateView: View {
+    
     @State private var text1 = "text here"
+    @State private var commentText: String = ""
+    @State private var rating: Int = 0
+    @State private var userName: String = ""
+    @State private var userAge: String = ""
+    let ref = Database.database().reference()
+    
     @State private var parks = [
         ParkReviewData(name: "Park Lafontaine", rating: 4.8, imageName: "parclafontaine", description: "One of the most popular parks in Montreal, ideal for picnics and walks.", reviews: [
             ParkReview(userName: "John", rating: 5, comment: "Incredible!"),
@@ -42,9 +49,21 @@ struct ReviewRateView: View {
                         .fontWeight(.bold)
                         .padding()
                     //testing textbox for response
-                    TextField("Your Name", text: $text1)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.vertical)
+                    Text("Name: \(userName)")
+                        .font(.title2)
+                        .bold()
+                    Text("Idade: \(userAge)")
+                        .font(.title2)
+                        .bold()
+                    // Caixa de texto para o comentário
+                    TextEditor(text: $commentText)
+                        .frame(height: 100)
+                        .padding()
+                        .background(Color(UIColor.systemGray6))
+                        .cornerRadius(10)
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
+                        .padding(.horizontal)
+                            
                     
                     ForEach(parks) { park in
                         VStack(alignment: .leading) {

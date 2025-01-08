@@ -80,7 +80,7 @@ struct ReviewRateView: View {
 
                                // Botão para salvar comentário
                                Button(action: saveComment) {
-                                   Text("Salvar Comentário")
+                                   Text("Save Comment")
                                        .padding()
                                        .frame(maxWidth: .infinity)
                                        .background(Color.blue)
@@ -91,23 +91,6 @@ struct ReviewRateView: View {
                                           }
                                           .onAppear { fetchUserDetails() // Busca os detalhes do usuário ao carregar a view
                                         }
-                    
-                    //funcao para carregar oo usuario
-                    func fetchUserDetails() {
-                           if let user = Auth.auth().currentUser {
-                               let userId = user.uid
-                               ref.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
-                                   if let value = snapshot.value as? [String: Any] {
-                                       self.userName = value["userName"] as? String ?? "Desconhecido"
-                                       self.userAge = value["userAge"] as? String ?? "N/A"
-                                   }
-                               }
-                           } else {
-                               print("Nenhum usuário está logado.")
-                           }
-                       }
-                    
-                    
                     
                     ForEach(parks) { park in
                         VStack(alignment: .leading) {
@@ -127,12 +110,56 @@ struct ReviewRateView: View {
                             Divider().padding(.vertical)
                         }
                     }
+                    
+                   }
+                    
                 }
-                .padding()
-            }
+                .padding()            }
+    
+    // Função para salvar o comentário e a nota no Firebase
+       func saveComment() {
+           if let user = Auth.auth().currentUser {
+               let userId = user.uid
+               let commentData: [String: Any] = [
+                   "userName": userName,
+                   "userAge": userAge,
+                   "commentText": commentText,
+                   "rating": rating,
+                   "timestamp": Date().timeIntervalSince1970
+               ]
 
+               ref.child("comments").child(userId).childByAutoId().setValue(commentData) { error, _ in
+                   if let error = error {
+                       print("Erro ao salvar comentário: \(error.localizedDescription)")
+                   } else {
+                       print("Comentário salvo com sucesso!")
+                       // Limpa os campos após salvar
+                       commentText = ""
+                       rating = 0
+                   }
+               }
+           } else {
+               print("Nenhum usuário está logado.")
+           }
+       }
+    
+    //funcao para carregar oo usuario
+    func fetchUserDetails() {
+           if let user = Auth.auth().currentUser {
+               let userId = user.uid
+               ref.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
+                   if let value = snapshot.value as? [String: Any] {
+                       self.userName = value["userName"] as? String ?? "Desconhecido"
+                       self.userAge = value["userAge"] as? String ?? "N/A"
+                   }
+               }
+           } else {
+               print("Nenhum usuário está logado.")
+           }
+       }
+    
+    
     }
-}
 
 struct ReviewCardView: View {
     var review: ParkReview
@@ -166,6 +193,8 @@ struct ReviewCardView: View {
         .shadow(radius: 5)
     }
 }
+
+
 
 struct ParkReviewData: Identifiable {
     var id = UUID()

@@ -78,24 +78,36 @@ struct ReviewRateView: View {
                                }
                                .padding()
 
-                    // Botão para salvar comentário
-                              Button(action: saveComment) {
-                                  Text("Salvar Comentário")
-                                      .padding()
-                                      .frame(maxWidth: .infinity)
-                                      .background(Color.blue)
-                                      .foregroundColor(.white)
-                                      .cornerRadius(10)
-                                      .padding(.horizontal)
-                              }
-
-                              Spacer()
-                          }
-                          .onAppear {
-                              fetchUserDetails() // Busca os detalhes do usuário ao carregar a view
-                          }
-                      }
-                            
+                               // Botão para salvar comentário
+                               Button(action: saveComment) {
+                                   Text("Salvar Comentário")
+                                       .padding()
+                                       .frame(maxWidth: .infinity)
+                                       .background(Color.blue)
+                                       .foregroundColor(.white)
+                                       .cornerRadius(10)
+                                       .padding(.horizontal)
+                                   Spacer()
+                                          }
+                                          .onAppear { fetchUserDetails() // Busca os detalhes do usuário ao carregar a view
+                                        }
+                    
+                    //funcao para carregar oo usuario
+                    func fetchUserDetails() {
+                           if let user = Auth.auth().currentUser {
+                               let userId = user.uid
+                               ref.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
+                                   if let value = snapshot.value as? [String: Any] {
+                                       self.userName = value["userName"] as? String ?? "Desconhecido"
+                                       self.userAge = value["userAge"] as? String ?? "N/A"
+                                   }
+                               }
+                           } else {
+                               print("Nenhum usuário está logado.")
+                           }
+                       }
+                    
+                    
                     
                     ForEach(parks) { park in
                         VStack(alignment: .leading) {

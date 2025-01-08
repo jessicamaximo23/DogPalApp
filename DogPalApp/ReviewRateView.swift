@@ -78,7 +78,23 @@ struct ReviewRateView: View {
                                }
                                .padding()
 
-                              
+                    // Botão para salvar comentário
+                              Button(action: saveComment) {
+                                  Text("Salvar Comentário")
+                                      .padding()
+                                      .frame(maxWidth: .infinity)
+                                      .background(Color.blue)
+                                      .foregroundColor(.white)
+                                      .cornerRadius(10)
+                                      .padding(.horizontal)
+                              }
+
+                              Spacer()
+                          }
+                          .onAppear {
+                              fetchUserDetails() // Busca os detalhes do usuário ao carregar a view
+                          }
+                      }
                             
                     
                     ForEach(parks) { park in

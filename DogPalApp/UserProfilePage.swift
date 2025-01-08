@@ -11,8 +11,6 @@ import FirebaseDatabase
 
 struct UserProfilePage: View {
     
-    var park: Parklist?
-    
     @State private var userName: String = ""
     @State private var userAge: String = ""
     @State private var userEmail: String = ""

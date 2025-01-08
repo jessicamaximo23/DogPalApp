@@ -1,150 +1,119 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
-import FirebaseFirestore
 import UIKit
 
 //Wandrey
 //Page created to show the idea of the ratings and comments by user. Need to polish and finish.
 
 struct ReviewRateView: View {
-    
-    var park: Parklist?
-    @State private var reviews: [Review] = [] // Lista de revisões existentes
-    @State private var newReview: String = "" // Nova revisão do usuário
-    
-    @State private var comment = ""
-    @State private var userName = ""
-    @State private var dogBreed = ""
-    @State private var dogName = ""
-    @State private var userAge = ""
-    
-    private var db = Firestore.firestore() // Instância do Firestore
+    @State private var parks = [
+        ParkReviewData(name: "Park Lafontaine", rating: 4.8, imageName: "parclafontaine", description: "One of the most popular parks in Montreal, ideal for picnics and walks.", reviews: [
+            ParkReview(userName: "John", rating: 5, comment: "Incredible!"),
+            ParkReview(userName: "Alice", rating: 4, comment: "Great place to relax."),
+            ParkReview(userName: "Bob", rating: 4, comment: "Very beautiful!")
+        ]),
+        
+        ParkReviewData(name: "Park Jean-Drapeau", rating: 4.7, imageName: "parcjeandrapeau", description: "A park with a view of the river and various outdoor activities.", reviews: [
+            ParkReview(userName: "David", rating: 4, comment: "I love running here."),
+            ParkReview(userName: "Emily", rating: 5, comment: "A perfect place for a family day.")
+        ]),
+        
+        ParkReviewData(name: "Park Angrignon", rating: 4.6, imageName: "parcangrignon", description: "A peaceful park with large green areas and lakes.", reviews: [
+            ParkReview(userName: "Eve", rating: 4, comment: "Excellent for walks."),
+            ParkReview(userName: "Jack", rating: 5, comment: "Very well maintained.")
+        ])
+    ]
     
     var body: some View {
-        
-        ScrollView {
-            VStack {
-                
-                if let park = park {
-                    Text("Review for \(park.name)")
+       
+            ScrollView {
+                VStack {
+                    
+                    Image("DogPalLogo2")
+                        .resizable()
+                        .scaledToFit()
+                        .padding()
+                        .frame(width: 350, height: 150)
+                    
+                    Text("Park Reviews")
                         .font(.title)
+                        .fontWeight(.bold)
                         .padding()
                     
-                    // Caixa de texto para o comentário
-                    TextField("Enter your review", text: $comment)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                    
-                    // Botão para salvar o comentário
-                    Button(action: saveReview) {
-                        Text("Submit Review")
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                    }
-                    .padding()
-                    
-                    // Lista de comentários existentes
-                    List(reviews.indices, id: \.self) { index in
-                        let review = reviews[index]
+                    ForEach(parks) { park in
                         VStack(alignment: .leading) {
-                            Text("\(review.userName) (\(review.dogBreed) - \(review.dogName), \(review.userAge) years):")
+                            Text(park.name)
                                 .font(.headline)
-                            Text(review.review)
-                                .font(.body)
-                            Text("Posted on \(review.timestamp.dateValue(), formatter: dateFormatter)")
-                                .font(.caption)
-                                .foregroundColor(.gray)
+                                .padding(.bottom, 5)
+                            
+                            Text("Rating: \(park.rating, specifier: "%.1f")")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .padding(.bottom, 10)
+                            
+                            ForEach(park.reviews) { review in
+                                ReviewCardView(review: review)
                             }
-                            .padding(.vertical, 5)
+                            
+                            Divider().padding(.vertical)
                         }
-                        .onAppear(perform: fetchReviews)
-                        } else {
-                            Text("No park selected.")
-                                .font(.title)
-                                .padding()
-                            }
-                        }
-                        .padding()
-                        .onAppear(perform: fetchUserDetails)
-                    }
-            }
-        
-        // Função para buscar as informações do usuário no Firebase
-        private func fetchUserDetails() {
-            guard let userId = Auth.auth().currentUser?.uid else { return }
-            
-            db.collection("users").document(userId).getDocument { document, error in
-                if let document = document, document.exists {
-                    self.userName = document.get("userName") as? String ?? ""
-                    self.dogBreed = document.get("dogBreed") as? String ?? ""
-                    self.dogName = document.get("dogName") as? String ?? ""
-                    self.userAge = document.get("userAge") as? String ?? ""
-                } else {
-                    print("User details not found")
-                }
-            }
-        }
-        
-        // Função para salvar o comentário no Firestore
-        private func saveReview() {
-            guard let park = park else { return }
-            
-            let reviewData: [String: Any] = [
-                "review": comment,
-                "userName": userName,
-                "dogBreed": dogBreed,
-                "dogName": dogName,
-                "userAge": userAge,
-                "timestamp": FieldValue.serverTimestamp() // Correção para usar o timestamp do Firestore
-            ]
-            
-            db.collection("parks").document(park.id.uuidString).collection("reviews").addDocument(data: reviewData) { error in
-                if let error = error {
-                    print("Error saving review: \(error)")
-                } else {
-                    print("Review saved successfully!")
-                    fetchReviews() // Atualiza a lista após salvar
-                    comment = "" // Limpa o campo de texto
-                }
-            }
-        }
-        
-        // Função para buscar os comentários do Firestore
-        private func fetchReviews() {
-            guard let park = park else { return }
-            
-            db.collection("parks").document(park.id.uuidString).collection("reviews").order(by: "timestamp", descending: false).getDocuments { snapshot, error in
-                if let error = error {
-                    print("Error fetching reviews: \(error)")
-                } else if let snapshot = snapshot {
-                    reviews = snapshot.documents.compactMap { doc in
-                        try? doc.data(as: Review.self)
                     }
                 }
+                .padding()
             }
-        }
-    private let dateFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateStyle = .medium
-            formatter.timeStyle = .short
-            return formatter
-        }()
-    }
-    
-    
-    struct Review: Identifiable, Codable {
-        @DocumentID var id: String? // Identificador do documento do comentário
-        var review: String
-        var userName: String
-        var dogBreed: String
-        var dogName: String
-        var userAge: String
-        var timestamp: Timestamp
-    }
 
+    }
+}
+
+struct ReviewCardView: View {
+    var review: ParkReview
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text(review.userName)
+                    .font(.headline)
+                    .foregroundColor(Color.black)
+                    .background(Color.white)
+                
+                Spacer()
+                
+                HStack {
+                    ForEach(0..<5) { star in
+                        Image(systemName: "star.fill")
+                            .foregroundColor(star < review.rating ? .yellow : .gray)
+                    }
+                }
+            }
+            
+            Text(review.comment)
+                .font(.body)
+                .padding(.top, 2)
+                .foregroundColor(Color.black)
+        }
+        .padding()
+        .background(Color.white)
+        .cornerRadius(10)
+        .shadow(radius: 5)
+    }
+}
+
+struct ParkReviewData: Identifiable {
+    var id = UUID()
+    var name: String
+    var rating: Double
+    var imageName: String
+    var description: String
+    var reviews: [ParkReview]
+}
+
+struct ParkReview: Identifiable {
+    var id = UUID()
+    var userName: String
+    var rating: Int
+    var comment: String
+}
 
 #Preview {
     ReviewRateView()

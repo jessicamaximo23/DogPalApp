@@ -38,7 +38,7 @@ struct HomeScreenView: View {
         
         TabView {
             
-            NavigationView {
+            NavigationStack {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
                         
@@ -113,12 +113,10 @@ struct HomeScreenView: View {
                 Image(systemName: "person.fill")
                 Text("Profile")
             }
-            
           
             NavigationView {
                 ReviewRateView()
-                    
-                  
+                 
                 }
         
             .tabItem {

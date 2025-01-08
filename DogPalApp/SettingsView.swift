@@ -7,6 +7,7 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
+import FirebaseDatabase
 
 struct SettingsView: View {
     
@@ -17,7 +18,7 @@ struct SettingsView: View {
     @State private var dogName: String = ""
     @State private var dogBreed: String = ""
     @State private var profileCreated = true
-    private var ref: DatabaseReference = Database.database().reference()
+    private let ref = Database.database().reference()
     
     @State private var userImage: UIImage?
     @State private var showingImagePicker: Bool = false
@@ -33,6 +34,8 @@ struct SettingsView: View {
 
     var body: some View {
         
+        
+        NavigationStack {
             VStack(alignment: .center){
                 
                 Image("DogPalLogo2")
@@ -69,107 +72,82 @@ struct SettingsView: View {
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
-                                               
+                            
                             TextField("Email", text: $userEmail)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
-                                               
+                            
                             TextField("Age", text: $userAge)
-                                 .padding()
-                                 .background(Color(UIColor.systemGray6))
-                                 .cornerRadius(8)
-                                               
+                                .padding()
+                                .background(Color(UIColor.systemGray6))
+                                .cornerRadius(8)
+                            
                             TextField("Dog Name", text: $dogName)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
-                                               
+                            
                             TextField("Dog Breed", text: $dogBreed)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
                         }
-                        
-                        Button("Save Changes") {
-                            saveProfileData()
-                            
-                        }
-                        .foregroundColor(Color.black)
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(50)
-                        .padding(.top, 20)
-                        .shadow(radius: 5)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                           
-                    
-                    Section(header: Text("Notifications")) {
-                        Toggle("Push Notifications", isOn: $notificationsEnabled).onChange(of: notificationsEnabled)
-                        { value in
-
-                    handleNotificationsToggle(value)
-           }
-                    }
-         Section(header: Text("Location Preferences")) {
-                        Toggle("Enable Location", isOn: $locationEnabled)
-                    }
-
-                    Section(header: Text("Theme")) {
-                     Toggle("Dark Mode", isOn: $isDarkMode)
-                                .onChange(of: isDarkMode) { value in
-
-                                setAppTheme(darkMode: value)
-                                                       }
-                    }
-            
                         Button("Reset Password") {
                             resetPassword()
                         }
-                        .foregroundColor(Color.black)
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(50)
-                        .padding(.top, 20)
-                        .shadow(radius: 5)
-                        .frame(maxWidth: .infinity, alignment: .center)
-
+                        .foregroundColor(.black)
                     }
-
+                    
+                    
+                    
+                    Button("Logout") {
+                        logout()
+                    }
+                    .foregroundColor(Color.textFields)
+                    
+                    
+                    Button("Save Changes") {
+                        saveProfileData()
+                    }
+                    .padding()
+                    .background(Color.textFields)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
-                .navigationBarItems(trailing: Button("Close") {
-                    presentationMode.wrappedValue.dismiss()
-                })
-                .preferredColorScheme(isDarkMode ? .dark : .light)
-                
-                NavigationLink(destination: LoginView(), isActive: $shouldNavigateToLogin) {
-                               EmptyView()
-                        }
             }
-            .onAppear {
-
+            onAppear{
                 loadUserProfile()
             }
-    }
-    
-    func loadUserProfile() {
-        
-        if let user = Auth.auth().currentUser {
-                let userId = user.uid
-                ref.child("users").child(userId).observe(.value) { snapshot in
-                    if let value = snapshot.value as? [String: Any] {
-                        userName = value["name"] as? String ?? ""
-                        userEmail = value["email"] as? String ?? ""
-                        userAge = value["age"] as? String ?? ""
-                        dogName = value["dogName"] as? String ?? ""
-                        dogBreed = value["dogBreed"] as? String ?? ""
-                        profileCreated = true
-                    }
-                }
-            }
+        }
     }
 
+
+func loadUserProfile() {
+        if let user = Auth.auth().currentUser {
+            let userId = user.uid
+            ref.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
+                if let value = snapshot.value as? [String: Any] {
+                    // Update @State properties with fetched data
+                    self.userName = value["name"] as? String ?? ""
+                    self.userEmail = value["email"] as? String ?? ""
+                    self.userAge = value["age"] as? String ?? ""
+                    self.dogName = value["dogName"] as? String ?? ""
+                    self.dogBreed = value["dogBreed"] as? String ?? ""
+                    
+                    print("User Profile Loaded: \(self.userName), \(self.userEmail), \(self.userAge), \(self.dogName), \(self.dogBreed)")
+                }
+            }
+        } else {
+            print("No user is currently logged in.")
+        }
+    }
+      
+
+
 func saveProfileData() {
+    
         if let user = Auth.auth().currentUser {
             let userId = user.uid
             
@@ -178,7 +156,7 @@ func saveProfileData() {
             ref.child("users").child(userId).setValue([
                 "name": userName,
                 "email": userEmail,
-                "age": ageValue, // saves as Int
+                "age": ageValue,
                 "dogName": dogName,
                 "dogBreed": dogBreed,
                 "profileCreated": true
@@ -290,6 +268,8 @@ struct UserImagePicker: UIViewControllerRepresentable {
         }
     }
 }
+
+        
 #Preview {
     SettingsView()
 }

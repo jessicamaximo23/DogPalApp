@@ -87,7 +87,13 @@ struct ParksView: View {
                 Spacer()
             }
             
-            NavigationLink(destination: ReviewRateView(park: closestPark)) {
+            NavigationLink(destination: {
+                if let park = closestPark {
+                    ReviewRateView(park: park)
+                } else {
+                    Text("No park selected")
+                }
+            }) {
                 Text("Review Parks")
                     .foregroundColor(Color.black)
                     .padding()
@@ -96,6 +102,7 @@ struct ParksView: View {
                     .padding(.top, 20)
                     .shadow(radius: 5)
             }
+            .disabled(closestPark == nil) // Desabilita o botão se nenhum parque estiver selecionado
         }
         .padding()
     }

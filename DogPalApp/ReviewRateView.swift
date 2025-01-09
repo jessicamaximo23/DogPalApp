@@ -12,7 +12,7 @@ struct ReviewRateView: View {
     @State private var commentText: String = ""
     @State private var rating: Int = 0
     @State private var userName: String = ""
-    @State private var userAge: String = ""
+    @State private var dogBreed: String = ""
     let ref = Database.database().reference()
     
     @State private var parks = [
@@ -53,7 +53,7 @@ struct ReviewRateView: View {
                 Text("Name: \(userName)")
                     .font(.title2)
                     .bold()
-                Text("Idade: \(userAge)")
+                Text("Dog Breed: \(dogBreed)")
                     .font(.title2)
                     .bold()
                 
@@ -127,7 +127,7 @@ struct ReviewRateView: View {
             let userId = user.uid
             let commentData: [String: Any] = [
                 "userName": userName,
-                "userAge": userAge,
+                "userAge": dogBreed,
                 "commentText": commentText,
                 "rating": rating,
                 "timestamp": Date().timeIntervalSince1970
@@ -151,20 +151,17 @@ struct ReviewRateView: View {
     //funcao para carregar oo usuario
     func fetchUserDetails() {
         
-        if let user = Auth.auth().currentUser {
-            let userId = user.uid
-            ref.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
-                if let value = snapshot.value as? [String: Any] {
-                    // Acessa diretamente "userName" e "userAge"
-                    self.userName = value["userName"] as? String ?? "Desconhecido"
-                    self.userAge = value["userAge"] as? String ?? "N/A"
-                    print("Dados carregados: userName: \(self.userName), userAge: \(self.userAge)")
-                } else {
-                    print("Snapshot vazio ou dados ausentes.")
-                }
-            } withCancel: { error in
-                print("Erro ao buscar dados do Firebase: \(error.localizedDescription)")
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let userRef = Database.database().reference().child("users").child(uid)
+        
+        userRef.observeSingleEvent(of: .value) { snapshot  in
+            if let userData = snapshot.value as? [String: Any] {
+                self.userName = userData["name"] as? String ?? "Unknown User"
+                self.dogBreed = userData["dogBreed"] as? String ?? "No Breed"
+                
             }
+        } withCancel: { error in
+            print("Error fetching user data: \(error.localizedDescription)")
         }
     }
 }

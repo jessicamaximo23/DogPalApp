@@ -11,15 +11,15 @@ struct SplashScreenView: View {
     @State private var isActive = false
     @State private var opacity = 0.9
     @State private var isLoginPresented = true
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         if isActive{
             LoginView()
         }else {
             ZStack{
-                Color(.white)
-                  
-                
+                Color(colorScheme == .dark ? .black : .white)
+                                   .edgesIgnoringSafeArea(.all)
                 VStack{
                     Image("DogPalLogo2")
                         .resizable()
@@ -46,6 +46,7 @@ struct SplashScreenView: View {
                 
             }
             .padding()
+            .preferredColorScheme(colorScheme)
         }
     }
 }

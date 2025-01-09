@@ -10,7 +10,7 @@ import MapKit
 
 
 struct ParksView: View {
-
+    
     @State private var searchText = ""
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 45.5017, longitude: -73.5673),
@@ -19,13 +19,15 @@ struct ParksView: View {
     @State private var userLocation: CLLocationCoordinate2D?
     @State private var closestPark: Parklist?
     
+    @State private var route: MKRoute?
     
-
+    
+    
     // Lista de parques com nome e coordenadas
     let parks = [
         Parklist(name: "Mount Royal Park", coordinate: CLLocationCoordinate2D(latitude: 45.5017, longitude: -73.5673)),
         Parklist(name: "Jean-Drapeau Park", coordinate: CLLocationCoordinate2D(latitude: 45.5088, longitude: -73.5530)),
-        Parklist(name: "La Fontaine Park", coordinate: CLLocationCoordinate2D(latitude: 45.5200, longitude: -73.6167)),
+        Parklist(name: "La Fontaine Park", coordinate: CLLocationCoordinate2D(latitude: 45.527290, longitude: -73.570457)),
         Parklist(name: "Jarry Park", coordinate: CLLocationCoordinate2D(latitude: 45.4230, longitude: -73.6032)),
         Parklist(name: "Berri Park", coordinate: CLLocationCoordinate2D(latitude: 45.4710, longitude: -73.5590)),
         Parklist(name: "Lachine Canal Park", coordinate: CLLocationCoordinate2D(latitude: 45.4485, longitude: -73.5752)),
@@ -53,9 +55,11 @@ struct ParksView: View {
         Parklist(name: "Parc Léon-Provancher", coordinate: CLLocationCoordinate2D(latitude: 45.5654, longitude: -73.6026)),
         Parklist(name: "Parc de l'Anse-à-l'Orme", coordinate: CLLocationCoordinate2D(latitude: 45.4815, longitude: -73.9302))
     ]
-
+    
+    
     
     var body: some View {
+        
         VStack {
             Image("DogPalLogo2")
                 .resizable()
@@ -71,17 +75,14 @@ struct ParksView: View {
             .padding(.horizontal)
             .frame(height: 50)
             
-            // Mapa com a localização do usuário e os parques
-            Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: parks) { park in
-                MapPin(coordinate: park.coordinate, tint: .red)
-                
-            }
-            .edgesIgnoringSafeArea(.all)
+            MapView(region: $region, route: route, parks: parks)
+                .edgesIgnoringSafeArea(.all)
             
             // Show the closest park
             if let closestPark = closestPark {
                 
-                Text("The nearest park is: ") + Text("\(closestPark.name)")
+                Text("The nearest park is: ") +
+                Text("\(closestPark.name)")
                     .foregroundColor(Color.textFields) +
                 Text("\nEnjoy your visit!")
                 Spacer()
@@ -89,15 +90,18 @@ struct ParksView: View {
             
             NavigationLink(destination: ReviewRateView()) {
                 Text("Review Parks")
-                    .foregroundColor(.white)
+                    .foregroundColor(Color.black)
                     .padding()
-                    .background(Color.textFields)
+                    .background(Color.white)
                     .cornerRadius(50)
                     .padding(.top, 20)
+                    .shadow(radius: 5)
             }
+            .disabled(closestPark == nil) // Desabilita o botão se nenhum parque estiver selecionado
+            .padding()
         }
-        .padding()
     }
+    
     
     // Função para geocodificar o endereço e calcular a distância
     func geocodeAddress(address: String) {
@@ -115,7 +119,8 @@ struct ParksView: View {
             }
         }
     }
-
+    
+    
     // Função para encontrar o parque mais próximo
     func findClosestPark(userLocation: CLLocationCoordinate2D) {
         
@@ -133,17 +138,102 @@ struct ParksView: View {
             }
         }
         
-        closestPark = closest
+        if let closestPark = closest {
+            self.closestPark = closestPark
+            getRoute(to: closestPark)
+        }
+    }
+    
+    func getRoute(to park: Parklist) {
+        
+        guard let userLocation = userLocation else { return }
+        
+        let userPlaceMark = MKPlacemark(coordinate: userLocation)
+        let parkPlaceMark = MKPlacemark(coordinate: park.coordinate)
+        
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: userPlaceMark)
+        request.destination = MKMapItem(placemark: parkPlaceMark)
+        request.transportType = .automobile // Você pode alterar para .walking se preferir caminhar
+        
+        let directions = MKDirections(request: request)
+        
+        directions.calculate { response, error in
+            if let route = response?.routes.first {
+                self.route = route
+            }
+        }
+    }
+    
+    
+    
+    
+    struct Parklist: Identifiable {
+        var id = UUID()
+        var name: String
+        var coordinate: CLLocationCoordinate2D
+    }
+    
+    
+    struct MapView: UIViewRepresentable {
+        @Binding var region: MKCoordinateRegion
+        var route: MKRoute?
+        var parks: [Parklist]
+        
+        func makeUIView(context: Context) -> MKMapView {
+            let mapView = MKMapView()
+            mapView.showsUserLocation = true
+            mapView.delegate = context.coordinator  // Adicionando o delegate
+            return mapView
+        }
+        
+        func updateUIView(_ uiView: MKMapView, context: Context) {
+            uiView.setRegion(region, animated: true)
+            
+            // Remover anotações antigas
+            uiView.removeAnnotations(uiView.annotations)
+            
+            // Adicionar os parques ao mapa
+            let annotations = parks.map { park in
+                return MKPointAnnotation(__coordinate: park.coordinate, title: park.name, subtitle: nil)
+            }
+            uiView.addAnnotations(annotations)
+            
+            // Remover sobreposições antigas
+            uiView.removeOverlays(uiView.overlays)
+            
+            // Adicionar a rota ao mapa
+            if let route = route {
+                uiView.addOverlay(route.polyline)
+            }
+        }
+        
+        func makeCoordinator() -> MapCoordinator {
+            return MapCoordinator()
+        }
+    }
+    
+    
+    class MapCoordinator: NSObject, MKMapViewDelegate {
+        func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+            if let polyline = overlay as? MKPolyline {
+                let renderer = MKPolylineRenderer(polyline: polyline)
+                
+                // Cor laranja para a rota
+                renderer.strokeColor = .orange
+                renderer.lineWidth = 4
+                
+                // Definir a linha como tracejada
+                renderer.lineDashPattern = [4, 4]  // Padrão de linha tracejada
+                
+                return renderer
+            }
+            return MKOverlayRenderer(overlay: overlay)
+        }
     }
 }
 
-struct Parklist: Identifiable {
-    var id = UUID()
-    var name: String
-    var coordinate: CLLocationCoordinate2D
-}
 
 #Preview {
     ParksView()
 }
-

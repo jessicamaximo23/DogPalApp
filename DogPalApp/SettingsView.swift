@@ -17,6 +17,7 @@ struct SettingsView: View {
     @State private var userAge: String = ""
     @State private var dogName: String = ""
     @State private var dogBreed: String = ""
+    @State private var profileCreated = true
     private var ref: DatabaseReference = Database.database().reference()
     
     @State private var userImage: UIImage?
@@ -32,8 +33,8 @@ struct SettingsView: View {
 
 
     var body: some View {
+    
             VStack(alignment: .center){
-                
                 
                 Image("DogPalLogo2")
                     .resizable()
@@ -69,115 +70,122 @@ struct SettingsView: View {
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
-                                               
+                            
                             TextField("Email", text: $userEmail)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
-                                               
+                            
                             TextField("Age", text: $userAge)
-                                 .padding()
-                                 .background(Color(UIColor.systemGray6))
-                                 .cornerRadius(8)
-                                               
+                                .padding()
+                                .background(Color(UIColor.systemGray6))
+                                .cornerRadius(8)
+                            
                             TextField("Dog Name", text: $dogName)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
-                                               
+                            
                             TextField("Dog Breed", text: $dogBreed)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
                         }
-                            Button("Reset Password") {
-                                resetPassword()
-                            }
-                            .foregroundColor(.black)
+                        
+                        Button("Save Changes") {
+                            saveProfileData()
+                            
                         }
+                        .foregroundColor(Color.black)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(50)
+                        .padding(.top, 20)
+                        .shadow(radius: 5)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                           
                     
                     Section(header: Text("Notifications")) {
                         Toggle("Push Notifications", isOn: $notificationsEnabled).onChange(of: notificationsEnabled)
                         { value in
-
-                    handleNotificationsToggle(value)
-           }
+                            
+                            handleNotificationsToggle(value)
+                        }
                     }
-         Section(header: Text("Location Preferences")) {
+                    Section(header: Text("Location Preferences")) {
                         Toggle("Enable Location", isOn: $locationEnabled)
                     }
-
+                    
                     Section(header: Text("Theme")) {
-                     Toggle("Dark Mode", isOn: $isDarkMode)
-                                .onChange(of: isDarkMode) { value in
-
+                        Toggle("Dark Mode", isOn: $isDarkMode)
+                            .onChange(of: isDarkMode) { value in
+                                
                                 setAppTheme(darkMode: value)
-                                                       }
+                            }
                     }
-                      
-                  
-                        Button("Logout") {
-                            logout()
+            
+                        Button("Reset Password") {
+                            resetPassword()
                         }
-                        .foregroundColor(Color.textFields)
-                    
-                    
-                    Button("Save Changes") {
-                        saveProfileData()
-                                   }
-                            .padding()
-                            .background(Color.textFields)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                            .frame(maxWidth: .infinity, alignment: .center)
+                        .foregroundColor(Color.black)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(50)
+                        .padding(.top, 20)
+                        .shadow(radius: 5)
+                        .frame(maxWidth: .infinity, alignment: .center)
+
+                    }
                 }
-                .navigationBarItems(trailing: Button("Close") {
-                    presentationMode.wrappedValue.dismiss()
-                })
                 .preferredColorScheme(isDarkMode ? .dark : .light)
                 
                 NavigationLink(destination: LoginView(), isActive: $shouldNavigateToLogin) {
-                               EmptyView()
-                        }
+                    EmptyView()
+                }
             }
             .onAppear {
-
-                loadUserProfile()
-            }
-    }
+                    loadUserProfile()
+                }
+        }
+       
     
     func loadUserProfile() {
         
         if let user = Auth.auth().currentUser {
-            let userId = user.uid
-            ref.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
-                if let value = snapshot.value as? [String: Any] {
-                  
-                    
-                    self.userName = value["name"] as? String ?? ""
-                    self.userEmail = value["email"] as? String ?? ""
-                    self.userAge = value["age"] as? String ?? ""
-                    self.dogName = value["dogName"] as? String ?? ""
-                    self.dogBreed = value["dogBreed"] as? String ?? ""
-                    
-                 
-                    print("User Profile Loaded: \(self.userName), \(self.userEmail), \(self.userAge), \(self.dogName), \(self.dogBreed)")
+                let userId = user.uid
+                ref.child("users").child(userId).observe(.value) { snapshot in
+                    if let value = snapshot.value as? [String: Any] {
+                        
+                        DispatchQueue.main.async {
+                            userName = value["name"] as? String ?? ""
+                            userEmail = value["email"] as? String ?? ""
+                            userAge = value["age"] as? String ?? ""
+                            dogName = value["dogName"] as? String ?? ""
+                            dogBreed = value["dogBreed"] as? String ?? ""
+                            profileCreated = true
+                        }
+                    }
                 }
             }
         }
-    }
+    
 
 
 func saveProfileData() {
     
         if let user = Auth.auth().currentUser {
             let userId = user.uid
+            
+            let ageValue = Int(userAge) ?? 0 // convert string to int
+            
             ref.child("users").child(userId).setValue([
                 "name": userName,
                 "email": userEmail,
-                "age": userAge,
+                "age": ageValue,
                 "dogName": dogName,
-                "dogBreed": dogBreed
+                "dogBreed": dogBreed,
+                "profileCreated": true
+                
             ]) { error, _ in
                 if let error = error {
                     print("Error saving data: \(error.localizedDescription)")

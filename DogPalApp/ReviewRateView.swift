@@ -13,6 +13,8 @@ struct ReviewRateView: View {
     @State private var rating: Int = 0
     @State private var userName: String = ""
     @State private var dogBreed: String = ""
+    @State private var parkName: String = ""
+    @State private var selection = 0
     let ref = Database.database().reference()
     
     @State private var parks = [
@@ -56,6 +58,40 @@ struct ReviewRateView: View {
                 Text("Dog Breed: \(dogBreed)")
                     .font(.title2)
                     .bold()
+                
+                Picker(selection: $selection, label: Text("Choose Park for Review:")) {
+                                    Text("Choose the park for review:").tag(0)
+                                    Text("Mount Royal Park").tag(1)
+                                    Text("Jean-Drapeau Park").tag(2)
+                                    Text("La Fontaine Park").tag(3)
+                                    Text("Jarry Park").tag(4)
+                                    Text("Berri Park").tag(5)
+                                    Text("Lachine Canal Park").tag(6)
+                                    Text("Parc des Rapides").tag(7)
+                                    Text("Parc Angrignon").tag(8)
+                                    Text("Parc Maisonneuve").tag(9)
+                                    Text("Parc de la Visitation").tag(10)
+                                    Text("Dorchester Square").tag(11)
+                                    Text("Parc du Mont-Saint-Bruno").tag(12)
+                                    Text("Biodome and Botanical Garden").tag(13)
+                                    Text("Parc de la Fontaine").tag(14)
+                                    Text("Park Avenue Green Alley").tag(15)
+                                    Text("Parc Mont-Royal Summit").tag(16)
+                                    Text("Beaver Lake").tag(17)
+                                    Text("Parc Jeanne-Mance").tag(18)
+                                    Text("Westmount Park").tag(19)
+                                    Text("Parc Outremont").tag(20)
+                                    Text("Parc du Bois-de-Liesse").tag(21)
+                                    Text("Parc des Iles-de-Boucherville").tag(22)
+                                    Text("Parc Beaudet").tag(23)
+                                    Text("Parc Nature de l'Île-de-la-Visitation").tag(24)
+                                    Text("Parc du Millénaire").tag(25)
+                                    Text("Parc des Moulins").tag(26)
+                                    Text("Parc de la Rivière-des-Prairies").tag(27)
+                                    Text("Parc Léon-Provancher").tag(28)
+                                    Text("Parc de l'Anse-à-l'Orme").tag(29)
+                                    
+                            }
                 
                 // Caixa de texto para o comentário
                 TextEditor(text: $commentText)
@@ -130,6 +166,7 @@ struct ReviewRateView: View {
                 "userAge": dogBreed,
                 "commentText": commentText,
                 "rating": rating,
+                "selectedPark": selection,
                 "timestamp": Date().timeIntervalSince1970
             ]
             
@@ -141,6 +178,7 @@ struct ReviewRateView: View {
                     // Limpa os campos após salvar
                     commentText = ""
                     rating = 0
+                    selection = 0
                 }
             }
         } else {

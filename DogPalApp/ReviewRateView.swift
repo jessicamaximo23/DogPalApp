@@ -8,32 +8,14 @@ import UIKit
 
 struct ReviewRateView: View {
     
-    @State private var text1 = "text here"
     @State private var commentText: String = ""
     @State private var rating: Int = 0
     @State private var userName: String = ""
     @State private var dogBreed: String = ""
-    @State private var parkName: String = ""
     @State private var selection = 0
-    let ref = Database.database().reference()
+    @State private var parks: [ParkReviewData] = []
     
-//    @State private var parks = [
-//        ParkReviewData(name: "Park Lafontaine", rating: 4.8, imageName: "parclafontaine", description: "One of the most popular parks in Montreal, ideal for picnics and walks.", reviews: [
-//            ParkReview(userName: "John", rating: 5, comment: "Incredible!"),
-//            ParkReview(userName: "Alice", rating: 4, comment: "Great place to relax."),
-//            ParkReview(userName: "Bob", rating: 4, comment: "Very beautiful!")
-//        ]),
-//        
-//        ParkReviewData(name: "Park Jean-Drapeau", rating: 4.7, imageName: "parcjeandrapeau", description: "A park with a view of the river and various outdoor activities.", reviews: [
-//            ParkReview(userName: "David", rating: 4, comment: "I love running here."),
-//            ParkReview(userName: "Emily", rating: 5, comment: "A perfect place for a family day.")
-//        ]),
-//        
-//        ParkReviewData(name: "Park Angrignon", rating: 4.6, imageName: "parcangrignon", description: "A peaceful park with large green areas and lakes.", reviews: [
-//            ParkReview(userName: "Eve", rating: 4, comment: "Excellent for walks."),
-//            ParkReview(userName: "Jack", rating: 5, comment: "Very well maintained.")
-//        ])
-//    ]
+    let ref = Database.database().reference()
     
     var body: some View {
         
@@ -60,38 +42,38 @@ struct ReviewRateView: View {
                     .bold()
                 
                 Picker(selection: $selection, label: Text("Choose Park for Review:")) {
-                                    Text("Choose the park for review:").tag(0)
-                                    Text("Mount Royal Park").tag(1)
-                                    Text("Jean-Drapeau Park").tag(2)
-                                    Text("La Fontaine Park").tag(3)
-                                    Text("Jarry Park").tag(4)
-                                    Text("Berri Park").tag(5)
-                                    Text("Lachine Canal Park").tag(6)
-                                    Text("Parc des Rapides").tag(7)
-                                    Text("Parc Angrignon").tag(8)
-                                    Text("Parc Maisonneuve").tag(9)
-                                    Text("Parc de la Visitation").tag(10)
-                                    Text("Dorchester Square").tag(11)
-                                    Text("Parc du Mont-Saint-Bruno").tag(12)
-                                    Text("Biodome and Botanical Garden").tag(13)
-                                    Text("Parc de la Fontaine").tag(14)
-                                    Text("Park Avenue Green Alley").tag(15)
-                                    Text("Parc Mont-Royal Summit").tag(16)
-                                    Text("Beaver Lake").tag(17)
-                                    Text("Parc Jeanne-Mance").tag(18)
-                                    Text("Westmount Park").tag(19)
-                                    Text("Parc Outremont").tag(20)
-                                    Text("Parc du Bois-de-Liesse").tag(21)
-                                    Text("Parc des Iles-de-Boucherville").tag(22)
-                                    Text("Parc Beaudet").tag(23)
-                                    Text("Parc Nature de l'Île-de-la-Visitation").tag(24)
-                                    Text("Parc du Millénaire").tag(25)
-                                    Text("Parc des Moulins").tag(26)
-                                    Text("Parc de la Rivière-des-Prairies").tag(27)
-                                    Text("Parc Léon-Provancher").tag(28)
-                                    Text("Parc de l'Anse-à-l'Orme").tag(29)
-                                    
-                            }
+                    Text("Choose the park for review:").tag(0)
+                    Text("Mount Royal Park").tag(1)
+                    Text("Jean-Drapeau Park").tag(2)
+                    Text("La Fontaine Park").tag(3)
+                    Text("Jarry Park").tag(4)
+                    Text("Berri Park").tag(5)
+                    Text("Lachine Canal Park").tag(6)
+                    Text("Parc des Rapides").tag(7)
+                    Text("Parc Angrignon").tag(8)
+                    Text("Parc Maisonneuve").tag(9)
+                    Text("Parc de la Visitation").tag(10)
+                    Text("Dorchester Square").tag(11)
+                    Text("Parc du Mont-Saint-Bruno").tag(12)
+                    Text("Biodome and Botanical Garden").tag(13)
+                    Text("Parc de la Fontaine").tag(14)
+                    Text("Park Avenue Green Alley").tag(15)
+                    Text("Parc Mont-Royal Summit").tag(16)
+                    Text("Beaver Lake").tag(17)
+                    Text("Parc Jeanne-Mance").tag(18)
+                    Text("Westmount Park").tag(19)
+                    Text("Parc Outremont").tag(20)
+                    Text("Parc du Bois-de-Liesse").tag(21)
+                    Text("Parc des Iles-de-Boucherville").tag(22)
+                    Text("Parc Beaudet").tag(23)
+                    Text("Parc Nature de l'Île-de-la-Visitation").tag(24)
+                    Text("Parc du Millénaire").tag(25)
+                    Text("Parc des Moulins").tag(26)
+                    Text("Parc de la Rivière-des-Prairies").tag(27)
+                    Text("Parc Léon-Provancher").tag(28)
+                    Text("Parc de l'Anse-à-l'Orme").tag(29)
+                    
+                }
                 
                 // Caixa de texto para o comentário
                 TextEditor(text: $commentText)
@@ -128,28 +110,6 @@ struct ReviewRateView: View {
                     
                     Spacer()
                     
-                }
-                
-                
-//                ForEach(parks) { park in
-//                    VStack(alignment: .leading) {
-//                        Text(park.name)
-//                            .font(.headline)
-//                            .padding(.bottom, 5)
-//                        
-//                        Text("Rating: \(park.rating, specifier: "%.1f")")
-//                            .font(.subheadline)
-//                            .foregroundColor(.secondary)
-//                            .padding(.bottom, 10)
-//                        
-//                        ForEach(park.reviews) { review in
-//                            ReviewCardView(review: review)
-//                        }
-//                        
-//                        Divider().padding(.vertical)
-//                    }
-//                }
-                .onAppear { fetchUserDetails() // Busca os detalhes do usuário ao carregar a view
                 }
             }
         }
@@ -202,58 +162,115 @@ struct ReviewRateView: View {
             print("Error fetching user data: \(error.localizedDescription)")
         }
     }
+    
+    
+    func fetchParksReviews(completion: @escaping ([ParkReviewData]) -> Void) {
+        ref.child("comments").observeSingleEvent(of: .value) { snapshot in
+            var parksDict: [String: [ParkReview]] = [:]
+            var parkRatings: [String: [Int]] = [:]
+            
+            for child in snapshot.children {
+                if let childSnapshot = child as? DataSnapshot,
+                   let userComments = childSnapshot.value as? [String: Any] {
+                    for (_, commentData) in userComments {
+                        if let data = commentData as? [String: Any],
+                           let parkName = data["selectedPark"] as? String,
+                           let userName = data["userName"] as? String,
+                           let rating = data["rating"] as? Int,
+                           let comment = data["commentText"] as? String {
+                            
+                            let review = ParkReview(userName: userName, rating: rating, comment: comment)
+                            
+                            // Group reviews by park name
+                            if parksDict[parkName] != nil {
+                                parksDict[parkName]?.append(review)
+                                parkRatings[parkName]?.append(rating)
+                            } else {
+                                parksDict[parkName] = [review]
+                                parkRatings[parkName] = [rating]
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Prepare the final array of ParkReviewData
+            @State private var parks: [ParkReviewData] = []
+            
+            var body: some View {
+                ScrollView {
+                    ForEach(parks) { park in
+                        VStack(alignment: .leading) {
+                            Text(park.name)
+                                .font(.headline)
+                                .padding(.bottom, 5)
+                            
+                            Text("Rating: \(park.rating, specifier: "%.1f")")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .padding(.bottom, 10)
+                            
+                            ForEach(park.reviews) { review in
+                                ReviewCardView(review: review)
+                            }
+                            
+                            Divider().padding(.vertical)
+                        }
+                    }
+                }
+                .onAppear {
+                    fetchParksReviews()
+                }
+            }
+        }
+    }
 }
 
-//struct ReviewCardView: View {
-//    var review: ParkReview
-//    
-//    var body: some View {
-//        VStack(alignment: .leading) {
-//            HStack {
-//                Text(review.userName)
-//                    .font(.headline)
-//                    .foregroundColor(Color.black)
-//                    .background(Color.white)
-//                
-//                Spacer()
-//                
-//                HStack {
-//                    ForEach(0..<5) { star in
-//                        Image(systemName: "star.fill")
-//                            .foregroundColor(star < review.rating ? .yellow : .gray)
-//                    }
-//                }
-//            }
-//            
-//            Text(review.comment)
-//                .font(.body)
-//                .padding(.top, 2)
-//                .foregroundColor(Color.black)
-//        }
-//        .padding()
-//        .background(Color.white)
-//        .cornerRadius(10)
-//        .shadow(radius: 5)
-//    }
-//}
-//
-//
-//
-//struct ParkReviewData: Identifiable {
-//    var id = UUID()
-//    var name: String
-//    var rating: Double
-//    var imageName: String
-//    var description: String
-//    var reviews: [ParkReview]
-//}
-//
-//struct ParkReview: Identifiable {
-//    var id = UUID()
-//    var userName: String
-//    var rating: Int
-//    var comment: String
-//}
+struct ReviewCardView: View {
+    var review: ParkReview
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text(review.userName)
+                    .font(.headline)
+                
+                Spacer()
+                
+                HStack {
+                    ForEach(0..<5) { star in
+                        Image(systemName: "star.fill")
+                            .foregroundColor(star < review.rating ? .yellow : .gray)
+                    }
+                }
+            }
+            
+            Text(review.comment)
+                .font(.body)
+                .padding(.top, 2)
+        }
+        .padding()
+        .background(Color.white)
+        .cornerRadius(10)
+        .shadow(radius: 5)
+    }
+}
+
+
+struct ParkReviewData: Identifiable {
+    let id = UUID()
+    var name: String
+    var rating: Double
+    var description: String
+    var reviews: [ParkReview]
+}
+
+struct ParkReview: Identifiable {
+    let id = UUID()
+    var userName: String
+    var rating: Int
+    var comment: String
+}
 
 #Preview {
     ReviewRateView()

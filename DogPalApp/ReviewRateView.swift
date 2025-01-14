@@ -28,60 +28,35 @@ struct ReviewRateView: View {
                     .padding()
                     .frame(width: 300, height: 150)
                     .padding(.bottom, 10)
-                    .shadow(radius: 5)
                 
                 Text("Park Reviews")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .foregroundColor(.blue)
-                    .multilineTextAlignment(.center)
-                    .padding(.bottom, 20)
-               
-                VStack(alignment: .leading, spacing: 10) {
-                    //testing textbox for response
-                    Text("Name: \(userName)")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.primary)
-                    
-                    Text("Dog Breed: \(dogBreed)")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.primary)
-                }
-                .padding()
-                .background(Color(UIColor.systemGray6))
-                .cornerRadius(10)
-                .shadow(radius: 3)
+                    .padding()
+                    .foregroundColor(Color.purple)
                 
-                VStack(alignment: .leading) {
-                    Text("Choose Park for Review:")
-                        .font(.headline)
-                        .foregroundColor(.secondary)
-                    Picker(selection: $selection, label: Text("")) {
-                        ForEach(parkNames.indices, id: \.self) { index in
-                            Text(parkNames[index]).tag(index)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                }
-                .padding()
-                .background(Color(UIColor.systemGray6))
-                .cornerRadius(10)
-                .shadow(radius: 3)
+                //testing textbox for response
+                Text("User Name: \(userName)")
+                    .font(.title3)
+                    .bold()
+                Text("Dog Breed: \(dogBreed)")
+                    .font(.title3)
+                    .bold()
+                    
+                Picker(selection: $selection, label: Text("Choose Park for Review:")) {
+                                    ForEach(parkNames.indices, id: \.self) { index in
+                                        Text(parkNames[index]).tag(index)
+                                    }
+                                }
                 
-                VStack(alignment: .leading) {
-                    
-                    // Caixa de texto para o comentário
-                    TextEditor(text: $commentText)
-                        .frame(height: 100)
-                        .padding()
-                        .background(Color(UIColor.systemGray6))
-                        .cornerRadius(10)
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
-                        .padding(.horizontal)
-                    
-                }
+                // Caixa de texto para o comentário
+                TextEditor(text: $commentText)
+                    .frame(height: 100)
+                    .padding()
+                    .background(Color(UIColor.systemGray6))
+                    .cornerRadius(10)
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
+                    .padding(.horizontal)
                 
                 // Seletor de estrelas para avaliação
                 HStack {

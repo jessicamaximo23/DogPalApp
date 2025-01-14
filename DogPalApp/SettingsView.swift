@@ -45,23 +45,13 @@ struct SettingsView: View {
                     
                     Section(header: Text("Edit Profile")) {
                         VStack{
-                            Button(action: {
-                                showingImagePicker = true
-                            }) {
-                                if let image = userImage {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .clipShape(Circle())
-                                        .frame(width: 100, height: 100)
-                                } else {
+                            
                                     Image(systemName: "person.circle.fill")
                                         .resizable()
                                         .scaledToFit()
                                         .foregroundColor(.gray)
                                         .frame(width: 100, height: 100)
-                                }
-                            }
+                            
                             .sheet(isPresented: $showingImagePicker) {
                                 ImagePicker(image: $userImage)
                             }
@@ -159,7 +149,7 @@ struct SettingsView: View {
                         DispatchQueue.main.async {
                             userName = value["name"] as? String ?? ""
                             userEmail = value["email"] as? String ?? ""
-                            userAge = value["age"] as? String ?? ""
+                            userAge = (value["age"] as? Int).map(String.init) ?? ""
                             dogName = value["dogName"] as? String ?? ""
                             dogBreed = value["dogBreed"] as? String ?? ""
                             profileCreated = true

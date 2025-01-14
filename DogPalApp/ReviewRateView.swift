@@ -12,51 +12,42 @@ struct ReviewRateView: View {
     @State private var rating: Int = 0
     @State private var userName: String = ""
     @State private var dogBreed: String = ""
-    @State private var parkName: String = ""
     @State private var selection = 0
-    let ref = Database.database().reference()
+    @State private var parks: [ParkReviewData] = []
     
-    @State private var parks = [
-        ParkReviewData(name: "Park Lafontaine", rating: 4.8, imageName: "parclafontaine", description: "One of the most popular parks in Montreal, ideal for picnics and walks.", reviews: [
-            ParkReview(userName: "John", rating: 5, comment: "Incredible!"),
-            ParkReview(userName: "Alice", rating: 4, comment: "Great place to relax."),
-            ParkReview(userName: "Bob", rating: 4, comment: "Very beautiful!")
-        ]),
-        
-        ParkReviewData(name: "Park Jean-Drapeau", rating: 4.7, imageName: "parcjeandrapeau", description: "A park with a view of the river and various outdoor activities.", reviews: [
-            ParkReview(userName: "David", rating: 4, comment: "I love running here."),
-            ParkReview(userName: "Emily", rating: 5, comment: "A perfect place for a family day.")
-        ]),
-        
-        ParkReviewData(name: "Park Angrignon", rating: 4.6, imageName: "parcangrignon", description: "A peaceful park with large green areas and lakes.", reviews: [
-            ParkReview(userName: "Eve", rating: 4, comment: "Excellent for walks."),
-            ParkReview(userName: "Jack", rating: 5, comment: "Very well maintained.")
-        ])
-    ]
+    let ref = Database.database().reference()
     
     var body: some View {
         
         ScrollView {
-            VStack {
+            VStack (alignment: .leading, spacing: 20) {
                 
                 Image("DogPalLogo2")
                     .resizable()
                     .scaledToFit()
                     .padding()
-                    .frame(width: 350, height: 150)
+                    .frame(width: 300, height: 150)
+                    .padding(.bottom, 10)
                 
                 Text("Park Reviews")
-                    .font(.title)
+                    .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding()
+                    .foregroundColor(Color.purple)
                 
                 //testing textbox for response
-                Text("Name: \(userName)")
-                    .font(.title2)
+                Text("User Name: \(userName)")
+                    .font(.title3)
                     .bold()
                 Text("Dog Breed: \(dogBreed)")
-                    .font(.title2)
+                    .font(.title3)
                     .bold()
+                    
+                Picker(selection: $selection, label: Text("Choose Park for Review:")) {
+                                    ForEach(parkNames.indices, id: \.self) { index in
+                                        Text(parkNames[index]).tag(index)
+                                    }
+                                }
                 
                 Picker(selection: $selection, label: Text("Choose Park for Review:")) {
                     Text("Choose the park for review:").tag(0)
@@ -129,7 +120,6 @@ struct ReviewRateView: View {
                     
                 }
                 
-                
                 ForEach(parks) { park in
                     VStack(alignment: .leading) {
                         Text(park.name)
@@ -148,23 +138,31 @@ struct ReviewRateView: View {
                         Divider().padding(.vertical)
                     }
                 }
-                .onAppear { fetchUserDetails() // Busca os detalhes do usuário ao carregar a view
-                }
             }
         }
-        .padding()
-    }
+                    .padding()
+                    .onAppear {
+                        fetchUserDetails()
+                        fetchParksReviews{ reviews in
+                            self.parks = reviews
+                    }
+                }
+            }
     
     
     // Função para salvar o comentário e a nota no Firebase
     func saveComment() {
-        if let user = Auth.auth().currentUser {
+        guard let user = Auth.auth().currentUser else{
+            return
+        }
+            
             let userId = user.uid
             let commentData: [String: Any] = [
                 "userName": userName,
                 "userAge": dogBreed,
                 "commentText": commentText,
                 "rating": rating,
+                "selectedPark": selection,
                 "timestamp": Date().timeIntervalSince1970
             ]
             
@@ -176,11 +174,9 @@ struct ReviewRateView: View {
                     // Limpa os campos após salvar
                     commentText = ""
                     rating = 0
+                    selection = 0
                 }
             }
-        } else {
-            print("Nenhum usuário está logado.")
-        }
     }
     
     //funcao para carregar oo usuario
@@ -195,22 +191,52 @@ struct ReviewRateView: View {
                 self.dogBreed = userData["dogBreed"] as? String ?? "No Breed"
                 
             }
-        } withCancel: { error in
-            print("Error fetching user data: \(error.localizedDescription)")
         }
     }
-}
+    
+    
+    func fetchParksReviews(completion: @escaping ([ParkReviewData]) -> Void) {
+        ref.child("comments").observeSingleEvent(of: .value) { snapshot in
+            var parksDict: [String: [ParkReview]] = [:]
+            var parkRatings: [String: [Int]] = [:]
+            
+            for child in snapshot.children {
+                if let childSnapshot = child as? DataSnapshot,
+                   let userComments = childSnapshot.value as? [String: Any] {
+                    for (_, commentData) in userComments {
+                        if let data = commentData as? [String: Any],
+                           let parkNameIndex = data["selectedPark"] as? Int, parkNameIndex < parkNames.count,
+                           let userName = data["userName"] as? String,
+                           let rating = data["rating"] as? Int,
+                           let comment = data["commentText"] as? String {
+                            
+                            let parkName = parkNames[parkNameIndex]
+                            let review = ParkReview(userName: userName, rating: rating, comment: comment)
+                                                        
+                            parksDict[parkName, default: []].append(review)
+                            parkRatings[parkName, default: []].append(rating)
+                            }
+                    }
+                }
+            }
+                                        
+                                        let parks = parksDict.map { (parkName, reviews) -> ParkReviewData in
+                                            let avgRating = Double(parkRatings[parkName]?.reduce(0, +) ?? 0) / Double(reviews.count)
+                                            return ParkReviewData(name: parkName, rating: avgRating, reviews: reviews)
+                                        }
+                                        completion(parks)
+                                    }
+                                }
+                            }
 
 struct ReviewCardView: View {
     var review: ParkReview
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Text(review.userName)
                     .font(.headline)
-                    .foregroundColor(Color.black)
-                    .background(Color.white)
                 
                 Spacer()
                 
@@ -225,7 +251,6 @@ struct ReviewCardView: View {
             Text(review.comment)
                 .font(.body)
                 .padding(.top, 2)
-                .foregroundColor(Color.black)
         }
         .padding()
         .background(Color.white)
@@ -235,22 +260,31 @@ struct ReviewCardView: View {
 }
 
 
-
 struct ParkReviewData: Identifiable {
-    var id = UUID()
+    let id = UUID()
     var name: String
     var rating: Double
-    var imageName: String
-    var description: String
     var reviews: [ParkReview]
 }
 
 struct ParkReview: Identifiable {
-    var id = UUID()
+    let id = UUID()
     var userName: String
     var rating: Int
     var comment: String
 }
+
+let parkNames = [
+    "Mount Royal Park", "Jean-Drapeau Park", "La Fontaine Park", "Jarry Park",
+    "Berri Park", "Lachine Canal Park", "Parc des Rapides", "Parc Angrignon",
+    "Parc Maisonneuve", "Parc de la Visitation", "Dorchester Square",
+    "Parc du Mont-Saint-Bruno", "Biodome and Botanical Garden", "Parc de la Fontaine",
+    "Park Avenue Green Alley", "Parc Mont-Royal Summit", "Beaver Lake",
+    "Parc Jeanne-Mance", "Westmount Park", "Parc Outremont", "Parc du Bois-de-Liesse",
+    "Parc des Iles-de-Boucherville", "Parc Beaudet", "Parc Nature de l'Île-de-la-Visitation",
+    "Parc du Millénaire", "Parc des Moulins", "Parc de la Rivière-des-Prairies",
+    "Parc Léon-Provancher", "Parc de l'Anse-à-l'Orme"
+]
 
 #Preview {
     ReviewRateView()

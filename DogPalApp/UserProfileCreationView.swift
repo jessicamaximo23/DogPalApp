@@ -17,6 +17,7 @@ struct UserProfileCreationView: View {
     @State private var userAge: String = ""
     @State private var dogName: String = ""
     @State private var dogBreed: String = ""
+    @State private var ageErrorMessage: String? = nil
     
     @State private var userImage: UIImage?
     @State private var showImagePicker = false
@@ -116,6 +117,15 @@ struct UserProfileCreationView: View {
     
     func updateUserProfileStatus() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        // Verificar se a idade é válida antes de salvar
+           guard let age = Int(userAge), age >= 0 else {
+               ageErrorMessage = "Please enter a valid non-negative age."
+               return
+           }
+           
+           // Se a idade for válida, limpa a mensagem de erro
+           ageErrorMessage = nil
         
         // Convertendo a imagem para Data (caso exista)
         let userImageData = userImage?.pngData()

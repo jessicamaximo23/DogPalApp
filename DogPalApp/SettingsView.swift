@@ -18,6 +18,8 @@ struct SettingsView: View {
     @State private var dogName: String = ""
     @State private var dogBreed: String = ""
     @State private var profileCreated = true
+    @State private var ageError: String? = nil  // To display an error message
+
     private var ref: DatabaseReference = Database.database().reference()
     
     @State private var userImage: UIImage?
@@ -62,10 +64,33 @@ struct SettingsView: View {
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
                             
-                            TextField("Age", text: $userAge)
+                            TextField("Your Age", text: $userAge)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
+                                .keyboardType(.numberPad) // Ensure the keyboard only shows numbers
+                                .onChange(of: userAge) { newValue in
+                                    // Remove any non-digit characters to ensure the age is only numeric
+                                    let filteredValue = newValue.filter { $0.isNumber }
+                                    
+                                    // Update the text field with the filtered value
+                                    if filteredValue != newValue {
+                                        userAge = filteredValue
+                                    }
+                                    
+                                    // Check if the value is a valid non-negative number
+                                    if let age = Int(filteredValue), age >= 0 {
+                                        ageError = nil
+                                    } else {
+                                        ageError = "Please enter a valid non-negative age."
+                                    }
+                                }
+
+                            if let error = ageError {
+                                Text(error)
+                                    .foregroundColor(.red)
+                                    .padding(.horizontal)
+                            }
                             
                             TextField("Dog Name", text: $dogName)
                                 .padding()

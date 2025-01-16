@@ -52,10 +52,6 @@ struct SettingsView: View {
                                         .foregroundColor(.gray)
                                         .frame(width: 100, height: 100)
                             
-                            .sheet(isPresented: $showingImagePicker) {
-                                ImagePicker(image: $userImage)
-                            }
-                            
                             TextField("Name", text: $userName)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))

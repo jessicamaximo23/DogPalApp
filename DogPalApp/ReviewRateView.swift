@@ -141,6 +141,8 @@ struct ReviewRateView: View {
                     commentText = ""
                     rating = 0
                     selection = 0
+                    
+                    reloadParksData()
                 }
             }
     }
@@ -193,6 +195,12 @@ struct ReviewRateView: View {
                                         completion(parks)
                                     }
                                 }
+    
+                    func reloadParksData() {
+                        fetchParksReviews { reviews in
+                            self.parks = reviews
+            }
+        }
                             }
 
 struct ReviewCardView: View {

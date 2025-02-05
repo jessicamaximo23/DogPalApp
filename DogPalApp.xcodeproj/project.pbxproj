@@ -41,14 +41,14 @@
 		08CEE6622D53C2BE00A2815E /* Exceptions for "DogPalApp" folder in "DogPalAppTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"GoogleService-Info (1).plist",
+				"GoogleService-Info.plist",
 			);
 			target = 0819B3102CC18462007A780D /* DogPalAppTests */;
 		};
 		08CEE6632D53C2BE00A2815E /* Exceptions for "DogPalApp" folder in "DogPalAppUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"GoogleService-Info (1).plist",
+				"GoogleService-Info.plist",
 			);
 			target = 0819B31A2CC18462007A780D /* DogPalAppUITests */;
 		};

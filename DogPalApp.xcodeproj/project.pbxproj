@@ -37,30 +37,9 @@
 		086E4EE32CDEA0C4005CF78E /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		08CEE6622D53C2BE00A2815E /* Exceptions for "DogPalApp" folder in "DogPalAppTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"GoogleService-Info.plist",
-			);
-			target = 0819B3102CC18462007A780D /* DogPalAppTests */;
-		};
-		08CEE6632D53C2BE00A2815E /* Exceptions for "DogPalApp" folder in "DogPalAppUITests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"GoogleService-Info.plist",
-			);
-			target = 0819B31A2CC18462007A780D /* DogPalAppUITests */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0819B3032CC18460007A780D /* DogPalApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				08CEE6622D53C2BE00A2815E /* Exceptions for "DogPalApp" folder in "DogPalAppTests" target */,
-				08CEE6632D53C2BE00A2815E /* Exceptions for "DogPalApp" folder in "DogPalAppUITests" target */,
-			);
 			path = DogPalApp;
 			sourceTree = "<group>";
 		};

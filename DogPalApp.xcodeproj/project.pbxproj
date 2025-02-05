@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		086E4EE42CDEA0CA005CF78E /* Untitled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086E4EE32CDEA0C4005CF78E /* Untitled.swift */; };
 		08925FF02CD29B8F00FE96EB /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 08925FEF2CD29B8F00FE96EB /* FirebaseDatabase */; };
-		08CEE65B2D53BC6200A2815E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08CEE65A2D53BC6200A2815E /* GoogleService-Info.plist */; };
 		CEA62C6A2D2743A300A0BDA2 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CEA62C692D2743A300A0BDA2 /* FirebaseFirestore */; };
 		F9CE4E9B2CC73D4A00D91E96 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F9CE4E9A2CC73D4A00D91E96 /* FirebaseAuth */; };
 /* End PBXBuildFile section */
@@ -36,7 +35,6 @@
 		0819B3112CC18462007A780D /* DogPalAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0819B31B2CC18462007A780D /* DogPalAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		086E4EE32CDEA0C4005CF78E /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
-		08CEE65A2D53BC6200A2815E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -94,7 +92,6 @@
 				0819B3022CC18460007A780D /* Products */,
 				086E4EE32CDEA0C4005CF78E /* Untitled.swift */,
 				CEA62C682D2743A300A0BDA2 /* Frameworks */,
-				08CEE65A2D53BC6200A2815E /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -241,7 +238,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08CEE65B2D53BC6200A2815E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

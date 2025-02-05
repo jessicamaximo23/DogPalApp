@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		086E4EE42CDEA0CA005CF78E /* Untitled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086E4EE32CDEA0C4005CF78E /* Untitled.swift */; };
 		08925FF02CD29B8F00FE96EB /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 08925FEF2CD29B8F00FE96EB /* FirebaseDatabase */; };
+		08CEE65B2D53BC6200A2815E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08CEE65A2D53BC6200A2815E /* GoogleService-Info.plist */; };
+		CEA62C6A2D2743A300A0BDA2 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CEA62C692D2743A300A0BDA2 /* FirebaseFirestore */; };
 		F9CE4E9B2CC73D4A00D91E96 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F9CE4E9A2CC73D4A00D91E96 /* FirebaseAuth */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +36,7 @@
 		0819B3112CC18462007A780D /* DogPalAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0819B31B2CC18462007A780D /* DogPalAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogPalAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		086E4EE32CDEA0C4005CF78E /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
+		08CEE65A2D53BC6200A2815E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -61,6 +64,7 @@
 			files = (
 				08925FF02CD29B8F00FE96EB /* FirebaseDatabase in Frameworks */,
 				F9CE4E9B2CC73D4A00D91E96 /* FirebaseAuth in Frameworks */,
+				CEA62C6A2D2743A300A0BDA2 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +93,8 @@
 				0819B31E2CC18462007A780D /* DogPalAppUITests */,
 				0819B3022CC18460007A780D /* Products */,
 				086E4EE32CDEA0C4005CF78E /* Untitled.swift */,
+				CEA62C682D2743A300A0BDA2 /* Frameworks */,
+				08CEE65A2D53BC6200A2815E /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,6 +106,13 @@
 				0819B31B2CC18462007A780D /* DogPalAppUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CEA62C682D2743A300A0BDA2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,6 +137,7 @@
 			packageProductDependencies = (
 				F9CE4E9A2CC73D4A00D91E96 /* FirebaseAuth */,
 				08925FEF2CD29B8F00FE96EB /* FirebaseDatabase */,
+				CEA62C692D2743A300A0BDA2 /* FirebaseFirestore */,
 			);
 			productName = DogPalApp;
 			productReference = 0819B3012CC18460007A780D /* DogPalApp.app */;
@@ -227,6 +241,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08CEE65B2D53BC6200A2815E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,7 +427,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DogPalApp/Preview Content\"";
-				DEVELOPMENT_TEAM = V59R53464M;
+				DEVELOPMENT_TEAM = UP25V4S4DH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -425,7 +440,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jessicamaximo.DogPalApp-com.jessicamaximo.DogPalApp";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wandrey.dogpalapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -441,7 +456,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DogPalApp/Preview Content\"";
-				DEVELOPMENT_TEAM = V59R53464M;
+				DEVELOPMENT_TEAM = UP25V4S4DH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -454,7 +469,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jessicamaximo.DogPalApp-com.jessicamaximo.DogPalApp";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wandrey.dogpalapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -587,6 +602,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F9CE4E992CC73D4A00D91E96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
+		};
+		CEA62C692D2743A300A0BDA2 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F9CE4E992CC73D4A00D91E96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 		F9CE4E9A2CC73D4A00D91E96 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

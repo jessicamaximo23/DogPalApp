@@ -5,6 +5,7 @@
 //  Created by Jessica Maximo on 2024-11-14.
 //
 
+
 import SwiftUI
 import MapKit
 
@@ -18,8 +19,8 @@ struct ParksView: View {
     )
     @State private var userLocation: CLLocationCoordinate2D?
     @State private var closestPark: Parklist?
-    @State private var route: MKRoute?
     
+    @State private var route: MKRoute?
     
     
     
@@ -57,7 +58,9 @@ struct ParksView: View {
     ]
     
     
+    
     var body: some View {
+        
         VStack {
             Image("DogPalLogo2")
                 .resizable()
@@ -74,13 +77,13 @@ struct ParksView: View {
             .frame(height: 50)
             
             MapView(region: $region, route: route, parks: parks)
-                           .edgesIgnoringSafeArea(.all)
-          
+                .edgesIgnoringSafeArea(.all)
             
             // Show the closest park
             if let closestPark = closestPark {
                 
-                Text("The nearest park is: ") + Text("\(closestPark.name)")
+                Text("The nearest park is: ") +
+                Text("\(closestPark.name)")
                     .foregroundColor(Color.textFields) +
                 Text("\nEnjoy your visit!")
                 Spacer()
@@ -95,9 +98,11 @@ struct ParksView: View {
                     .padding(.top, 20)
                     .shadow(radius: 5)
             }
+            .disabled(closestPark == nil) // Desabilita o botão se nenhum parque estiver selecionado
+            .padding()
         }
-        .padding()
     }
+    
     
     // Função para geocodificar o endereço e calcular a distância
     func geocodeAddress(address: String) {
@@ -160,71 +165,72 @@ struct ParksView: View {
             }
         }
     }
-}
-
-
-
-struct Parklist: Identifiable {
-    var id = UUID()
-    var name: String
-    var coordinate: CLLocationCoordinate2D
-}
-
-
-struct MapView: UIViewRepresentable {
-    @Binding var region: MKCoordinateRegion
-    var route: MKRoute?
-    var parks: [Parklist]
     
-    func makeUIView(context: Context) -> MKMapView {
-        let mapView = MKMapView()
-        mapView.showsUserLocation = true
-        mapView.delegate = context.coordinator  // Adicionando o delegate
-        return mapView
+    
+    
+    
+    struct Parklist: Identifiable {
+        var id = UUID()
+        var name: String
+        var coordinate: CLLocationCoordinate2D
     }
     
-    func updateUIView(_ uiView: MKMapView, context: Context) {
-        uiView.setRegion(region, animated: true)
+    
+    struct MapView: UIViewRepresentable {
+        @Binding var region: MKCoordinateRegion
+        var route: MKRoute?
+        var parks: [Parklist]
         
-        // Remover anotações antigas
-        uiView.removeAnnotations(uiView.annotations)
-        
-        // Adicionar os parques ao mapa
-        let annotations = parks.map { park in
-            return MKPointAnnotation(__coordinate: park.coordinate, title: park.name, subtitle: nil)
+        func makeUIView(context: Context) -> MKMapView {
+            let mapView = MKMapView()
+            mapView.showsUserLocation = true
+            mapView.delegate = context.coordinator  // Adicionando o delegate
+            return mapView
         }
-        uiView.addAnnotations(annotations)
         
-        // Remover sobreposições antigas
-        uiView.removeOverlays(uiView.overlays)
+        func updateUIView(_ uiView: MKMapView, context: Context) {
+            uiView.setRegion(region, animated: true)
+            
+            // Remover anotações antigas
+            uiView.removeAnnotations(uiView.annotations)
+            
+            // Adicionar os parques ao mapa
+            let annotations = parks.map { park in
+                return MKPointAnnotation(__coordinate: park.coordinate, title: park.name, subtitle: nil)
+            }
+            uiView.addAnnotations(annotations)
+            
+            // Remover sobreposições antigas
+            uiView.removeOverlays(uiView.overlays)
+            
+            // Adicionar a rota ao mapa
+            if let route = route {
+                uiView.addOverlay(route.polyline)
+            }
+        }
         
-        // Adicionar a rota ao mapa
-        if let route = route {
-            uiView.addOverlay(route.polyline)
+        func makeCoordinator() -> MapCoordinator {
+            return MapCoordinator()
         }
     }
     
-    func makeCoordinator() -> MapCoordinator {
-        return MapCoordinator()
-    }
-}
-
-
-class MapCoordinator: NSObject, MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        if let polyline = overlay as? MKPolyline {
-            let renderer = MKPolylineRenderer(polyline: polyline)
-            
-            // Cor laranja para a rota
-            renderer.strokeColor = .orange
-            renderer.lineWidth = 4
-            
-            // Definir a linha como tracejada
-            renderer.lineDashPattern = [4, 4]  // Padrão de linha tracejada
-            
-            return renderer
+    
+    class MapCoordinator: NSObject, MKMapViewDelegate {
+        func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+            if let polyline = overlay as? MKPolyline {
+                let renderer = MKPolylineRenderer(polyline: polyline)
+                
+                // Cor laranja para a rota
+                renderer.strokeColor = .orange
+                renderer.lineWidth = 4
+                
+                // Definir a linha como tracejada
+                renderer.lineDashPattern = [4, 4]  // Padrão de linha tracejada
+                
+                return renderer
+            }
+            return MKOverlayRenderer(overlay: overlay)
         }
-        return MKOverlayRenderer(overlay: overlay)
     }
 }
 

@@ -7,6 +7,7 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
+import FirebaseDatabase
 
 struct SettingsView: View {
     
@@ -17,6 +18,10 @@ struct SettingsView: View {
     @State private var dogName: String = ""
     @State private var dogBreed: String = ""
     @State private var profileCreated = true
+
+    @State private var ageError: String? = nil  // To display an error message
+
+
     private var ref: DatabaseReference = Database.database().reference()
     
     @State private var userImage: UIImage?
@@ -32,7 +37,7 @@ struct SettingsView: View {
 
 
     var body: some View {
-        
+
             VStack(alignment: .center){
                 
                 Image("DogPalLogo2")
@@ -44,57 +49,72 @@ struct SettingsView: View {
                     
                     Section(header: Text("Edit Profile")) {
                         VStack{
-                            Button(action: {
-                                showingImagePicker = true
-                            }) {
-                                if let image = userImage {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .clipShape(Circle())
-                                        .frame(width: 100, height: 100)
-                                } else {
+                            
                                     Image(systemName: "person.circle.fill")
                                         .resizable()
                                         .scaledToFit()
                                         .foregroundColor(.gray)
                                         .frame(width: 100, height: 100)
-                                }
-                            }
-                            .sheet(isPresented: $showingImagePicker) {
-                                ImagePicker(image: $userImage)
-                            }
                             
                             TextField("Name", text: $userName)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
-                                               
+
+                            
+
                             TextField("Email", text: $userEmail)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
-                                               
-                            TextField("Age", text: $userAge)
-                                 .padding()
-                                 .background(Color(UIColor.systemGray6))
-                                 .cornerRadius(8)
-                                               
+                            
+                            TextField("Your Age", text: $userAge)
+                                .padding()
+                                .background(Color(UIColor.systemGray6))
+                                .cornerRadius(8)
+                                .keyboardType(.numberPad) // Ensure the keyboard only shows numbers
+                                .onChange(of: userAge) { newValue in
+                                    // Remove any non-digit characters to ensure the age is only numeric
+                                    let filteredValue = newValue.filter { $0.isNumber }
+                                    
+                                    // Update the text field with the filtered value
+                                    if filteredValue != newValue {
+                                        userAge = filteredValue
+                                    }
+                                    
+                                    // Check if the value is a valid non-negative number
+                                    if let age = Int(filteredValue), age >= 0 {
+                                        ageError = nil
+                                    } else {
+                                        ageError = "Please enter a valid non-negative age."
+                                    }
+                                }
+
+                            if let error = ageError {
+                                Text(error)
+                                    .foregroundColor(.red)
+                                    .padding(.horizontal)
+                            }
+                            
+
                             TextField("Dog Name", text: $dogName)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
-                                               
+
+
                             TextField("Dog Breed", text: $dogBreed)
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(8)
+
                         }
                         
                         Button("Save Changes") {
                             saveProfileData()
                             
                         }
+
                         .foregroundColor(Color.black)
                         .padding()
                         .background(Color.white)
@@ -108,19 +128,21 @@ struct SettingsView: View {
                         Toggle("Push Notifications", isOn: $notificationsEnabled).onChange(of: notificationsEnabled)
                         { value in
 
-                    handleNotificationsToggle(value)
-           }
+                            
+                            handleNotificationsToggle(value)
+                        }
+
                     }
-         Section(header: Text("Location Preferences")) {
+                    Section(header: Text("Location Preferences")) {
                         Toggle("Enable Location", isOn: $locationEnabled)
                     }
-
+            
                     Section(header: Text("Theme")) {
-                     Toggle("Dark Mode", isOn: $isDarkMode)
-                                .onChange(of: isDarkMode) { value in
-
+                        Toggle("Dark Mode", isOn: $isDarkMode)
+                            .onChange(of: isDarkMode) { value in
+                                
                                 setAppTheme(darkMode: value)
-                                                       }
+                            }
                     }
             
                         Button("Reset Password") {
@@ -137,19 +159,18 @@ struct SettingsView: View {
                     }
 
                 }
-                .navigationBarItems(trailing: Button("Close") {
-                    presentationMode.wrappedValue.dismiss()
-                })
+
                 .preferredColorScheme(isDarkMode ? .dark : .light)
                 
                 NavigationLink(destination: LoginView(), isActive: $shouldNavigateToLogin) {
-                               EmptyView()
-                        }
+                    EmptyView()
+                }
             }
             .onAppear {
-                loadUserProfile()
-            }
-    }
+                    loadUserProfile()
+                }
+        }
+       
     
     func loadUserProfile() {
         
@@ -161,7 +182,8 @@ struct SettingsView: View {
                         DispatchQueue.main.async {
                             userName = value["name"] as? String ?? ""
                             userEmail = value["email"] as? String ?? ""
-                            userAge = value["age"] as? String ?? ""
+
+                            userAge = (value["age"] as? Int).map(String.init) ?? ""
                             dogName = value["dogName"] as? String ?? ""
                             dogBreed = value["dogBreed"] as? String ?? ""
                             profileCreated = true
@@ -169,9 +191,13 @@ struct SettingsView: View {
                     }
                 }
             }
-    }
+        }
+    
+
 
 func saveProfileData() {
+    
+
         if let user = Auth.auth().currentUser {
             let userId = user.uid
             

@@ -6,7 +6,6 @@
 //  Created by Jessica Maximo on 2024-10-30.
 
 
-
 import SwiftUI
 import Firebase
 import FirebaseAuth
@@ -33,12 +32,14 @@ struct HomeScreenView: View {
     @State private var showingImagePicker: Bool = false
     @State private var selectedDate = Date()
     
+    private var ref: DatabaseReference = Database.database().reference()
+    
     
     var body: some View {
         
         TabView {
             
-            NavigationView {
+            NavigationStack {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
                         
@@ -113,12 +114,10 @@ struct HomeScreenView: View {
                 Image(systemName: "person.fill")
                 Text("Profile")
             }
-            
           
             NavigationView {
                 ReviewRateView()
-                    
-                  
+                 
                 }
         
             .tabItem {
@@ -155,11 +154,13 @@ struct HomeScreenView: View {
            }
            
         
-        if let email = user.email {
-                self.userEmail = email
-                self.userName = email
-            } else {
-               print("No display name found for the user")
+        let userId = user.uid
+           ref.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
+               if let value = snapshot.value as? [String: Any] {
+                   self.userName = value["name"] as? String ?? "No Name"
+               } else {
+                   print("No user data found in the database")
+               }
            }
        }
     

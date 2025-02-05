@@ -12,8 +12,10 @@ import FirebaseAuth
 
 @main
 struct DogPalAppApp: App {
-    init() {
-        FirebaseApp.configure()  // Configuração do Firebase
+
+    
+    init(){
+        FirebaseApp.configure()
     }
     
     var body: some Scene {

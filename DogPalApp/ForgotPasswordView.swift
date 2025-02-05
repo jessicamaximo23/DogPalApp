@@ -105,9 +105,6 @@ struct ForgotPasswordView: View {
         showAlert = true
         
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//            alertMessage = "If an account exists with this email, a password reset link will be sent."
-//            showAlert = true
         }
     }
 }

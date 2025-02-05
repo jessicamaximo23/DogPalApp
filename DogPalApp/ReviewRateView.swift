@@ -5,7 +5,6 @@ import UIKit
 
 //Wandrey
 //Page created to show the idea of the ratings and comments by user. Need to polish and finish.
-
 struct ReviewRateView: View {
     
     @State private var commentText: String = ""
@@ -48,6 +47,7 @@ struct ReviewRateView: View {
                                         Text(parkNames[index]).tag(index)
                                     }
                                 }
+                
                 
                 // Caixa de texto para o comentário
                 TextEditor(text: $commentText)
@@ -141,8 +141,6 @@ struct ReviewRateView: View {
                     commentText = ""
                     rating = 0
                     selection = 0
-                    
-                    reloadParksData()
                 }
             }
     }
@@ -195,12 +193,6 @@ struct ReviewRateView: View {
                                         completion(parks)
                                     }
                                 }
-    
-                    func reloadParksData() {
-                        fetchParksReviews { reviews in
-                            self.parks = reviews
-            }
-        }
                             }
 
 struct ReviewCardView: View {

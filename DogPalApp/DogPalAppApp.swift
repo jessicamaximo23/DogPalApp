@@ -12,7 +12,6 @@ import FirebaseAuth
 
 @main
 struct DogPalAppApp: App {
-
     
     init(){
         FirebaseApp.configure()
@@ -21,8 +20,8 @@ struct DogPalAppApp: App {
     var body: some Scene {
             WindowGroup {
                 SplashScreenView()
-                    .navigationBarBackButtonHidden(true)  // Esconde o botão de voltar
-                    .navigationBarHidden(true)  // Oculta a barra de navegação globalmente
+                    .navigationBarBackButtonHidden(true)
+                    .navigationBarHidden(true)  
             }
         }
 }

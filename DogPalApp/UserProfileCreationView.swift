@@ -17,7 +17,7 @@ struct UserProfileCreationView: View {
     @State private var userAge: String = ""
     @State private var dogName: String = ""
     @State private var dogBreed: String = ""
-
+    
     @State private var ageErrorMessage: String? = nil
     @State private var userImage: UIImage?
     @State private var showImagePicker = false
@@ -27,7 +27,6 @@ struct UserProfileCreationView: View {
     var body: some View {
         NavigationView {
             VStack {
-                // Logo
                 Image("DogPalLogo2")
                     .resizable()
                     .scaledToFit()
@@ -37,6 +36,7 @@ struct UserProfileCreationView: View {
                 Text("Set up your account")
                     .font(.largeTitle)
                     .padding(.bottom, 20)
+                
                 Section {
                     TextField("Your Name", text: $userName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -59,7 +59,6 @@ struct UserProfileCreationView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal)
                     
-                    // Foto opcional
                     Section(header: Text("Insert a picture of yourself! (optional)")) {
                         if let image = userImage {
                             Image(uiImage: image)
@@ -87,10 +86,8 @@ struct UserProfileCreationView: View {
                     .sheet(isPresented: $showImagePicker) {
                         CustomImagePicker(selectedImage: $userImage)
                     }
-                    
                 }
                 
-                // Botão de envio
                 Button(action: {
                     updateUserProfileStatus()
                 }) {
@@ -105,27 +102,30 @@ struct UserProfileCreationView: View {
                 .disabled(userEmail.isEmpty || userName.isEmpty || userAge.isEmpty || dogName.isEmpty || dogBreed.isEmpty)
                 
                 NavigationLink(
-                    destination: HomeScreenView (),
+                    destination: HomeScreenView(),
                     isActive: $navigateToHomeScreen
                 ) {
                     EmptyView()
                 }
             }
-          
+            .onAppear {
+                fetchUserProfile()
+            }
         }
     }
+    
     
     func updateUserProfileStatus() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         // Verificar se a idade é válida antes de salvar
-           guard let age = Int(userAge), age >= 0 else {
-               ageErrorMessage = "Please enter a valid non-negative age."
-               return
-           }
-           
-           // Se a idade for válida, limpa a mensagem de erro
-           ageErrorMessage = nil
+        guard let age = Int(userAge), age >= 0 else {
+            ageErrorMessage = "Please enter a valid non-negative age."
+            return
+        }
+        
+        // Se a idade for válida, limpa a mensagem de erro
+        ageErrorMessage = nil
         
         // Convertendo a imagem para Data (caso exista)
         let userImageData = userImage?.pngData()
@@ -150,7 +150,31 @@ struct UserProfileCreationView: View {
             }
         }
     }
+    
+    func fetchUserProfile() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let userRef = Database.database().reference().child("users").child(uid)
+        
+        userRef.observeSingleEvent(of: .value) { snapshot in
+            guard let userData = snapshot.value as? [String: Any] else {
+                print("No data found for user")
+                return
+            }
+            
+            // Atualizar os estados com os dados recuperados
+            userName = userData["userName"] as? String ?? ""
+            userEmail = userData["userEmail"] as? String ?? ""
+            userAge = userData["userAge"] as? String ?? ""
+            dogName = userData["dogName"] as? String ?? ""
+            dogBreed = userData["dogBreed"] as? String ?? ""
+            
+            if let imageData = userData["userImage"] as? Data {
+                userImage = UIImage(data: imageData)
+            }
+        }
+    }
 }
+
 
 
 

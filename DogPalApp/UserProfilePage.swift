@@ -1,4 +1,3 @@
-
 import SwiftUI
 import FirebaseAuth
 import FirebaseDatabase
@@ -19,63 +18,63 @@ struct UserProfilePage: View {
     
     var body: some View {
         NavigationStack {
-            
-            VStack(spacing: 20) {
-                // Logo
-                Image("DogPalLogo2")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 250, height: 100)
-                    .padding(.top, 20)
                 
-                // User Image
-                if let image = userImage {
-                    Image(uiImage: image)
+                VStack(spacing: 20) {
+                    // Logo
+                    Image("DogPalLogo2")
                         .resizable()
                         .scaledToFit()
-                        .clipShape(Circle())
-                        .shadow(radius: 10)
-                        .frame(width: 120, height: 120)
-                } else {
-                    Image(systemName: "person.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 120, height: 120)
-                        .foregroundColor(.gray)
-                }
-                
-                Text(userName)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.primary)
-                
-                // User Details Section
-                VStack(alignment: .leading, spacing: 15) {
-                    DetailRow(title: "Email", value: userEmail, color: .blue)
-                    DetailRow(title: "Age", value: "\(userAge)", color: .green)
-                    DetailRow(title: "Dog Name", value: dogName, color: .purple)
-                    DetailRow(title: "Dog Breed", value: dogBreed, color: .orange)
-                }
-                .padding(15)
-                .background(RoundedRectangle(cornerRadius: 20).fill(Color.white).shadow(radius: 5))
-                .padding(.horizontal)
-                
-                
-                
-                // Logout Button
-                Button(action: {
-                    showingSignOutAlert = true
-                }) {
-                    Text("Sign Out")
-                        .foregroundColor(Color.black)
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(50)
+                        .frame(width: 250, height: 100)
                         .padding(.top, 20)
-                        .shadow(radius: 5)
+                    
+                    // User Image
+                    if let image = userImage {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .clipShape(Circle())
+                            .shadow(radius: 10)
+                            .frame(width: 120, height: 120)
+                    } else {
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 120, height: 120)
+                            .foregroundColor(.gray)
+                    }
+                    
+                    Text(userName)
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.primary)
+                    
+                    // User Details Section
+                    VStack(alignment: .leading, spacing: 15) {
+                        DetailRow(title: "Email", value: userEmail, color: .blue)
+                        DetailRow(title: "Age", value: "\(userAge)", color: .green)
+                        DetailRow(title: "Dog Name", value: dogName, color: .purple)
+                        DetailRow(title: "Dog Breed", value: dogBreed, color: .orange)
+                    }
+                    .padding(15)
+                    .background(RoundedRectangle(cornerRadius: 20).fill(Color.white).shadow(radius: 5))
+                    .padding(.horizontal)
+                    
+                    
+                    
+                    // Logout Button
+                    Button(action: {
+                        showingSignOutAlert = true
+                    }) {
+                        Text("Sign Out")
+                            .foregroundColor(Color.black)
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(50)
+                            .padding(.top, 20)
+                            .shadow(radius: 5)
+                    }
+                    .padding(25)
                 }
-                .padding(25)
-            }
             .navigationDestination(isPresented: $navigateToLogin) {
                 LoginView()
             }
@@ -88,7 +87,7 @@ struct UserProfilePage: View {
             .onAppear {
                 fetchUserProfile()
             }
-            // Esconde a barra inteira
+                   // Esconde a barra inteira
         }
     }
     
@@ -107,27 +106,25 @@ struct UserProfilePage: View {
         
         userRef.observeSingleEvent(of: .value) { snapshot in
             if let userData = snapshot.value as? [String: Any] {
-                self.userName = userData["userName"] as? String ?? "Unknown User"
-                self.userEmail = userData["userEmail"] as? String ?? "No Email"
-                self.userAge = userData["userAge"] as? String ?? "0" // Assume String no banco
+                self.userName = userData["name"] as? String ?? "Unknown User"
+                self.userEmail = userData["email"] as? String ?? "No Email"
+                if let age = userData["age"] as? Int {
+                                self.userAge = "\(age)"  // Convert Int to String
+                            } else {
+                                self.userAge = "0"
+                            }
                 self.dogName = userData["dogName"] as? String ?? "No Dog Name"
                 self.dogBreed = userData["dogBreed"] as? String ?? "No Breed"
                 
-                if let imageDataString = userData["userImage"] as? String,
-                   let imageData = Data(base64Encoded: imageDataString) {
+                if let imageData = userData["userImage"] as? Data {
                     self.userImage = UIImage(data: imageData)
-                } else {
-                    self.userImage = nil
                 }
-            } else {
-                print("No user data found for UID: \(uid)")
             }
         } withCancel: { error in
             print("Error fetching user data: \(error.localizedDescription)")
         }
     }
 }
-
 
 // Reusable component for user details
 struct DetailRow: View {

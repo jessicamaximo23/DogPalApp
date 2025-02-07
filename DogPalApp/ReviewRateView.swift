@@ -1,64 +1,59 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
-import UIKit
 
-//Wandrey
-//Page created to show the idea of the ratings and comments by user. Need to polish and finish.
 struct ReviewRateView: View {
-    
     @State private var commentText: String = ""
     @State private var rating: Int = 0
     @State private var userName: String = ""
     @State private var dogBreed: String = ""
     @State private var selection = 0
     @State private var parks: [ParkReviewData] = []
+    @State private var userReviews: [ParkReview] = []
     
     let ref = Database.database().reference()
     
     var body: some View {
-        
         ScrollView {
-            VStack (alignment: .leading, spacing: 20) {
-                
+            VStack(alignment: .leading, spacing: 20) {
                 Image("DogPalLogo2")
                     .resizable()
                     .scaledToFit()
-                    .padding()
                     .frame(width: 300, height: 150)
                     .padding(.bottom, 10)
                 
                 Text("Park Reviews")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding()
-                    .foregroundColor(Color.purple)
-                
-                //testing textbox for response
-                Text("User Name: \(userName)")
-                    .font(.title3)
-                    .bold()
-                Text("Dog Breed: \(dogBreed)")
-                    .font(.title3)
-                    .bold()
-                    
-                Picker(selection: $selection, label: Text("Choose Park for Review:")) {
-                                    ForEach(parkNames.indices, id: \.self) { index in
-                                        Text(parkNames[index]).tag(index)
-                                    }
-                                }
-                
-                
-                // Caixa de texto para o comentário
+                                   .font(.title)
+                                   .fontWeight(.bold)
+                                   .foregroundColor(Color.black)
+                                   .multilineTextAlignment(.center)  // Centralizando o texto
+                               
+                               Text("Name: \(userName)")
+                                   .font(.title3)
+                                   .bold()
+                                   .foregroundColor(.primary)  // Usando a cor padrão do texto
+                               
+                               Text("Dog Breed: \(dogBreed)")
+                                   .font(.title3)
+                                   .bold()
+                                   .foregroundColor(.primary)
+                               
+                Picker("Choose Park for Review:", selection: $selection) {
+                    ForEach(parkNames.indices, id: \.self) { index in
+                        Text(parkNames[index]).tag(index)
+                    }
+                }
+
+                .pickerStyle(MenuPickerStyle()) // Estilo do Picker
+
+                  
                 TextEditor(text: $commentText)
                     .frame(height: 100)
                     .padding()
                     .background(Color(UIColor.systemGray6))
                     .cornerRadius(10)
                     .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
-                    .padding(.horizontal)
                 
-                // Seletor de estrelas para avaliação
                 HStack {
                     ForEach(1...5, id: \.self) { star in
                         Image(systemName: star <= rating ? "star.fill" : "star")
@@ -66,103 +61,105 @@ struct ReviewRateView: View {
                             .frame(width: 30, height: 30)
                             .foregroundColor(star <= rating ? .yellow : .gray)
                             .onTapGesture {
-                                rating = star // Atualiza a nota
+                                rating = star
                             }
                     }
                 }
-                .padding()
                 
-                // Botão para salvar comentário
                 Button(action: saveComment) {
                     Text("Save Comment")
                         .padding()
-                        .frame(maxWidth: .infinity)
                         .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(10)
-                        .padding(.horizontal)
-                    
-                    Spacer()
-                    
                 }
                 
+                Text("Your Reviews")
+                    .font(.headline)
+                    .padding(.top, 20)
+                
+                ForEach(userReviews) { review in
+                    ReviewCardView(review: review)
+                }
+                
+                Divider().padding(.vertical)
+                
+                // Exibindo as avaliações de parques
                 ForEach(parks) { park in
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 20) {
                         Text(park.name)
                             .font(.headline)
-                            .padding(.bottom, 5)
                         
-                        Text("Rating: \(park.rating, specifier: "%.1f")")
+                        Text("Average Rating: \(park.rating, specifier: "%.1f")")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
-                            .padding(.bottom, 10)
                         
-                        ForEach(park.reviews) { review in
-                            ReviewCardView(review: review)
+                        LazyVStack(alignment: .leading, spacing: 15) {
+                            ForEach(park.reviews) { review in
+                                VStack(alignment: .leading) {
+                                    Text("Park: \(park.name)")
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                    ReviewCardView(review: review)
+                                }
+                            }
                         }
                         
                         Divider().padding(.vertical)
                     }
                 }
             }
-        }
-                    .padding()
-                    .onAppear {
-                        fetchUserDetails()
-                        fetchParksReviews{ reviews in
-                            self.parks = reviews
-                    }
+            .padding()
+            .onAppear {
+                fetchUserDetails()
+                fetchParksReviews { reviews in
+                    self.parks = reviews
                 }
+                fetchUserReviews()
             }
-    
-    
-    // Função para salvar o comentário e a nota no Firebase
-    func saveComment() {
-        guard let user = Auth.auth().currentUser else{
-            return
         }
-            
-            let userId = user.uid
-            let commentData: [String: Any] = [
-                "userName": userName,
-                "userAge": dogBreed,
-                "commentText": commentText,
-                "rating": rating,
-                "selectedPark": selection,
-                "timestamp": Date().timeIntervalSince1970
-            ]
-            
-            ref.child("comments").child(userId).childByAutoId().setValue(commentData) { error, _ in
-                if let error = error {
-                    print("Erro ao salvar comentário: \(error.localizedDescription)")
-                } else {
-                    print("Comentário salvo com sucesso!")
-                    // Limpa os campos após salvar
-                    commentText = ""
-                    rating = 0
-                    selection = 0
-                }
-            }
     }
     
-    //funcao para carregar oo usuario
-    func fetchUserDetails() {
+    func saveComment() {
+        guard let user = Auth.auth().currentUser else { return }
+        let userId = user.uid
+        let commentData: [String: Any] = [
+            "userName": userName,
+            "dogBreed": dogBreed,
+            "commentText": commentText,
+            "rating": rating,
+            "selectedPark": selection,
+            "timestamp": Date().timeIntervalSince1970
+        ]
         
+        ref.child("comments").child(userId).childByAutoId().setValue(commentData) { error, _ in
+            if let error = error {
+                print("Error saving comment: \(error.localizedDescription)")
+            } else {
+                print("Comment saved successfully!")
+                commentText = ""
+                rating = 0
+                selection = 0
+                reloadParksData()
+                fetchUserReviews() // Atualizar as avaliações do usuário após salvar um novo comentário
+            }
+        }
+    }
+    
+    func fetchUserDetails() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let userRef = Database.database().reference().child("users").child(uid)
         
-        userRef.observeSingleEvent(of: .value) { snapshot  in
+        userRef.observeSingleEvent(of: .value) { snapshot in
             if let userData = snapshot.value as? [String: Any] {
                 self.userName = userData["name"] as? String ?? "Unknown User"
                 self.dogBreed = userData["dogBreed"] as? String ?? "No Breed"
-                
             }
         }
     }
     
-    
     func fetchParksReviews(completion: @escaping ([ParkReviewData]) -> Void) {
-        ref.child("comments").observeSingleEvent(of: .value) { snapshot in
+        ref.child("comments").observe(.value) { snapshot in
             var parksDict: [String: [ParkReview]] = [:]
             var parkRatings: [String: [Int]] = [:]
             
@@ -178,45 +175,75 @@ struct ReviewRateView: View {
                             
                             let parkName = parkNames[parkNameIndex]
                             let review = ParkReview(userName: userName, rating: rating, comment: comment)
-                                                        
+                            
                             parksDict[parkName, default: []].append(review)
                             parkRatings[parkName, default: []].append(rating)
-                            }
+                        }
                     }
                 }
             }
-                                        
-                                        let parks = parksDict.map { (parkName, reviews) -> ParkReviewData in
-                                            let avgRating = Double(parkRatings[parkName]?.reduce(0, +) ?? 0) / Double(reviews.count)
-                                            return ParkReviewData(name: parkName, rating: avgRating, reviews: reviews)
-                                        }
-                                        completion(parks)
-                                    }
-                                }
-                            }
+            
+            let updatedParks = parksDict.map { (parkName, reviews) -> ParkReviewData in
+                let avgRating = Double(parkRatings[parkName]?.reduce(0, +) ?? 0) / Double(reviews.count)
+                return ParkReviewData(name: parkName, rating: avgRating, reviews: reviews)
+            }
+            
+            DispatchQueue.main.async {
+                completion(updatedParks)
+            }
+        }
+    }
+    
+    func fetchUserReviews() {
+        guard let user = Auth.auth().currentUser else { return }
+        let userId = user.uid
+        
+        ref.child("comments").child(userId).observe(.value) { snapshot in
+            var reviews: [ParkReview] = []
+            
+            for child in snapshot.children {
+                if let childSnapshot = child as? DataSnapshot,
+                   let reviewData = childSnapshot.value as? [String: Any],
+                   let userName = reviewData["userName"] as? String,
+                   let rating = reviewData["rating"] as? Int,
+                   let comment = reviewData["commentText"] as? String {
+                    
+                    let review = ParkReview(userName: userName, rating: rating, comment: comment)
+                    reviews.append(review)
+                }
+            }
+            
+            DispatchQueue.main.async {
+                self.userReviews = reviews
+            }
+        }
+    }
+    
+    func reloadParksData() {
+        fetchParksReviews { reviews in
+            self.parks = reviews
+        }
+    }
+}
 
 struct ReviewCardView: View {
     var review: ParkReview
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Text(review.userName)
                     .font(.headline)
-                
                 Spacer()
-                
                 HStack {
-                    ForEach(0..<5) { star in
+                    ForEach(0..<review.rating) { _ in
                         Image(systemName: "star.fill")
-                            .foregroundColor(star < review.rating ? .yellow : .gray)
+                            .foregroundColor(.yellow)
                     }
                 }
             }
-            
-            Text(review.comment)
+            Text(review.comment.prefix(100) + (review.comment.count > 100 ? "..." : ""))
                 .font(.body)
-                .padding(.top, 2)
         }
         .padding()
         .background(Color.white)
@@ -224,7 +251,6 @@ struct ReviewCardView: View {
         .shadow(radius: 5)
     }
 }
-
 
 struct ParkReviewData: Identifiable {
     let id = UUID()
@@ -247,11 +273,8 @@ let parkNames = [
     "Parc du Mont-Saint-Bruno", "Biodome and Botanical Garden", "Parc de la Fontaine",
     "Park Avenue Green Alley", "Parc Mont-Royal Summit", "Beaver Lake",
     "Parc Jeanne-Mance", "Westmount Park", "Parc Outremont", "Parc du Bois-de-Liesse",
-    "Parc des Iles-de-Boucherville", "Parc Beaudet", "Parc Nature de l'Île-de-la-Visitation",
-    "Parc du Millénaire", "Parc des Moulins", "Parc de la Rivière-des-Prairies",
-    "Parc Léon-Provancher", "Parc de l'Anse-à-l'Orme"
+    "Parc des Iles-de-Boucherville", "Parc Beaudet",
+    "Parc Nature de l'Île-de-la-Visitation", "Parc du Millénaire",
+    "Parc des Moulins", "Parc de la Rivière-des-Prairies", "Parc Léon-Provancher",
+    "Parc de l'Anse-à-l'Orme"
 ]
-
-#Preview {
-    ReviewRateView()
-}

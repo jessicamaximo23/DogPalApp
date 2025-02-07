@@ -6,8 +6,6 @@
 //  Created by Jessica Maximo on 2024-10-30.
 
 
-
-
 import SwiftUI
 import Firebase
 import FirebaseAuth
@@ -150,25 +148,21 @@ struct HomeScreenView: View {
     }
     
     func fetchUserName() {
-        guard let user = Auth.auth().currentUser else {
-            print("User not authenticated")
-            return
-        }
-
+           guard let user = Auth.auth().currentUser else {
+               print("User not authenticated")
+               return
+           }
+           
+        
         let userId = user.uid
-        ref.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
-            if let value = snapshot.value as? [String: Any] {
-                self.userName = value["userName"] as? String ?? "No Name"
-                self.userEmail = value["userEmail"] as? String ?? "No Email"
-                self.userAge = value["userAge"] as? String ?? "No Age"
-                self.dogName = value["dogName"] as? String ?? "No Dog Name"
-                self.dogBreed = value["dogBreed"] as? String ?? "No Dog Breed"
-            } else {
-                print("No user data found in the database")
-            }
-        }
-    }
-
+           ref.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
+               if let value = snapshot.value as? [String: Any] {
+                   self.userName = value["name"] as? String ?? "No Name"
+               } else {
+                   print("No user data found in the database")
+               }
+           }
+       }
     
     struct ParkCardView: View {
         var park: Park
